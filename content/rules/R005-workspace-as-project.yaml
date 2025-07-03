@@ -1,0 +1,74 @@
+id: R005
+name: "Workspace Is Just Another Project"
+version: "1.0.0"
+priority: "critical"
+category: "structure"
+content: |
+  ## Rule Statement
+  
+  The workspace root MUST follow the exact same structure as any other project. There MUST be no special folders or exceptions. The workspace's content/ folder contains system files (templates, rules, scripts) instead of code or documents.
+  
+  ## Rationale
+  
+  This principle:
+  - Eliminates special cases and exceptions
+  - Makes the system self-demonstrating
+  - Simplifies learning and maintenance
+  - Proves the system works at any scale
+  
+  ## Implementation
+  
+  1. Workspace structure:
+     ```
+     deepworkspace/
+     ├── README.md      # Workspace documentation
+     ├── CLAUDE.md      # Workspace AI context
+     ├── content/       # System files (not .deepworkspace!)
+     │   ├── templates/
+     │   ├── rules/
+     │   ├── scripts/
+     │   ├── archive/
+     │   └── temp/
+     └── projects/      # All other projects
+     ```
+  
+  2. Key insight:
+     - No ".deepworkspace" or special system folder
+     - System files go in content/ like any project
+     - The only difference is what's IN content/
+  
+  ## Examples
+  
+  ### Correct
+  ```
+  deepworkspace/
+  ├── README.md          # Standard project file
+  ├── CLAUDE.md          # Standard project file
+  ├── content/           # Standard folder (contains system files)
+  └── projects/          # Standard folder (contains projects)
+  ```
+  
+  ### Incorrect
+  ```
+  deepworkspace/
+  ├── README.md
+  ├── CLAUDE.md
+  ├── .deepworkspace/    # Wrong: special folder
+  ├── system/            # Wrong: special folder
+  └── projects/
+  ```
+  
+  ## Verification
+  
+  To verify this rule is being followed:
+  - [ ] Workspace has README.md, CLAUDE.md
+  - [ ] System files are in content/ folder
+  - [ ] No special folders at root
+  - [ ] Structure identical to any project
+  
+references:
+  - "R001"  # Universal project structure
+  - "R002"  # Content isolation
+  
+exceptions:
+  - "None - this rule is absolute"

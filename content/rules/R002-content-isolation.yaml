@@ -1,0 +1,74 @@
+id: R002
+name: "Content Folder Isolation"
+version: "1.0.0"
+priority: "critical"
+category: "structure"
+content: |
+  ## Rule Statement
+  
+  All actual work MUST happen inside content/ folders. Project metadata (README.md, CLAUDE.md) MUST stay at project root. The content/ folder MUST be gitignored to separate metadata from content.
+  
+  ## Rationale
+  
+  This separation enables:
+  - Clean version control of project structure
+  - Independent versioning of content vs metadata
+  - Prevents bloating the workspace repository
+  - Allows different git strategies for different content types
+  
+  ## Implementation
+  
+  1. Place all actual work in content/:
+     - Source code
+     - Documentation files
+     - Assets and resources
+     - Build outputs
+     - Any project-specific files
+  
+  2. Keep only metadata at project root:
+     - README.md (human documentation)
+     - CLAUDE.md (AI context)
+     - projects/ folder (for sub-projects)
+  
+  3. Ensure .gitignore includes:
+     - `**/content/` to ignore all content folders
+  
+  ## Examples
+  
+  ### Correct
+  ```
+  my-web-app/
+  ├── README.md          # Metadata: describes project
+  ├── CLAUDE.md          # Metadata: AI instructions
+  ├── content/           # Actual web app code
+  │   ├── package.json
+  │   ├── src/
+  │   └── public/
+  └── projects/          # Sub-projects if any
+  ```
+  
+  ### Incorrect
+  ```
+  my-web-app/
+  ├── README.md
+  ├── CLAUDE.md
+  ├── package.json       # Wrong: should be in content/
+  ├── src/               # Wrong: should be in content/
+  └── content/           # Correct location exists but not used
+  ```
+  
+  ## Verification
+  
+  To verify this rule is being followed:
+  - [ ] All code/documents are in content/ folder
+  - [ ] Only README.md, CLAUDE.md at project root
+  - [ ] .gitignore includes **/content/
+  - [ ] No project files at root level
+  
+references:
+  - "R001"  # Project structure
+  - "R005"  # Workspace as project
+  
+exceptions:
+  - "Workspace root content/ contains system files (templates, rules)"
+  - "These system files are tracked in git as they define the system"

@@ -1,0 +1,91 @@
+id: R008
+name: "Pull Request Complete Documentation"
+version: "1.0.0"
+priority: "high"
+category: "workflow"
+content: |
+  ## Rule Statement
+  
+  All pull requests MUST follow template T006, including the complete original user request, implementation decisions, and comprehensive change summary. PRs MUST serve as permanent context records for AI agents.
+  
+  ## Rationale
+  
+  Complete PR documentation:
+  - Preserves original intent and context
+  - Documents AI decision-making process
+  - Creates traceable history
+  - Enables future agents to understand past changes
+  
+  ## Implementation
+  
+  1. Required PR sections:
+     - Summary of changes
+     - Full context (who, what, when, why)
+     - Complete user request (verbatim)
+     - AI implementation notes
+     - Verification checklist
+     - File changes summary
+  
+  2. Critical elements:
+     - ALWAYS include original user request
+     - Document any interpretations made
+     - Explain implementation choices
+     - Note deviations from request
+     - List all affected files
+  
+  3. PR creation process:
+     ```bash
+     gh pr create \
+       --title "feat: Description" \
+       --body "$(cat pr-body.md)" \
+       --base main \
+       --head feature/branch
+     ```
+  
+  ## Examples
+  
+  ### Correct
+  ```markdown
+  ## Summary
+  Implemented DeepWorkspace v3.0.0 with modular structure...
+  
+  ## Context
+  - **Initiated by**: User request for workspace upgrade
+  - **Task IDs**: #003-#010
+  - **Feature Branch**: feature/v3-implementation
+  - **Date**: 2025-07-03
+  
+  ## User Request
+  ```
+  Create an ultrathink plan to execute this request...
+  [Full original request]
+  ```
+  
+  ## AI Implementation Notes
+  Decided to use YAML for templates because...
+  Chose to rename .deepworkspace to content/ because...
+  ```
+  
+  ### Incorrect
+  ```markdown
+  Fixed some issues and updated files.
+  
+  [Missing context, no user request, no details]
+  ```
+  
+  ## Verification
+  
+  To verify this rule is being followed:
+  - [ ] PR uses template T006
+  - [ ] Original user request included verbatim
+  - [ ] AI decisions documented
+  - [ ] All changes listed
+  - [ ] Context is complete
+  
+references:
+  - "T006"  # PR template
+  - "R006"  # Feature branch workflow
+  - "R007"  # Commit standards
+  
+exceptions:
+  - "None - all PRs must be fully documented"

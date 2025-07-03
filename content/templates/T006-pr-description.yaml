@@ -1,0 +1,78 @@
+id: T006
+name: "Pull Request Description Template"
+version: "1.0.0"
+workspace_version: "3.0.0"
+modified: "2025-07-03"
+purpose: "Captures full context of changes for PR history and AI understanding"
+format: "markdown"
+content: |
+  ## Summary
+  
+  [One paragraph explaining what this PR accomplishes]
+  
+  ## Context
+  
+  - **Initiated by**: [User request / Task / Issue]
+  - **Task IDs**: [#XXX, #XXX]
+  - **Feature Branch**: feature/[branch-name]
+  - **Date**: [YYYY-MM-DD]
+  
+  ## Changes Made
+  
+  - [ ] [Category]: [Specific change description]
+  - [ ] [Category]: [Specific change description]
+  - [ ] Documentation updated where needed
+  - [ ] Tests added/updated if applicable
+  
+  Categories: Created, Modified, Deleted, Moved, Refactored
+  
+  ## Verification
+  
+  - [ ] Follows all workspace rules
+  - [ ] Templates applied correctly  
+  - [ ] No direct commits to main branch
+  - [ ] All commits follow template T005
+  - [ ] Changes are complete and working
+  
+  ## User Request
+  
+  ```
+  [Copy the original user request that triggered these changes]
+  [This preserves context for future AI agents]
+  ```
+  
+  ## AI Implementation Notes
+  
+  [Any decisions, interpretations, or trade-offs made during implementation]
+  [Explain why certain approaches were chosen]
+  [Note any deviations from the original request and why]
+  
+  ## File Changes Summary
+  
+  - **Created**: [List new files]
+  - **Modified**: [List changed files]
+  - **Deleted**: [List removed files]
+  
+  ## Testing Performed
+  
+  [Describe any testing or verification done]
+  
+  ## Future Considerations
+  
+  [Any follow-up work needed or recommendations]
+  
+  ---
+  
+  Following template @content/templates/T006
+  
+usage: |
+  1. Use for ALL pull requests
+  2. Fill in every section (use N/A if not applicable)
+  3. Always include original user request
+  4. Document AI decision-making process
+  5. Check all verification boxes before submitting
+  
+references:
+  - "T005"  # Commit message template
+  - "R006"  # Feature branch workflow
+  - "R008"  # PR documentation rule
