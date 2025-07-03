@@ -1,0 +1,67 @@
+id: T002
+name: "Project README Template"
+version: "1.0.0"
+workspace_version: "3.0.0"
+modified: "2025-07-03"
+purpose: "Standard template for all project README.md files"
+format: "markdown"
+content: |
+  # [Project Name]
+  
+  <!-- This file follows template @content/templates/T002 -->
+  
+  ## Metadata
+  - **Type**: [workspace|code|writing|research|other]
+  - **Created**: [YYYY-MM-DD]
+  - **Status**: [active|paused|archived]
+  - **Parent**: [parent-project-name or 'root']
+  
+  ## Purpose
+  
+  [One paragraph explaining what this project is and why it exists]
+  
+  ## Structure
+  
+  This project follows the standard DeepWorkspace structure:
+  - `README.md` - This file
+  - `CLAUDE.md` - AI context and instructions
+  - `content/` - [Describe what's in content: code, documents, etc.]
+  - `projects/` - [List sub-projects if any, or state "No sub-projects"]
+  
+  ## Quick Start
+  
+  [2-3 steps to get started with this project]
+  
+  ## Key Information
+  
+  [Project-specific important details]
+  
+  ## Sub-Projects
+  
+  [If applicable, list and briefly describe each sub-project]
+  
+  ## Dependencies
+  
+  [List any dependencies on other projects or external resources]
+  
+  ## Status & Roadmap
+  
+  Current focus: [What's being worked on]
+  
+  Next steps:
+  - [ ] [Future task 1]
+  - [ ] [Future task 2]
+  
+  ---
+  
+  *This project is part of the DeepWorkspace system.*
+  
+usage: |
+  1. Copy this template to new-project/README.md
+  2. Replace all placeholders in square brackets
+  3. Remove any sections that don't apply
+  4. Keep the template reference comment at the top
+  
+references:
+  - "T003"  # CLAUDE.md template
+  - "R001"  # Project structure rule
