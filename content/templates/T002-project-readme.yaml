@@ -25,6 +25,7 @@ content: |
   This project follows the standard DeepWorkspace structure:
   - `README.md` - This file
   - `CLAUDE.md` - AI context and instructions
+  - `.claude/` - Claude Desktop project settings
   - `content/` - [Describe what's in content: code, documents, etc.]
   - `projects/` - [List sub-projects if any, or state "No sub-projects"]
   

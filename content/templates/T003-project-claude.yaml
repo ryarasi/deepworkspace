@@ -22,8 +22,9 @@ content: |
   
   1. **You are here**: projects/[path]/CLAUDE.md
   2. **Read next**: README.md for project details
-  3. **Work in**: content/ folder
-  4. **Sub-projects**: projects/ folder [if any]
+  3. **Check tasks**: content/TASKS.md for current work items
+  4. **Work in**: content/ folder
+  5. **Sub-projects**: projects/ folder [if any]
   
   ## Project-Specific Instructions
   

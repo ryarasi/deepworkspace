@@ -11,6 +11,7 @@ content: |
   <!-- This file follows template @content/templates/T007 -->
   
   ## Active
+  - [ ] **PRIORITY**: Push this project to GitHub remote (required for PR workflow)
   - [ ] Update README.md with detailed project information
   - [ ] Enhance CLAUDE.md with project-specific context
   - [ ] Define project structure in content/

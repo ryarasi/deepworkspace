@@ -35,20 +35,45 @@ Our thesis: By maintaining the most minimalist structure possible, we optimize f
 
 ```bash
 # 1. Clone this repository
-git clone <repo-url> deepworkspace
+git clone https://github.com/ryarasi/deepworkspace.git
 cd deepworkspace
 
-# 2. Run initialization (optional)
-./content/scripts/init.sh
+# 2. Set up dws commands (see DWS Commands Setup below)
 
 # 3. Create your first project
-mkdir -p projects/my-project/content
-cp content/templates/T002-readme.yaml projects/my-project/
-cp content/templates/T003-claude.yaml projects/my-project/
+dws create
 
-# 4. Start working in content folder
-cd projects/my-project/content
+# 4. Navigate to projects
+dws start
 ```
+
+## DWS Commands Setup
+
+Add these functions to your shell configuration file (`~/.bashrc` or `~/.zshrc`):
+
+```bash
+# Add dws to PATH
+export PATH="$PATH:$HOME/deepworkspace/content/scripts"
+
+# Function to change directory and open Claude Desktop
+dws-cd() {
+    cd "$1" && claude --dangerously-skip-permissions
+}
+
+# Quick project navigation with Claude
+dws-start() {
+    eval $(dws start --eval)
+}
+```
+
+Then reload your shell configuration:
+```bash
+source ~/.bashrc  # or source ~/.zshrc
+```
+
+Now you can use:
+- `dws create` - Create new projects
+- `dws start` or `dws-start` - Navigate to projects and open Claude Desktop
 
 ## Structure
 
@@ -122,7 +147,7 @@ When working in this workspace:
 
 ## Roadmap
 
-See `content/temp/TASKS.md` for current tasks and future plans.
+See `content/TASKS.md` for current tasks and future plans.
 
 Future features:
 - GitHub issue-based change tracking

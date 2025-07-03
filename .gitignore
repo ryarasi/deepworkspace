@@ -1,6 +1,9 @@
 # Project content folders (but not workspace content)
 /projects/**/content/
 
+# Local task tracking (in projects only, not workspace)
+/projects/**/TASKS.md
+
 # System files
 .DS_Store
 *.swp

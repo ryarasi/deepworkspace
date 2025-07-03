@@ -9,6 +9,7 @@ content: |
   Every project (including the workspace root) MUST have exactly these files and folders:
   - README.md - Human-readable documentation
   - CLAUDE.md - AI context and instructions
+  - .claude/ - Claude Desktop project settings
   - content/ - All actual project content
   - projects/ - Sub-projects (optional, can be empty)
   
@@ -26,6 +27,7 @@ content: |
      - Create the project directory
      - Add README.md using template T002
      - Add CLAUDE.md using template T003
+     - Create .claude/ directory
      - Create content/ directory
      - Create projects/ directory (even if empty)
   
@@ -40,6 +42,7 @@ content: |
   my-project/
   ├── README.md
   ├── CLAUDE.md
+  ├── .claude/
   ├── content/
   │   └── [actual project files]
   └── projects/
@@ -60,9 +63,10 @@ content: |
   To verify this rule is being followed:
   - [ ] Project has README.md at root
   - [ ] Project has CLAUDE.md at root
+  - [ ] Project has .claude/ directory
   - [ ] Project has content/ directory
   - [ ] Project has projects/ directory
-  - [ ] No other files/folders at project root
+  - [ ] No other files/folders at project root (except .git, .gitignore)
   
 references:
   - "T002"  # README template

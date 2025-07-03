@@ -17,6 +17,10 @@ case "${1:-}" in
         shift
         source "$DWS_LIB/create.sh"
         ;;
+    start)
+        shift
+        source "$DWS_LIB/start.sh"
+        ;;
     help|--help|-h|"")
         cat << EOF
 DeepWorkspace CLI v1.0.0
@@ -25,10 +29,12 @@ Usage: dws <command> [options]
 
 Commands:
   create     Create a new project in the workspace
+  start      Navigate to a project and open Claude Desktop
   help       Show this help message
 
 Examples:
   dws create              # Interactive project creation
+  dws start               # Select and navigate to a project
   dws help                # Show help
 
 More commands coming soon:
