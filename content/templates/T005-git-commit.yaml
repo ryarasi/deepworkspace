@@ -1,0 +1,65 @@
+id: T005
+name: "Git Commit Message Template"
+version: "1.0.0"
+workspace_version: "3.0.0"
+modified: "2025-07-03"
+purpose: "Ensures all commits include full context and traceability"
+format: "markdown"
+content: |
+  [type]: [Brief description - 50 chars max]
+  
+  ## Context
+  - Task ID: [#XXX or specific task reference]
+  - Feature Branch: feature/[branch-name]
+  - Purpose: [Why this change is needed]
+  
+  ## Changes
+  - [Specific change 1]
+  - [Specific change 2]
+  - [File/component modified]
+  
+  ## Testing
+  - [How changes were verified]
+  - [Any tests run]
+  
+  ## References
+  - Related to: [task/issue/discussion]
+  - Follows: @content/rules/[R###]
+  - Templates used: @content/templates/[T###]
+  
+  🤖 Generated with [Claude Code](https://claude.ai/code)
+  
+  Co-Authored-By: Claude <noreply@anthropic.com>
+  
+usage: |
+  1. Use for all commits in feature branches
+  2. Replace [type] with: feat, fix, docs, style, refactor, test, chore
+  3. Keep first line under 50 characters
+  4. Include all context sections
+  5. Reference relevant rules and templates
+  
+examples:
+  - |
+    feat: Add project initialization script
+    
+    ## Context
+    - Task ID: #005
+    - Feature Branch: feature/v3-implementation
+    - Purpose: Provide easy workspace setup
+    
+    ## Changes
+    - Created init.sh placeholder script
+    - Added execution permissions
+    - Included future feature roadmap
+    
+    ## Testing
+    - Verified script is executable
+    - Tested echo output
+    
+    ## References
+    - Related to: Workspace v3.0.0 implementation
+    - Follows: @content/rules/R006
+    
+references:
+  - "R007"  # Commit message standards
+  - "T006"  # PR template

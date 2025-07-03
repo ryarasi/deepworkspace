@@ -1,0 +1,40 @@
+id: T007
+name: "Project Tasks Template"
+version: "1.0.0"
+workspace_version: "3.0.0"
+modified: "2025-07-03"
+purpose: "Template for TASKS.md files in project content folders"
+format: "markdown"
+content: |
+  # [Project Name] Tasks
+  
+  <!-- This file follows template @content/templates/T007 -->
+  
+  ## Active
+  - [ ] Update README.md with detailed project information
+  - [ ] Enhance CLAUDE.md with project-specific context
+  - [ ] Define project structure in content/
+  - [ ] Create initial project files
+  
+  ## Planned
+  - [ ] Set up development environment
+  - [ ] Create project architecture
+  - [ ] Add initial documentation
+  
+  ## Completed
+  - [x] Project created on [date]
+  
+  ---
+  
+  **Note**: This file is for local task tracking only. It is not committed to git.
+  Create GitHub issues for formal work items that need tracking.
+  
+usage: |
+  1. This template is automatically applied when creating new projects
+  2. Place in project's content/ folder as TASKS.md
+  3. Update tasks as work progresses
+  4. Move to GitHub issues when ready for formal tracking
+  
+references:
+  - "R001"  # Project structure
+  - "R002"  # Content isolation

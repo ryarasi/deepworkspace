@@ -1,0 +1,82 @@
+id: R004
+name: "Infinite Project Nesting"
+version: "1.0.0"
+priority: "high"
+category: "structure"
+content: |
+  ## Rule Statement
+  
+  Projects MAY contain sub-projects in their projects/ folder to any depth. Each sub-project MUST follow the same structure rules as its parent. This creates a fractal architecture where complexity is managed through hierarchy.
+  
+  ## Rationale
+  
+  This enables:
+  - Large projects broken into manageable pieces
+  - Clear ownership and boundaries
+  - Reusable components as sub-projects
+  - Natural organization of complex systems
+  
+  ## Implementation
+  
+  1. When a project grows complex:
+     - Identify logical components
+     - Create sub-projects in projects/ folder
+     - Each sub-project gets its own README.md, CLAUDE.md, content/
+  
+  2. Example hierarchies:
+     - Software project → web-ui, mobile-ui, api, shared-libs
+     - Book project → chapters as sub-projects
+     - Company workspace → departments → teams → projects
+  
+  3. Navigation pattern:
+     - Start at root CLAUDE.md
+     - Navigate down through projects/
+     - Each level is self-contained
+  
+  ## Examples
+  
+  ### Correct
+  ```
+  my-saas/
+  ├── README.md
+  ├── CLAUDE.md
+  ├── content/              # Parent project docs, configs
+  └── projects/
+      ├── web-app/
+      │   ├── README.md
+      │   ├── CLAUDE.md
+      │   └── content/      # Web app code
+      ├── mobile-app/
+      │   ├── README.md
+      │   ├── CLAUDE.md
+      │   └── content/      # Mobile app code
+      └── api/
+          ├── README.md
+          ├── CLAUDE.md
+          └── content/      # API code
+  ```
+  
+  ### Incorrect
+  ```
+  my-saas/
+  ├── README.md
+  ├── CLAUDE.md
+  ├── web-app/           # Wrong: should be in projects/
+  ├── mobile-app/        # Wrong: should be in projects/
+  └── api/               # Wrong: should be in projects/
+  ```
+  
+  ## Verification
+  
+  To verify this rule is being followed:
+  - [ ] Sub-projects are in projects/ folder only
+  - [ ] Each sub-project has required structure
+  - [ ] No project files at parent level
+  - [ ] Clear hierarchy maintained
+  
+references:
+  - "R001"  # Project structure
+  - "R002"  # Content isolation
+  
+exceptions:
+  - "None - all projects follow the same rules regardless of depth"

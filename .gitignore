@@ -1,5 +1,5 @@
-# All content folders at any level
-**/content/
+# Project content folders (but not workspace content)
+/projects/**/content/
 
 # System files
 .DS_Store
