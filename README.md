@@ -1,35 +1,135 @@
 # DeepWorkspace
 
-This directory is meant to be the entire workspace of projects of any user. Here we will provide comprehensive context to Claude on how to work on this directory and how to handle the user's requests regarding the projects in this workspace.
+<!-- This file follows template @content/templates/T002 -->
 
-In this folder is where we will host our deepworkspace. Here, this will be the structure of this folder. 
+## Version: 3.0.0
 
-deepworkspace/
-├── CLAUDE.md          # You are here ← Start point
-├── README.md          # This file contains the metadata about the project (initialization datetime, git repo link where the project is committed, type of project, organization for which the project belongs, purpose of the project etc). It also contains a manifest of rules on how updates to the project ought to be handled. The actual rules will be referred from a folder inside the .deepworkspace at the root of the workspace where all the rules are listed in detail. The first rule is to maintain this directory structure in this directory at all times. This is to maintain our philosophy of balance between configuration and convention. And all files will have templates stored in the .deepworkspace/templates folder. All templates will have IDs and those will be in the filename of the template itself. And All the files that follow that template will have a statement at the top to indicate "This document must always be as specified in the format at @.deepworkspace/<template-id> (relative paths over absolute paths). And the claude.md file inside the project will provide context on how claude must first initialize itself with the context of the deepworkspace folder before operating on any files in this project. And the claude.md file in the deepworkspace folder will redirect to this readme file which ought to orient claude on all context related to the how to behave in this workspace.
-├── projects    # Will contain projects in the workspace that have their own folder structure as outlined below. And all projects are modular. This workspace itself is a project and within each project it can contain sub-projects. ONly the root of the workspace has the .deepworkspace folder with all the essential files to ensure the integrity of the workspace. All other projects will contain the other files only.
-├── content    # These are static documents and files or specific code files. The contents of this folder can be different depending on the type of project it is. For example, code projects will have code repos. Writing projects will have the actual written content.
-└── .deepworkspace/    # System files. See folder structure below.
+### Metadata
+- **Type**: workspace
+- **Created**: 2025-07-03
+- **Status**: active
+- **Philosophy**: Minimalist, modular, git-centric
 
+## What is DeepWorkspace?
 
+DeepWorkspace is a structured, template-driven workspace management system that brings order to chaos through:
 
+- **Fractal Architecture**: Every project follows the same pattern, projects can contain projects
+- **Template-Driven**: Consistency through templates, not complex tooling
+- **Git-First**: All context and history captured in version control
+- **AI-Optimized**: Designed for seamless Claude Code integration
+- **Minimalist**: Lightweight orchestration, maximum flexibility
 
-.deepworkspace folders
-- archive # contains the contents and other files that are no longer part of any project and don't follow the rules regarding the folder structure of projects. These files are Compressed and stored along with a manifest file with proper context in case we need to extract something from here. Archive can also have timestamped backup copy of a project. 
-- templates # contains templates with unique IDs and a human readable description of what the template contains. The templates themselves have a format, which will be the initial template. All other templates follow the outline of the first template. The first template has to have all information related to the version number of the template, the version number of the workspace, date last modified, purpose of the template, file format and then the content structure. Choose the right format to specify these template files in for maximum fidelity across various text file formats. Everything from the readme file, the claude.md file and the files within the project will have templates, including things like PRD document templates, readme files among other such files. Every file outside the content folder must have template id of the file at the top of the file and follow the template rules.
-- rules # This folder contains rules listed with their own unique IDS in their filename and contain one rule per file, with references to other rules within it for additional context. Rule files will also follow a template. For now create a set of core rules for the workspace, to adhere to all these conventions. And put them in individual files and reference these files from the main readme file at the root to establish the workspace rules to the claude.md when it initializes. 
+## Why DeepWorkspace?
 
+Our thesis: By maintaining the most minimalist structure possible, we optimize for efficiency and elegance. This system captures endless complexity through modular nesting while remaining simple at its core.
 
-Tasks to perform:-
-- Use ultrathink to Create the detailed list of all templates needed for the maintenance of the workspace and then use ultrathink to come up with the naming convention of the template files that is sustainable across all files in the projects
-- Use ultrathink to come up with the format of the template for the template file itself. After user approval, write the file.
-- Use ultrathink to come up with the format of the template for the claude.md file. After user approval, write the file.
-- Then use ultrathink to come up with the format for the template of the readme.md file. After user approval, write the file.
-- Then use ultrathink to come up with the format for the template of the rules files. After user approval, write the file.
-- Use ultrathink to come up with a comprehensive list of rules to maintain this structure and integrity of the workspace at all times. Use web research where possible to explore best practices and alternate systems like this. Allow the user to review all the rules proposed before writing them to the respective files.
-- Use ultrathink to fully review if this setup will work with claude code best, so that every operation that claude code does in modifying the files of the workspace follows the rules of the workspace. Use deep web search to explore how claude code's internal tooling can be fully utilized to enforce these rules for all file update operations within the workspace. Once a clear report is generated on how to proceed with this, add it to the Roadmap section in the readme file. We can also add a rule that all project readme files will contain a roadmap folder which ought to summarize the next steps of planned progress for the project. 
-- Use ultrathink and web search to craft a plan to create a set of items in the roadmap to come up with these features
-    - All operations intended to create file changes in the  project/contents folder of a project (whether it is code or writing projects) ought to be handled through github issues. We will trigger secondary process to analyze and execute the issue once the issue is created. This way there will be clear documentation of the purpose behind a change, persistent history of all changes along with the context surrounding that change. Use ultrathink to create a clear architecture for this kind of a setup.
-    - All operations intended to create file changes in the project ought to happen through PRs created to the github repo of the project and then pulled into the local repo of the project. Once again to maintain history of updates and the context.
-    - Create rules to follow for all of these operations.
-- Before any changes are made to any files in this project, initialize this project as a repo with this readme file intact and then proceed to update everything as requested. Use ultrathink to break down complex tasks and use ultrathink further to analyze how best to perform them. 
+### Key Benefits
+1. **No Installation Required**: Just clone and follow this README
+2. **Infinitely Scalable**: Projects within projects, any depth
+3. **Self-Documenting**: The workspace follows its own rules
+4. **Version Controlled**: Complete history of all changes
+5. **AI-Friendly**: Optimized for Claude Code context
+
+## Quick Start
+
+```bash
+# 1. Clone this repository
+git clone <repo-url> deepworkspace
+cd deepworkspace
+
+# 2. Run initialization (optional)
+./content/scripts/init.sh
+
+# 3. Create your first project
+mkdir -p projects/my-project/content
+cp content/templates/T002-readme.yaml projects/my-project/
+cp content/templates/T003-claude.yaml projects/my-project/
+
+# 4. Start working in content folder
+cd projects/my-project/content
+```
+
+## Structure
+
+```
+deepworkspace/                    # The root project (this workspace)
+├── README.md                     # You are here
+├── CLAUDE.md                     # AI context entry point
+├── content/                      # Workspace system files
+│   ├── templates/                # T001-T999 templates
+│   ├── rules/                    # R001-R999 rules  
+│   ├── scripts/                  # Helper scripts
+│   ├── archive/                  # Compressed old projects
+│   └── temp/                     # Temporary files
+└── projects/                     # All your projects
+    └── [project-name]/          # Each project follows same structure
+        ├── README.md            # Project documentation
+        ├── CLAUDE.md            # Project AI context
+        ├── content/             # Project actual content
+        └── projects/            # Sub-projects (optional)
+```
+
+## Core Concepts
+
+### 1. Universal Project Structure
+Every project (including this workspace) has exactly:
+- `README.md` - Human documentation
+- `CLAUDE.md` - AI context
+- `content/` - Actual content (code, docs, or system files)
+- `projects/` - Sub-projects (optional)
+
+### 2. Modular Projects
+Projects can contain other projects, enabling:
+- Complex software with multiple components (web-ui, mobile-ui, api)
+- Large documentation projects with sub-sections
+- Any hierarchical organization needed
+
+### 3. Template System
+All consistency comes from templates in `content/templates/`:
+- Templates ensure uniform structure
+- Templates are versioned
+- Templates reference: `@content/templates/T###`
+
+### 4. Rules Engine
+Workspace integrity maintained by rules in `content/rules/`:
+- Rules define requirements
+- Rules are actionable
+- Rules reference: `@content/rules/R###`
+
+### 5. Git Workflow
+All changes (except in content/) must follow:
+1. Create feature branch
+2. Make changes
+3. Create PR with full context
+4. Auto-merge to main
+5. Pull and cleanup
+
+## For AI Agents
+
+When working in this workspace:
+1. Read `CLAUDE.md` first for context
+2. Check `content/rules/` for requirements
+3. Use `content/templates/` for new files
+4. Follow git workflow for all changes
+5. Maintain the fractal structure
+
+## Version History
+
+- **v1.0.0**: Original deepwork concept
+- **v2.0.0**: v0.deepworkspace implementation  
+- **v3.0.0**: Current minimalist, modular design
+
+## Roadmap
+
+See `content/temp/TASKS.md` for current tasks and future plans.
+
+Future features:
+- GitHub issue-based change tracking
+- Automated template validation
+- Cross-project dependency management
+- Enhanced archival system
+
+---
+
+*This workspace is itself a project that follows its own rules. No exceptions, no special cases.* 
