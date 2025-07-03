@@ -57,7 +57,14 @@ replace_placeholders() {
     local project_type="$3"
     local purpose="$4"
     local parent_project="$5"
-    local date="$(date +%Y-%m-%d)"
+    local track_content="$6"
+    local date="$(date +%Y-%m-%dT%H:%M:%S%z)"
+    
+    # Convert track content value (y/n to yes/no)
+    local track_content_display="no"
+    if [[ "$track_content" == "y" ]] || [[ "$track_content" == "yes" ]]; then
+        track_content_display="yes"
+    fi
     
     # Replace placeholders
     echo "$template" | sed \
@@ -72,6 +79,7 @@ replace_placeholders() {
         -e "s/\[One paragraph explaining what this project is and why it exists\]/$purpose/g" \
         -e "s/\[parent-project-name or 'root'\]/${parent_project:-root}/g" \
         -e "s/\[active|paused|archived\]/active/g" \
+        -e "s/\[yes|no\]/$track_content_display/g" \
         -e "s/\[Describe what's in content: code, documents, etc.\]/Source code and related files/g" \
         -e "s/\[List sub-projects if any, or state \"No sub-projects\"\]/No sub-projects/g" \
         -e "s/\[2-3 steps to get started with this project\]/1. Review the TASKS.md file in content\/\n2. Update this README with more details\n3. Start developing in the content\/ folder/g" \
@@ -99,6 +107,11 @@ success() {
 # Print error message
 error() {
     echo -e "${RED}✗${NC} $1" >&2
+}
+
+# Print warning message
+warning() {
+    echo -e "${YELLOW}⚠${NC} $1"
 }
 
 # Print info message

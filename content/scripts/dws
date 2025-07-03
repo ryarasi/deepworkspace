@@ -17,6 +17,18 @@ case "${1:-}" in
         shift
         source "$DWS_LIB/create.sh"
         ;;
+    start)
+        shift
+        source "$DWS_LIB/start.sh"
+        ;;
+    validate)
+        shift
+        source "$DWS_LIB/validate.sh"
+        ;;
+    fix)
+        shift
+        source "$DWS_LIB/fix.sh"
+        ;;
     help|--help|-h|"")
         cat << EOF
 DeepWorkspace CLI v1.0.0
@@ -25,14 +37,19 @@ Usage: dws <command> [options]
 
 Commands:
   create     Create a new project in the workspace
+  start      Navigate to a project and open Claude Desktop
+  validate   Check project compliance with workspace rules
+  fix        Automatically fix common validation issues
   help       Show this help message
 
 Examples:
   dws create              # Interactive project creation
+  dws start               # Select and navigate to a project
+  dws validate            # Check all projects for rule compliance
+  dws fix                 # Auto-fix common issues
   dws help                # Show help
 
 More commands coming soon:
-  validate   Check project compliance with workspace rules
   archive    Archive old projects
   protect    Toggle write protection on files
 

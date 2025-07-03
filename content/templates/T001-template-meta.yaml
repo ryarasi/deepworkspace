@@ -2,7 +2,7 @@ id: T001
 name: "Template Meta-Template"
 version: "1.0.0"
 workspace_version: "3.0.0"
-modified: "2025-07-03"
+modified: "2025-07-04T03:32:21+0530"
 purpose: "Defines the structure for all other templates"
 format: "yaml"
 content: |
@@ -10,7 +10,7 @@ content: |
   name: "[Descriptive Template Name]"
   version: "[semantic version]"
   workspace_version: "[workspace version this template is compatible with]"
-  modified: "[YYYY-MM-DD]"
+  modified: "[YYYY-MM-DDTHH:MM:SS+ZZZZ]"
   purpose: "[Brief description of what this template is for]"
   format: "[yaml|markdown|json|other]"
   content: |

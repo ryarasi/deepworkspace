@@ -2,7 +2,7 @@ id: T007
 name: "Project Tasks Template"
 version: "1.0.0"
 workspace_version: "3.0.0"
-modified: "2025-07-03"
+modified: "2025-07-04T03:32:21+0530"
 purpose: "Template for TASKS.md files in project content folders"
 format: "markdown"
 content: |
@@ -11,6 +11,7 @@ content: |
   <!-- This file follows template @content/templates/T007 -->
   
   ## Active
+  - [ ] **PRIORITY**: Push this project to GitHub remote (required for PR workflow)
   - [ ] Update README.md with detailed project information
   - [ ] Enhance CLAUDE.md with project-specific context
   - [ ] Define project structure in content/

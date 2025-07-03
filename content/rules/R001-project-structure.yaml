@@ -1,14 +1,15 @@
 id: R001
 name: "Universal Project Structure"
-version: "1.0.0"
+version: "1.1.0"
 priority: "critical"
 category: "structure"
 content: |
   ## Rule Statement
   
   Every project (including the workspace root) MUST have exactly these files and folders:
-  - README.md - Human-readable documentation
+  - README.md - Human-readable documentation with required metadata including content tracking preference
   - CLAUDE.md - AI context and instructions
+  - .claude/ - Claude Desktop project settings
   - content/ - All actual project content
   - projects/ - Sub-projects (optional, can be empty)
   
@@ -24,10 +25,12 @@ content: |
   
   1. When creating a new project:
      - Create the project directory
-     - Add README.md using template T002
+     - Add README.md using template T002 (includes Track Content metadata)
      - Add CLAUDE.md using template T003
+     - Create .claude/ directory
      - Create content/ directory
      - Create projects/ directory (even if empty)
+     - Configure .gitignore based on Track Content preference
   
   2. The workspace root follows this same structure:
      - content/ contains system files (templates, rules, etc.)
@@ -40,6 +43,7 @@ content: |
   my-project/
   ├── README.md
   ├── CLAUDE.md
+  ├── .claude/
   ├── content/
   │   └── [actual project files]
   └── projects/
@@ -58,18 +62,20 @@ content: |
   ## Verification
   
   To verify this rule is being followed:
-  - [ ] Project has README.md at root
+  - [ ] Project has README.md at root with complete metadata
+  - [ ] README.md includes "Track Content" declaration
   - [ ] Project has CLAUDE.md at root
+  - [ ] Project has .claude/ directory
   - [ ] Project has content/ directory
   - [ ] Project has projects/ directory
-  - [ ] No other files/folders at project root
+  - [ ] No other files/folders at project root (except .git, .gitignore)
   
 references:
-  - "T002"  # README template
+  - "T002"  # README template with metadata
   - "T003"  # CLAUDE.md template
+  - "R002"  # Content tracking rules
   - "R004"  # Nesting rules
   
 exceptions:
   - ".git/" directory for version control
   - ".gitignore" file at any level
-  - ".pre-commit-config.yaml" at workspace root only

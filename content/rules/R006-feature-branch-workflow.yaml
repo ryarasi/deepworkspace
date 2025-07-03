@@ -81,4 +81,3 @@ references:
   
 exceptions:
   - "Initial repository setup only"
-  - "Emergency fixes with documented reason"

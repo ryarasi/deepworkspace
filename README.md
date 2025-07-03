@@ -6,8 +6,10 @@
 
 ### Metadata
 - **Type**: workspace
-- **Created**: 2025-07-03
+- **Created**: 2025-07-03T20:00:00+0530
 - **Status**: active
+- **Parent**: root
+- **Track Content**: yes
 - **Philosophy**: Minimalist, modular, git-centric
 
 ## What is DeepWorkspace?
@@ -35,20 +37,49 @@ Our thesis: By maintaining the most minimalist structure possible, we optimize f
 
 ```bash
 # 1. Clone this repository
-git clone <repo-url> deepworkspace
+git clone https://github.com/ryarasi/deepworkspace.git
 cd deepworkspace
 
-# 2. Run initialization (optional)
-./content/scripts/init.sh
+# 2. Run the setup script
+./content/scripts/setup.sh
 
-# 3. Create your first project
-mkdir -p projects/my-project/content
-cp content/templates/T002-readme.yaml projects/my-project/
-cp content/templates/T003-claude.yaml projects/my-project/
+# 3. Reload your shell (or open a new terminal)
+source ~/.bashrc  # or source ~/.zshrc
 
-# 4. Start working in content folder
-cd projects/my-project/content
+# 4. Create your first project
+dws create
+
+# 5. Navigate to projects
+dws start
 ```
+
+## Manual Setup (Alternative)
+
+If you prefer to set up manually instead of using the setup script, add these to your shell configuration file (`~/.bashrc` or `~/.zshrc`):
+
+```bash
+# Add dws to PATH
+export PATH="$PATH:$HOME/deepworkspace/content/scripts"
+
+# Function to change directory and open Claude Desktop
+dws-cd() {
+    cd "$1" && claude --dangerously-skip-permissions
+}
+
+# Quick project navigation with Claude
+dws-start() {
+    eval $(dws start --eval)
+}
+```
+
+## Available Commands
+
+After setup, you can use:
+- `dws create` - Create new projects interactively
+- `dws start` or `dws-start` - Navigate to projects and open Claude Desktop
+- `dws validate` - Check all projects for rule compliance
+- `dws fix` - Automatically fix common issues
+- `dws help` - Show all available commands
 
 ## Structure
 
@@ -122,7 +153,7 @@ When working in this workspace:
 
 ## Roadmap
 
-See `content/temp/TASKS.md` for current tasks and future plans.
+See `content/TASKS.md` for current tasks and future plans.
 
 Future features:
 - GitHub issue-based change tracking

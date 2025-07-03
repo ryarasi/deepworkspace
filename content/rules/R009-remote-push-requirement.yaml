@@ -1,0 +1,78 @@
+id: R009
+name: "Remote Push Before Changes"
+version: "1.0.0"
+priority: "high"
+category: "workflow"
+content: |
+  ## Rule Statement
+  
+  New projects MUST be pushed to a GitHub remote repository before making any changes to their structure or content. This enables the PR-based workflow required by R006.
+  
+  ## Rationale
+  
+  This rule ensures:
+  - All projects can use the PR workflow from the start
+  - No local-only changes that bypass review
+  - Complete audit trail from project inception
+  - Consistent workflow across all projects
+  
+  ## Implementation
+  
+  1. After creating a project with `dws create`:
+     - Project is initialized with git repository
+     - Initial structure is committed
+     - TASKS.md includes push as priority task
+  
+  2. Before making any changes:
+     - Create GitHub repository: `gh repo create`
+     - Push initial structure: `git push -u origin main`
+     - Then use feature branches for all changes
+  
+  3. The first task in every new project is:
+     - "Push this project to GitHub remote (required for PR workflow)"
+  
+  ## Examples
+  
+  ### Correct Workflow
+  ```bash
+  # Create project
+  dws create
+  # Project name: my-api
+  
+  # Navigate to project
+  cd projects/my-api
+  
+  # Create GitHub repo and push
+  gh repo create my-api --public
+  git push -u origin main
+  
+  # Now make changes via feature branch
+  git checkout -b feature/initial-setup
+  ```
+  
+  ### Incorrect Workflow
+  ```bash
+  # Create project
+  dws create
+  
+  # Make changes without pushing - WRONG!
+  cd projects/my-api
+  echo "code" > content/index.js
+  git add .
+  git commit -m "Add code"  # This violates the rule
+  ```
+  
+  ## Verification
+  
+  To verify this rule is being followed:
+  - [ ] Project has been pushed to remote before changes
+  - [ ] TASKS.md lists push as first/priority task
+  - [ ] No local commits beyond initial structure
+  - [ ] Remote repository exists on GitHub
+  
+references:
+  - "R006"  # Feature branch workflow
+  - "T007"  # Tasks template with push task
+  
+exceptions:
+  - "Workspace root project (already has remote)"
