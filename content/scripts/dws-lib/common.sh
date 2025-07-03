@@ -109,6 +109,11 @@ error() {
     echo -e "${RED}✗${NC} $1" >&2
 }
 
+# Print warning message
+warning() {
+    echo -e "${YELLOW}⚠${NC} $1"
+}
+
 # Print info message
 info() {
     echo -e "${YELLOW}→${NC} $1"

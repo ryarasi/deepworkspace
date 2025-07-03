@@ -6,7 +6,7 @@
 
 ### Metadata
 - **Type**: workspace
-- **Created**: 2025-07-03
+- **Created**: 2025-07-03T20:00:00+0530
 - **Status**: active
 - **Parent**: root
 - **Track Content**: yes
