@@ -29,6 +29,10 @@ case "${1:-}" in
         shift
         source "$DWS_LIB/fix.sh"
         ;;
+    pr)
+        shift
+        source "$DWS_LIB/pr.sh" "$@"
+        ;;
     help|--help|-h|"")
         cat << EOF
 DeepWorkspace CLI v1.0.0
@@ -40,6 +44,7 @@ Commands:
   start      Navigate to a project and open Claude Desktop
   validate   Check project compliance with workspace rules
   fix        Automatically fix common validation issues
+  pr         Manage pull request workflow (create, merge, status)
   help       Show this help message
 
 Examples:
@@ -47,6 +52,8 @@ Examples:
   dws start               # Select and navigate to a project
   dws validate            # Check all projects for rule compliance
   dws fix                 # Auto-fix common issues
+  dws pr create -t "title" # Create PR from current branch
+  dws pr merge            # Merge PR and complete workflow
   dws help                # Show help
 
 More commands coming soon:
