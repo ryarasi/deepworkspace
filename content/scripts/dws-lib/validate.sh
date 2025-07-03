@@ -181,9 +181,7 @@ check_structural_logic() {
     # Check for rule numbering gaps
     for i in {001..010}; do
         if ! ls "$WORKSPACE_ROOT/content/rules/R${i}"*.yaml >/dev/null 2>&1; then
-            if [[ "$i" != "009" ]]; then  # R009 is known to be missing
-                issues+=("Rule numbering gap: R${i} is missing (expected in sequence)")
-            fi
+            issues+=("Rule numbering gap: R${i} is missing (expected in sequence)")
         fi
     done
     

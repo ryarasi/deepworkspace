@@ -190,10 +190,6 @@ fix_structural_issues() {
         ((FIXES_APPLIED++))
     fi
     
-    # Note about missing rules
-    if ! ls "$WORKSPACE_ROOT/content/rules/R009"*.yaml >/dev/null 2>&1; then
-        info "R009 is missing - this appears to be intentional"
-    fi
 }
 
 # Main fix process

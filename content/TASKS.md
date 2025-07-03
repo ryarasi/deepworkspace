@@ -12,7 +12,7 @@
 - [x] Update README.md to v3.0.0
 - [x] Create CLAUDE.md with fractal context
 - [x] Create templates (T001-T007)
-- [x] Create rules (R001-R008, R010)
+- [x] Create rules (R001-R009)
 
 ### DWS CLI Tool ✓
 - [x] Create dws main dispatcher
@@ -26,7 +26,7 @@
 - [x] Update templates to include .claude directory
 - [x] Add TASKS.md to gitignore patterns
 - [x] Implement git initialization in project creation
-- [x] Create R010 rule for remote push requirement
+- [x] Create R009 rule for remote push requirement
 - [x] Add GitHub push as priority task in new projects
 
 ### Configurable Content Tracking ✓
