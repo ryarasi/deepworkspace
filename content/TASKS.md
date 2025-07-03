@@ -43,6 +43,12 @@
 - [x] Add clear limitations about semantic validation
 - [x] Update dws help with new commands
 
+### Reliability & Workflow ✓
+- [x] Create dws pr command for complete PR workflow
+- [x] Implement state tracking for resilient operations
+- [x] Add subcommands: create, merge, status, complete
+- [x] Handle context limitations with resumable workflows
+
 ## Next Steps
 
 ### Immediate
@@ -53,6 +59,7 @@
 ### Near Term
 - [x] Create dws validate command - DONE
 - [x] Create dws fix command - DONE
+- [x] Create dws pr command - DONE
 - [ ] Create dws archive command  
 - [ ] Create dws protect command
 - [ ] Implement automated template validation
