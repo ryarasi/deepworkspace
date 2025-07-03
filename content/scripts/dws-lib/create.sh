@@ -59,13 +59,13 @@ CLAUDE_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T003-project-claude.yam
 TASKS_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T007-project-tasks.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
 
 # Replace placeholders and create files
-replace_placeholders "$README_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" \
+replace_placeholders "$README_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" "$TRACK_CONTENT" \
     > "$WORKSPACE_ROOT/$PROJECT_PATH/README.md"
 
-replace_placeholders "$CLAUDE_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" \
+replace_placeholders "$CLAUDE_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" "$TRACK_CONTENT" \
     > "$WORKSPACE_ROOT/$PROJECT_PATH/CLAUDE.md"
 
-replace_placeholders "$TASKS_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" \
+replace_placeholders "$TASKS_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" "$TRACK_CONTENT" \
     > "$WORKSPACE_ROOT/$PROJECT_PATH/content/TASKS.md"
 
 # Initialize git repository

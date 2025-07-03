@@ -29,15 +29,30 @@
 - [x] Create R010 rule for remote push requirement
 - [x] Add GitHub push as priority task in new projects
 
+### Configurable Content Tracking ✓
+- [x] Update R002 to allow project-level content tracking choice
+- [x] Add "Track Content" metadata to README template
+- [x] Update R001 to require tracking preference declaration
+- [x] Modify dws create to respect tracking preference
+- [x] Fix broken pre-commit hook (removed dependency on .pre-commit-config.yaml)
+- [x] Update all datetime formats to ISO 8601 with timezone
+
+### Validation & Enforcement ✓
+- [x] Create dws validate command with structural checks
+- [x] Create dws fix command for auto-fixable issues
+- [x] Add clear limitations about semantic validation
+- [x] Update dws help with new commands
+
 ## Next Steps
 
 ### Immediate
-- [ ] Push enhanced-project-structure branch to remote
-- [ ] Create PR for v3.0.0 complete implementation
+- [ ] Test dws validate and fix commands
+- [ ] Create PR for configurable content tracking
 - [ ] Merge to main and cleanup feature branch
 
 ### Near Term
-- [ ] Create dws validate command
+- [x] Create dws validate command - DONE
+- [x] Create dws fix command - DONE
 - [ ] Create dws archive command  
 - [ ] Create dws protect command
 - [ ] Implement automated template validation
@@ -51,6 +66,11 @@
 - [ ] Project health dashboard
 - [ ] Template inheritance system
 - [ ] Rule enforcement automation
+- [ ] **NLP Integration for Semantic Rule Validation**:
+  - Explore local LLM integration (ollama, llama.cpp)
+  - Consider API-based validation (OpenAI, Anthropic)
+  - Design plugin architecture for advanced validation
+  - Enable detection of semantic rule contradictions
 
 ## Architecture Notes
 

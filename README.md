@@ -8,6 +8,8 @@
 - **Type**: workspace
 - **Created**: 2025-07-03
 - **Status**: active
+- **Parent**: root
+- **Track Content**: yes
 - **Philosophy**: Minimalist, modular, git-centric
 
 ## What is DeepWorkspace?
@@ -38,18 +40,22 @@ Our thesis: By maintaining the most minimalist structure possible, we optimize f
 git clone https://github.com/ryarasi/deepworkspace.git
 cd deepworkspace
 
-# 2. Set up dws commands (see DWS Commands Setup below)
+# 2. Run the setup script
+./content/scripts/setup.sh
 
-# 3. Create your first project
+# 3. Reload your shell (or open a new terminal)
+source ~/.bashrc  # or source ~/.zshrc
+
+# 4. Create your first project
 dws create
 
-# 4. Navigate to projects
+# 5. Navigate to projects
 dws start
 ```
 
-## DWS Commands Setup
+## Manual Setup (Alternative)
 
-Add these functions to your shell configuration file (`~/.bashrc` or `~/.zshrc`):
+If you prefer to set up manually instead of using the setup script, add these to your shell configuration file (`~/.bashrc` or `~/.zshrc`):
 
 ```bash
 # Add dws to PATH
@@ -66,14 +72,14 @@ dws-start() {
 }
 ```
 
-Then reload your shell configuration:
-```bash
-source ~/.bashrc  # or source ~/.zshrc
-```
+## Available Commands
 
-Now you can use:
-- `dws create` - Create new projects
+After setup, you can use:
+- `dws create` - Create new projects interactively
 - `dws start` or `dws-start` - Navigate to projects and open Claude Desktop
+- `dws validate` - Check all projects for rule compliance
+- `dws fix` - Automatically fix common issues
+- `dws help` - Show all available commands
 
 ## Structure
 

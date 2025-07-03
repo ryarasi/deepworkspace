@@ -2,7 +2,7 @@ id: T006
 name: "Pull Request Description Template"
 version: "1.0.0"
 workspace_version: "3.0.0"
-modified: "2025-07-03"
+modified: "2025-07-04T03:32:21+0530"
 purpose: "Captures full context of changes for PR history and AI understanding"
 format: "markdown"
 content: |
@@ -15,7 +15,7 @@ content: |
   - **Initiated by**: [User request / Task / Issue]
   - **Task IDs**: [#XXX, #XXX]
   - **Feature Branch**: feature/[branch-name]
-  - **Date**: [YYYY-MM-DD]
+  - **Date**: [YYYY-MM-DDTHH:MM:SS+ZZZZ]
   
   ## Changes Made
   

@@ -2,7 +2,7 @@ id: T004
 name: "Rule Template"
 version: "1.0.0"
 workspace_version: "3.0.0"
-modified: "2025-07-03"
+modified: "2025-07-04T03:32:21+0530"
 purpose: "Standard template for workspace rules"
 format: "yaml"
 content: |
