@@ -41,10 +41,6 @@ fi
 # 3. Purpose
 read -p "Purpose: " PURPOSE
 
-# 4. Track content in git (default: n)
-read -p "Track content in git? (y/n) [n]: " TRACK_CONTENT
-TRACK_CONTENT=${TRACK_CONTENT:-n}
-
 # Create project structure
 info "Creating project structure..."
 
@@ -52,48 +48,98 @@ info "Creating project structure..."
 mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/content"
 mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/projects"
 mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/.claude"
+mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/.untracked/repos"
+mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/.untracked/local"
 
 # Load templates
 README_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T002-project-readme.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
 CLAUDE_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T003-project-claude.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
 TASKS_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T007-project-tasks.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
+CONTENT_README_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T009-content-readme.yaml" | sed -n '/^template: |/,/^[a-z]/p' | sed '1d;$d')
 
 # Replace placeholders and create files
-replace_placeholders "$README_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" "$TRACK_CONTENT" \
+replace_placeholders "$README_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" \
     > "$WORKSPACE_ROOT/$PROJECT_PATH/README.md"
 
-replace_placeholders "$CLAUDE_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" "$TRACK_CONTENT" \
+replace_placeholders "$CLAUDE_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" \
     > "$WORKSPACE_ROOT/$PROJECT_PATH/CLAUDE.md"
 
-replace_placeholders "$TASKS_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" "$TRACK_CONTENT" \
-    > "$WORKSPACE_ROOT/$PROJECT_PATH/content/TASKS.md"
+replace_placeholders "$TASKS_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" \
+    > "$WORKSPACE_ROOT/$PROJECT_PATH/.untracked/TASKS.md"
+
+replace_placeholders "$CONTENT_README_TEMPLATE" "$PROJECT_NAME" "code" "$PURPOSE" "$PARENT_PROJECT" \
+    > "$WORKSPACE_ROOT/$PROJECT_PATH/content/README.md"
+
+# Create project .gitignore
+cat > "$WORKSPACE_ROOT/$PROJECT_PATH/.gitignore" << 'EOF'
+# Untracked items
+.untracked/
+
+# Claude Desktop settings (local to each developer)
+**/.claude/settings.local.json
+
+# Temporary files in content
+content/temp/*
+!content/temp/.gitkeep
+
+# Build artifacts
+dist/
+build/
+*.o
+*.so
+*.dll
+*.exe
+
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+
+# Archive extraction
+*.tar.gz.tmp
+*.zip.tmp
+
+# System files
+.DS_Store
+*.swp
+*.swo
+*~
+
+# IDE files
+.idea/
+.vscode/
+*.code-workspace
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+EOF
 
 # Initialize git repository
 info "Initializing git repository..."
 cd "$WORKSPACE_ROOT/$PROJECT_PATH"
 
-# Create project .gitignore if tracking is disabled
-if [[ "$TRACK_CONTENT" == "n" ]]; then
-    echo "# Project content (not tracked in git)" > .gitignore
-    echo "content/" >> .gitignore
-fi
-
 # Initialize git and make initial commit
 git init
-git add README.md CLAUDE.md
-if [[ -f .gitignore ]]; then
-    git add .gitignore
-fi
+git add README.md CLAUDE.md .gitignore content/README.md
 git commit -m "Initial project structure
 
 - Created standard DeepWorkspace project structure
+- Added content/README.md for content documentation
+- Added .untracked/ directory for untracked items
+- Content is tracked by default
 - Ready for remote push and PR workflow"
 
 cd - > /dev/null
 
 # Success messages
 success "Created project structure at $PROJECT_PATH/"
-success "Created TASKS.md with starter tasks"
+success "Created content/README.md for content documentation"
+success "Created .untracked/ directory with TASKS.md"
 success "Initialized git repository"
 
 echo
@@ -104,9 +150,6 @@ echo "3. Push to remote: git push -u origin main"
 echo "4. Then make all changes via feature branches"
 echo
 info "Remember: All code goes in the content/ folder"
+info "External repos go in .untracked/repos/ (gitignored)"
+info "Tasks are tracked in .untracked/TASKS.md (not in git)"
 info "Sub-projects can be created in the projects/ folder"
-if [[ "$TRACK_CONTENT" == "y" ]]; then
-    info "Content tracking enabled - content/ will be committed to git"
-else
-    info "Content tracking disabled - content/ is gitignored"
-fi

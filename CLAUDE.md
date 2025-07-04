@@ -2,6 +2,15 @@
 
 <!-- This file follows template @content/templates/T003 -->
 
+<!-- BRANCH CHECK START -->
+⚠️ **BRANCH STATUS CHECK**: 
+- Current branch: Run `git branch --show-current` to check
+- If NOT on main: You're continuing work from a previous session
+- Check .untracked/local/BRANCH_REGISTRY.yaml for context
+- DO NOT create new branches until current branch is merged
+- See R010 for branch lifecycle rules
+<!-- BRANCH CHECK END -->
+
 You are in the DeepWorkspace root, which is itself a project following its own rules.
 
 ## Quick Orientation

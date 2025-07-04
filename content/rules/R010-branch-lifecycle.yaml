@@ -1,0 +1,78 @@
+id: R010
+name: "Branch Lifecycle Management"
+version: "1.0.0"
+priority: "critical"
+category: "workflow"
+content: |
+  ## Rule Statement
+  
+  All work MUST be done on feature branches. Feature branches MUST be completed (merged via PR or explicitly abandoned) before starting new branches. Claude sessions MUST detect existing non-main branches and warn users. Branch state MUST be tracked in .untracked/local/BRANCH_REGISTRY.yaml.
+  
+  ## Rationale
+  
+  This rule prevents:
+  - Orphaned branches with unfinished work
+  - Lost context from incomplete features
+  - Confusion about which branch contains what work
+  - Accidental work on wrong branches
+  - Unmerged changes being forgotten
+  
+  ## Implementation
+  
+  1. Branch Creation:
+     - Always create from main: `git checkout -b feature/description`
+     - Update .untracked/local/BRANCH_REGISTRY.yaml with:
+       - Branch name
+       - Creation date
+       - Purpose
+       - Initial context
+  
+  2. Branch Detection:
+     - Check current branch on Claude/dws startup
+     - If not on main, display warning
+     - Show uncommitted changes count
+     - Reference branch registry for context
+  
+  3. Branch Completion:
+     - Create PR with full context (T006)
+     - Merge to main
+     - Delete local and remote branch
+     - Update registry to mark as completed
+  
+  4. Branch Registry Format:
+     ```yaml
+     branches:
+       - name: feature/content-structure-update
+         created: 2025-07-04T23:00:00+0530
+         purpose: Update project structure for .untracked/
+         status: active
+         context: |
+           Moving from .repos/ to .untracked/
+           Consolidating gitignore files
+           Adding branch management
+     ```
+  
+  ## Verification
+  
+  To verify this rule is being followed:
+  - [ ] Currently on main or documented feature branch
+  - [ ] No uncommitted changes on main
+  - [ ] All feature branches in registry
+  - [ ] No branches older than 7 days without PR
+  - [ ] Branch purpose clearly documented
+  
+  ## Enforcement
+  
+  - CLAUDE.md includes branch check on startup
+  - dws commands verify branch state
+  - Pre-commit hooks can warn about branch age
+  - Regular cleanup of completed branches
+  
+references:
+  - "R006"  # Feature branch workflow
+  - "R008"  # PR documentation
+  - "T005"  # Commit standards
+  - "T006"  # PR template
+  
+exceptions:
+  - "Hotfix branches for critical production issues may bypass normal flow"

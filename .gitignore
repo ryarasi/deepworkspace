@@ -1,12 +1,21 @@
-# Project content folders (but not workspace content)
-/projects/**/content/
+# Untracked items
+.untracked/
 
-# Local task tracking (in projects only, not workspace)
-/projects/**/TASKS.md
+# Claude Desktop settings (local to each developer)
+**/.claude/settings.local.json
+
+# Temporary files in content
+content/temp/*
+!content/temp/.gitkeep
+
+# Archive extraction
+*.tar.gz.tmp
+*.zip.tmp
 
 # System files
 .DS_Store
 *.swp
+*.swo
 *~
 
 # IDE files

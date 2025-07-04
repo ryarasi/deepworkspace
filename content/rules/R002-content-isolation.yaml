@@ -1,21 +1,21 @@
 id: R002
 name: "Content Folder Isolation"
-version: "2.0.0"
+version: "3.0.0"
 priority: "critical"
 category: "structure"
 content: |
   ## Rule Statement
   
-  All actual work MUST happen inside content/ folders. Project metadata (README.md, CLAUDE.md) MUST stay at project root. The content/ folder MUST be gitignored UNLESS the project explicitly declares content tracking in its README.md metadata.
+  All actual work MUST happen inside content/ folders. Project metadata (README.md, CLAUDE.md) MUST stay at project root. The content/ folder is ALWAYS tracked in git. Every content/ folder MUST contain a README.md explaining its contents. Every project MUST have a .untracked/ directory at the root (gitignored) for items that should not be tracked.
   
   ## Rationale
   
   This separation enables:
-  - Clean version control of project structure
-  - Independent versioning of content vs metadata when desired
-  - Flexibility for projects that need to track content (e.g., writing projects)
-  - Prevents bloating repositories unintentionally
-  - Allows different git strategies for different content types
+  - Clean separation of metadata from actual work
+  - Consistent structure across all projects
+  - Clear documentation of content purpose via content/README.md
+  - Safe storage of untracked items via .untracked/
+  - Simplified mental model (content always tracked, untracked items in dedicated location)
   
   ## Implementation
   
@@ -27,43 +27,61 @@ content: |
      - Any project-specific files
   
   2. Keep only metadata at project root:
-     - README.md (human documentation with tracking preference)
+     - README.md (human documentation)
      - CLAUDE.md (AI context)
      - .claude/ folder (Claude Desktop settings)
      - projects/ folder (for sub-projects)
+     - .untracked/ folder (for untracked items)
   
-  3. Declare content tracking preference in README.md:
-     ```markdown
-     ## Metadata
-     - **Type**: [workspace|code|writing|research|other]
-     - **Track Content**: [yes|no]
-     ```
+  3. Required in every content/ folder:
+     - README.md explaining what's in this content folder
   
-  4. Configure .gitignore based on preference:
-     - If "Track Content: no" → add `content/` to project .gitignore
-     - If "Track Content: yes" → do not gitignore content/
+  4. Required in .untracked/ directory:
+     - repos/ - External git repositories
+     - local/ - Local operational files including:
+       - TASKS.md - Project task list
+       - BRANCH_REGISTRY.yaml - Active branch tracking
+       - Machine-specific configurations
+  
+  5. Content is ALWAYS tracked:
+     - No more "Track Content" metadata option
+     - Use .gitignore patterns for build artifacts
+     - Use git LFS for large binary files if needed
   
   ## Examples
   
-  ### Code Project (content not tracked)
+  ### Code Project
   ```
   my-web-app/
-  ├── README.md          # Has "Track Content: no"
+  ├── README.md          # Project documentation
   ├── CLAUDE.md          # AI instructions
-  ├── .gitignore         # Contains "content/"
-  ├── content/           # Not tracked in git
+  ├── .untracked/        # Untracked items (gitignored)
+  │   ├── repos/         # External dependencies
+  │   └── local/         # Local operational files
+  │       ├── TASKS.md   # Project tasks
+  │       └── BRANCH_REGISTRY.yaml
+  ├── content/           # All work happens here (tracked)
+  │   ├── README.md      # Explains this is a React web app
+  │   ├── .gitignore     # Includes node_modules/, dist/
   │   ├── package.json
   │   ├── src/
   │   └── public/
   └── projects/          # Sub-projects if any
   ```
   
-  ### Writing Project (content tracked)
+  ### Writing Project
   ```
   my-novel/
-  ├── README.md          # Has "Track Content: yes"
+  ├── README.md          # Project documentation
   ├── CLAUDE.md          # AI instructions
-  ├── content/           # Tracked in git
+  ├── .untracked/        # Untracked items (gitignored)
+  │   ├── repos/         # Research repositories
+  │   └── local/         # Local operational files
+  │       ├── TASKS.md   # Writing tasks
+  │       └── notes.md   # Personal notes
+  ├── content/           # All work happens here (tracked)
+  │   ├── README.md      # Explains novel structure & progress
+  │   ├── .gitignore     # Includes *.tmp, *.bak
   │   ├── chapters/
   │   ├── notes/
   │   └── outline.md
@@ -73,10 +91,12 @@ content: |
   ### Incorrect
   ```
   my-web-app/
-  ├── README.md          # Missing "Track Content" declaration
+  ├── README.md          # OK
   ├── package.json       # Wrong: should be in content/
   ├── src/               # Wrong: should be in content/
-  └── content/           # Correct location exists but not used
+  ├── .untracked/        # OK but...
+  │   └── TASKS.md       # Wrong: should be in local/TASKS.md
+  └── content/           # Missing README.md
   ```
   
   ## Verification
@@ -84,14 +104,18 @@ content: |
   To verify this rule is being followed:
   - [ ] All code/documents are in content/ folder
   - [ ] Only metadata files at project root
-  - [ ] README.md declares "Track Content" preference
-  - [ ] .gitignore matches declared preference
+  - [ ] content/README.md exists and explains contents
+  - [ ] .untracked/ directory exists at project root
+  - [ ] .untracked/repos/ and .untracked/local/ directories exist
+  - [ ] TASKS.md is in .untracked/local/ not directly in .untracked/
+  - [ ] Project .gitignore includes `.untracked/`
   - [ ] No project files at root level
   
 references:
   - "R001"  # Project structure
   - "R005"  # Workspace as project
-  - "T002"  # README template with metadata
+  - "T002"  # README template
+  - "T009"  # Content README template
   
 exceptions:
-  - "None - all projects must declare their content tracking preference"
+  - "None - all projects must follow this structure"

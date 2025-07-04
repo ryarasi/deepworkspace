@@ -57,14 +57,7 @@ replace_placeholders() {
     local project_type="$3"
     local purpose="$4"
     local parent_project="$5"
-    local track_content="$6"
     local date="$(date +%Y-%m-%dT%H:%M:%S%z)"
-    
-    # Convert track content value (y/n to yes/no)
-    local track_content_display="no"
-    if [[ "$track_content" == "y" ]] || [[ "$track_content" == "yes" ]]; then
-        track_content_display="yes"
-    fi
     
     # Replace placeholders
     echo "$template" | sed \
@@ -74,12 +67,12 @@ replace_placeholders() {
         -e "s/\[workspace|code|writing|research|other\]/code/g" \
         -e "s/\[code|writing|research|other\]/code/g" \
         -e "s/\[YYYY-MM-DD\]/$date/g" \
+        -e "s/\[YYYY-MM-DDTHH:MM:SS+ZZZZ\]/$date/g" \
         -e "s/\[date\]/$date/g" \
         -e "s/\[One line description\]/$purpose/g" \
         -e "s/\[One paragraph explaining what this project is and why it exists\]/$purpose/g" \
         -e "s/\[parent-project-name or 'root'\]/${parent_project:-root}/g" \
         -e "s/\[active|paused|archived\]/active/g" \
-        -e "s/\[yes|no\]/$track_content_display/g" \
         -e "s/\[Describe what's in content: code, documents, etc.\]/Source code and related files/g" \
         -e "s/\[List sub-projects if any, or state \"No sub-projects\"\]/No sub-projects/g" \
         -e "s/\[2-3 steps to get started with this project\]/1. Review the TASKS.md file in content\/\n2. Update this README with more details\n3. Start developing in the content\/ folder/g" \
@@ -90,7 +83,13 @@ replace_placeholders() {
         -e "s/\[path\]/projects\/$project_name/g" \
         -e "s/\[Any special instructions for AI agents working on this project\]/Follow standard code project conventions/g" \
         -e "s/\[List key files\/directories in content\/\]/- Source code files will be added here/g" \
-        -e "s/\[What should AI agents prioritize when working here\]/Setting up the basic project structure and documentation/g"
+        -e "s/\[What should AI agents prioritize when working here\]/Setting up the basic project structure and documentation/g" \
+        -e "s/\[Brief description of what's in this content directory\]/This directory contains all the actual work for this project./g" \
+        -e "s/\[project-specific structure\]/src\/ - Source code files/g" \
+        -e "s/\[List and describe the main components\/directories\]/- src\/ - Source code files\n- docs\/ - Documentation/g" \
+        -e "s/\[List any repos in .repos\/\]/None yet/g" \
+        -e "s/\[Any specific notes about working in this directory\]/All development work should happen here./g" \
+        -e "s/\[List key gitignore patterns\]/- .repos\/ - External repositories\n- node_modules\/ - Dependencies\n- dist\/ - Build output/g"
 }
 
 # Colors for output
