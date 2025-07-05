@@ -5,12 +5,15 @@
 ## Version: 3.0.0
 
 ### Metadata
-- **Type**: workspace
-- **Created**: 2025-07-03T20:00:00+0530
-- **Status**: active
+- **Name**: DeepWorkspace
+- **Slug**: deepworkspace
 - **Parent**: root
-- **Track Content**: yes
-- **Philosophy**: Minimalist, modular, git-centric
+- **Type**: product
+- **Subtype**: software
+- **URL**: https://github.com/ryarasi/deepworkspace
+- **Created**: 2025-07-03T20:00:00+0530
+- **Modified**: 2025-07-05T01:30:00+0530
+- **Status**: active
 
 ## What is DeepWorkspace?
 

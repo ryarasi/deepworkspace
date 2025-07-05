@@ -14,7 +14,9 @@ content: |
   
   ## Quick Context
   
-  - **Project Type**: [code|writing|research|other]
+  - **Project Name**: [Project Name]
+  - **Type**: [person|group|entity|product|research|learning]
+  - **Subtype**: [type-specific-subtype]
   - **Purpose**: [One line description]
   - **Status**: [active|paused|archived]
   
@@ -24,8 +26,9 @@ content: |
   2. **Read next**: README.md for project details
   3. **Check content**: content/README.md for what's inside
   4. **Work in**: content/ folder (all actual work)
-  5. **External repos**: content/.repos/ folder (gitignored)
-  6. **Sub-projects**: projects/ folder [if any]
+  5. **External repos**: .untracked/repos/ folder (gitignored)
+  6. **Tasks**: .untracked/local/TASKS.md
+  7. **Sub-projects**: projects/ folder [if any]
   
   ## Project-Specific Instructions
   

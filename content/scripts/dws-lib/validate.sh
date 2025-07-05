@@ -14,49 +14,33 @@ TOTAL_WARNINGS=0
 declare -a PROJECT_RESULTS
 declare -a STRUCTURE_ISSUES
 
-# Function to check if content tracking matches declaration
-check_content_tracking() {
+# Function to check .untracked directory structure
+check_untracked_structure() {
     local project_path="$1"
-    local readme_path="$project_path/README.md"
-    local gitignore_path="$project_path/.gitignore"
     
-    # Extract Track Content preference from README
-    local track_content=""
-    if [[ -f "$readme_path" ]]; then
-        track_content=$(grep -E "^\s*-\s*\*\*Track Content\*\*:" "$readme_path" | sed 's/.*: *//' | tr -d ' ')
+    # Check if .untracked exists with proper structure
+    if [[ ! -d "$project_path/.untracked" ]]; then
+        return 1  # Missing .untracked
     fi
     
-    # Check if preference is declared
-    if [[ -z "$track_content" ]]; then
-        return 1  # Missing declaration
+    if [[ ! -d "$project_path/.untracked/repos" ]]; then
+        return 2  # Missing repos subdirectory
     fi
     
-    # Check if .gitignore matches preference
-    if [[ "$track_content" == "no" ]]; then
-        # Should have content/ in .gitignore
-        if [[ -f "$gitignore_path" ]]; then
-            if grep -q "^content/$" "$gitignore_path"; then
-                return 0  # Correct
-            else
-                return 2  # Mismatch - should ignore but doesn't
-            fi
-        else
-            return 2  # No .gitignore but should have one
-        fi
-    elif [[ "$track_content" == "yes" ]]; then
-        # Should NOT have content/ in .gitignore
-        if [[ -f "$gitignore_path" ]]; then
-            if grep -q "^content/$" "$gitignore_path"; then
-                return 3  # Mismatch - ignores but shouldn't
-            else
-                return 0  # Correct
-            fi
-        else
-            return 0  # No .gitignore is fine when tracking content
+    if [[ ! -d "$project_path/.untracked/local" ]]; then
+        return 3  # Missing local subdirectory
+    fi
+    
+    # Check if .gitignore includes .untracked
+    if [[ -f "$project_path/.gitignore" ]]; then
+        if ! grep -q "^\.untracked/" "$project_path/.gitignore"; then
+            return 4  # .untracked not in .gitignore
         fi
     else
-        return 4  # Invalid value
+        return 5  # No .gitignore file
     fi
+    
+    return 0  # All good
 }
 
 # Function to validate a single project
@@ -71,6 +55,7 @@ validate_project() {
     [[ ! -f "$project_path/README.md" ]] && missing_items+=("README.md")
     [[ ! -f "$project_path/CLAUDE.md" ]] && missing_items+=("CLAUDE.md")
     [[ ! -d "$project_path/.claude" ]] && missing_items+=(".claude/")
+    [[ ! -d "$project_path/.untracked" ]] && missing_items+=(".untracked/")
     [[ ! -d "$project_path/content" ]] && missing_items+=("content/")
     [[ ! -d "$project_path/projects" ]] && missing_items+=("projects/")
     
@@ -78,14 +63,15 @@ validate_project() {
         violations+=("R001: Missing required items: ${missing_items[*]}")
     fi
     
-    # R001/R002: Check content tracking
-    check_content_tracking "$project_path"
-    local tracking_status=$?
-    case $tracking_status in
-        1) violations+=("R002: Missing 'Track Content' declaration in README.md") ;;
-        2) violations+=("R002: Content tracking mismatch - declared 'no' but content/ not in .gitignore") ;;
-        3) violations+=("R002: Content tracking mismatch - declared 'yes' but content/ is in .gitignore") ;;
-        4) violations+=("R002: Invalid 'Track Content' value (must be yes/no)") ;;
+    # R001/R002: Check .untracked structure
+    check_untracked_structure "$project_path"
+    local untracked_status=$?
+    case $untracked_status in
+        1) violations+=("R001: Missing .untracked/ directory") ;;
+        2) violations+=("R001: Missing .untracked/repos/ subdirectory") ;;
+        3) violations+=("R001: Missing .untracked/local/ subdirectory") ;;
+        4) violations+=("R002: .untracked/ not in .gitignore") ;;
+        5) violations+=("R002: Missing .gitignore file") ;;
     esac
     
     # R003: Check template references
@@ -101,7 +87,7 @@ validate_project() {
     fi
     
     # R001: Check for extra files at root
-    local allowed_files=("README.md" "CLAUDE.md" ".git" ".gitignore" ".claude" "content" "projects")
+    local allowed_files=("README.md" "CLAUDE.md" ".git" ".gitignore" ".claude" ".untracked" "content" "projects")
     local extra_files=()
     for item in "$project_path"/{*,.*}; do
         local basename=$(basename "$item")
@@ -273,8 +259,9 @@ if [[ $TOTAL_VIOLATIONS -gt 0 ]] || [[ ${#STRUCTURE_ISSUES[@]} -gt 0 ]]; then
     echo "==============="
     echo "1. Run 'dws fix' to automatically fix common violations"
     echo "2. Review structural issues and fix manually if needed"
-    echo "3. Ensure all projects have proper 'Track Content' declarations"
+    echo "3. Ensure all projects have .untracked/ directory with proper structure"
     echo "4. Check that all required directories exist"
+    echo "5. Verify .gitignore includes .untracked/"
     
     if [[ ${#STRUCTURE_ISSUES[@]} -gt 0 ]]; then
         echo "5. Address structural issues (missing references, hooks, etc.)"
