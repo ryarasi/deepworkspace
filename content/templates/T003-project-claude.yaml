@@ -1,8 +1,8 @@
 id: T003
 name: "Project CLAUDE.md Template"
-version: "2.0.0"
+version: "2.1.0"
 workspace_version: "3.0.0"
-modified: "2025-07-04T23:18:00+0530"
+modified: "2025-07-05T12:35:00+0530"
 purpose: "Standard template for all project CLAUDE.md files"
 format: "markdown"
 content: |
@@ -23,12 +23,11 @@ content: |
   ## Navigation
   
   1. **You are here**: projects/[path]/CLAUDE.md
-  2. **Read next**: README.md for project details
-  3. **Check content**: content/README.md for what's inside
-  4. **Work in**: content/ folder (all actual work)
-  5. **External repos**: .untracked/repos/ folder (gitignored)
-  6. **Tasks**: .untracked/local/TASKS.md
-  7. **Sub-projects**: projects/ folder [if any]
+  2. **Read next**: README.md for project details and content manifest
+  3. **Work in**: content/ folder (all actual work)
+  4. **External repos**: .untracked/repos/ folder (documented in README)
+  5. **Tasks**: .untracked/local/TASKS.md
+  6. **Sub-projects**: projects/ folder [if any]
   
   ## Project-Specific Instructions
   

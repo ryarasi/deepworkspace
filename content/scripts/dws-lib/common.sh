@@ -79,9 +79,10 @@ replace_placeholders() {
         -e "s/\[One line description\]/$purpose/g" \
         -e "s/\[One paragraph explaining what this project is and why it exists\]/$purpose/g" \
         -e "s/\[active|paused|archived\]/active/g" \
+        -e "s/\[comma-separated-project-slugs or empty\]//g" \
         -e "s/\[Describe what's in content: code, documents, etc.\]/Source code and related files/g" \
         -e "s/\[List sub-projects if any, or state \"No sub-projects\"\]/No sub-projects/g" \
-        -e "s/\[2-3 steps to get started with this project\]/1. Review the TASKS.md file in content\/\n2. Update this README with more details\n3. Start developing in the content\/ folder/g" \
+        -e "s/\[2-3 steps to get started with this project\]/1. Review the TASKS.md file in .untracked\/local\/\n2. Update this README with more details\n3. Start developing in the content\/ folder/g" \
         -e "s/\[Project-specific important details\]/This is a code project. All source code should go in the content\/ folder./g" \
         -e "s/\[What's being worked on\]/Initial project setup/g" \
         -e "s/\[Future task 1\]/Set up development environment/g" \
@@ -93,9 +94,17 @@ replace_placeholders() {
         -e "s/\[Brief description of what's in this content directory\]/This directory contains all the actual work for this project./g" \
         -e "s/\[project-specific structure\]/src\/ - Source code files/g" \
         -e "s/\[List and describe the main components\/directories\]/- src\/ - Source code files\n- docs\/ - Documentation/g" \
-        -e "s/\[List any repos in .repos\/\]/None yet/g" \
         -e "s/\[Any specific notes about working in this directory\]/All development work should happen here./g" \
-        -e "s/\[List key gitignore patterns\]/- .repos\/ - External repositories\n- node_modules\/ - Dependencies\n- dist\/ - Build output/g"
+        -e "s/\[List key gitignore patterns\]/- .untracked\/ - External repositories and local data\n- node_modules\/ - Dependencies\n- dist\/ - Build output/g" \
+        -e "s/\[Detailed description of what's in the content\/ directory\]/All project source code and related files/g" \
+        -e "s/\[List main directories and files\]/src\/ - Source code\ndocs\/ - Documentation/g" \
+        -e "s/\[with descriptions\]/tests\/ - Test files/g" \
+        -e "s/\[Any build commands, development setup, or architecture notes\]/# Development setup instructions will be added here/g" \
+        -e "s/\[List any external repositories in .untracked\/repos\/\]/No external repositories yet/g" \
+        -e "s/\[repo-name\]/example-repo/g" \
+        -e "s/\[Purpose\/description\]/Example repository/g" \
+        -e "s/\[github.com\/\.\.\.\]/github.com\/example\/repo/g" \
+        -e "s/\[YYYY-MM-DD\]/$created_date/g"
 }
 
 # Colors for output

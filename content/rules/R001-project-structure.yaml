@@ -1,6 +1,6 @@
 id: R001
 name: "Universal Project Structure"
-version: "1.1.0"
+version: "1.2.0"
 priority: "critical"
 category: "structure"
 content: |
@@ -30,7 +30,7 @@ content: |
      - Add CLAUDE.md using template T003
      - Create .claude/ directory
      - Create .untracked/ directory with repos/ and local/
-     - Create content/ directory with README.md
+     - Create content/ directory
      - Create projects/ directory (even if empty)
      - Create .gitignore to exclude .untracked/
   
@@ -68,7 +68,7 @@ content: |
   - [ ] Project has CLAUDE.md at root
   - [ ] Project has .claude/ directory
   - [ ] Project has .untracked/ directory with repos/ and local/
-  - [ ] Project has content/ directory with README.md
+  - [ ] Project has content/ directory
   - [ ] Project has projects/ directory
   - [ ] No other files/folders at project root (except .git, .gitignore)
   

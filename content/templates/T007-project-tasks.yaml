@@ -1,9 +1,9 @@
 id: T007
 name: "Project Tasks Template"
-version: "1.0.0"
+version: "1.1.0"
 workspace_version: "3.0.0"
-modified: "2025-07-04T03:32:21+0530"
-purpose: "Template for TASKS.md files in project content folders"
+modified: "2025-07-05T13:00:00+0530"
+purpose: "Template for TASKS.md files in project .untracked/local/ folders"
 format: "markdown"
 content: |
   # [Project Name] Tasks
@@ -32,7 +32,7 @@ content: |
   
 usage: |
   1. This template is automatically applied when creating new projects
-  2. Place in project's content/ folder as TASKS.md
+  2. Created in project's .untracked/local/ folder as TASKS.md
   3. Update tasks as work progresses
   4. Move to GitHub issues when ready for formal tracking
   

@@ -161,7 +161,6 @@ mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/.untracked/local"
 README_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T002-project-readme.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
 CLAUDE_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T003-project-claude.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
 TASKS_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T007-project-tasks.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
-CONTENT_README_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T009-content-readme.yaml" | sed -n '/^template: |/,/^[a-z]/p' | sed '1d;$d')
 
 # Get timestamps
 CREATED_DATE="$(date +%Y-%m-%dT%H:%M:%S%z)"
@@ -194,10 +193,6 @@ echo "$TASKS_TEMPLATE" | sed \
     -e "s/\[Project Name\]/$PROJECT_NAME/g" \
     -e "s/\[YYYY-MM-DD\]/$CREATED_DATE/g" \
     > "$WORKSPACE_ROOT/$PROJECT_PATH/.untracked/local/TASKS.md"
-
-echo "$CONTENT_README_TEMPLATE" | sed \
-    -e "s/\[Brief description of what's in this content directory\]/This directory contains all the actual work for this project./g" \
-    > "$WORKSPACE_ROOT/$PROJECT_PATH/content/README.md"
 
 # Create project .gitignore
 cat > "$WORKSPACE_ROOT/$PROJECT_PATH/.gitignore" << 'EOF'
@@ -254,11 +249,10 @@ cd "$WORKSPACE_ROOT/$PROJECT_PATH"
 
 # Initialize git and make initial commit
 git init
-git add README.md CLAUDE.md .gitignore content/README.md
+git add README.md CLAUDE.md .gitignore
 git commit -m "Initial project structure
 
 - Created standard DeepWorkspace project structure
-- Added content/README.md for content documentation
 - Added .untracked/ directory for untracked items
 - Content is tracked by default
 - Ready for remote push and PR workflow"
@@ -267,7 +261,6 @@ cd - > /dev/null
 
 # Success messages
 success "Created project structure at $PROJECT_PATH/"
-success "Created content/README.md for content documentation"
 success "Created .untracked/ directory with TASKS.md"
 success "Initialized git repository"
 
