@@ -64,6 +64,22 @@ Use helper scripts:
 - **R007**: Commits follow template T005
 - **R008**: PRs follow template T006
 
+## DWS Script Validation
+
+Always use DWS scripts to validate implementations:
+- `dws validate` - Verify rule compliance before commits
+- `dws fix` - Automatically resolve common issues
+- `dws pr status` - Check PR workflow state
+- Check `content/scripts/dws-lib/common.sh` for validation functions
+
+Key validation patterns:
+- Project structure compliance (R001)
+- Template reference checking
+- Rule numbering consistency
+- Git workflow compliance
+
+Note: Temp files belong in `.untracked/local/temp/`, not in `content/`
+
 ## Working with Projects
 
 When entering any project:

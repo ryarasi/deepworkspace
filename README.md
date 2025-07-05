@@ -83,6 +83,34 @@ After setup, you can use:
 - `dws fix` - Automatically fix common issues
 - `dws help` - Show all available commands
 
+## DWS Script Architecture
+
+The DWS CLI provides comprehensive workspace management through modular scripts:
+
+### Command Structure
+- `content/scripts/dws` - Main dispatcher script
+- `content/scripts/dws-lib/` - Command implementations
+  - `common.sh` - Shared functions and validation utilities
+  - `create.sh` - Project creation with metadata
+  - `validate.sh` - Rule compliance checking
+  - `fix.sh` - Automated issue resolution
+  - `pr.sh` - Pull request workflow management
+  - `start.sh` - Project navigation
+
+### Validation Capabilities
+DWS scripts provide extensive validation:
+- **Structural validation**: Project structure compliance (R001)
+- **Template validation**: Template existence and references
+- **Rule validation**: Rule numbering and references
+- **Git validation**: Branch status and workflow compliance
+
+When implementing tasks, use these scripts to validate your work:
+```bash
+dws validate              # Check all projects
+dws fix                  # Auto-fix common issues
+dws pr status            # Check PR workflow state
+```
+
 ## Structure
 
 ```
@@ -185,7 +213,7 @@ When working in this workspace:
 
 ## Roadmap
 
-See `content/TASKS.md` for current tasks and future plans.
+See `.untracked/local/TASKS.md` for current tasks and future plans.
 
 Future features:
 - GitHub issue-based change tracking
