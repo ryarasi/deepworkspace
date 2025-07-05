@@ -1,6 +1,6 @@
 id: R005
 name: "Workspace Is Just Another Project"
-version: "1.0.0"
+version: "1.1.0"
 priority: "critical"
 category: "structure"
 content: |
@@ -27,7 +27,6 @@ content: |
      │   ├── templates/
      │   ├── rules/
      │   ├── scripts/
-     │   ├── archive/
      │   └── temp/
      └── projects/      # All other projects
      ```

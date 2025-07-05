@@ -1,15 +1,16 @@
 id: R001
 name: "Universal Project Structure"
-version: "1.1.0"
+version: "1.2.0"
 priority: "critical"
 category: "structure"
 content: |
   ## Rule Statement
   
   Every project (including the workspace root) MUST have exactly these files and folders:
-  - README.md - Human-readable documentation with required metadata including content tracking preference
+  - README.md - Human-readable documentation with required metadata
   - CLAUDE.md - AI context and instructions
   - .claude/ - Claude Desktop project settings
+  - .untracked/ - Untracked items (repos/, local/)
   - content/ - All actual project content
   - projects/ - Sub-projects (optional, can be empty)
   
@@ -25,12 +26,13 @@ content: |
   
   1. When creating a new project:
      - Create the project directory
-     - Add README.md using template T002 (includes Track Content metadata)
+     - Add README.md using template T002
      - Add CLAUDE.md using template T003
      - Create .claude/ directory
+     - Create .untracked/ directory with repos/ and local/
      - Create content/ directory
      - Create projects/ directory (even if empty)
-     - Configure .gitignore based on Track Content preference
+     - Create .gitignore to exclude .untracked/
   
   2. The workspace root follows this same structure:
      - content/ contains system files (templates, rules, etc.)
@@ -63,9 +65,9 @@ content: |
   
   To verify this rule is being followed:
   - [ ] Project has README.md at root with complete metadata
-  - [ ] README.md includes "Track Content" declaration
   - [ ] Project has CLAUDE.md at root
   - [ ] Project has .claude/ directory
+  - [ ] Project has .untracked/ directory with repos/ and local/
   - [ ] Project has content/ directory
   - [ ] Project has projects/ directory
   - [ ] No other files/folders at project root (except .git, .gitignore)

@@ -23,58 +23,46 @@ fix_missing_directories() {
         fi
     done
     
+    # Create .untracked structure separately to count as one fix
+    if [[ ! -d "$project_path/.untracked" ]]; then
+        info "Creating .untracked directory structure"
+        mkdir -p "$project_path/.untracked/repos"
+        mkdir -p "$project_path/.untracked/local"
+        ((fixed++))
+    else
+        # Check subdirectories
+        if [[ ! -d "$project_path/.untracked/repos" ]]; then
+            mkdir -p "$project_path/.untracked/repos"
+            ((fixed++))
+        fi
+        if [[ ! -d "$project_path/.untracked/local" ]]; then
+            mkdir -p "$project_path/.untracked/local"
+            ((fixed++))
+        fi
+    fi
+    
     return $fixed
 }
 
-# Function to fix content tracking mismatch
-fix_content_tracking() {
+# Function to fix .untracked gitignore entry
+fix_untracked_gitignore() {
     local project_path="$1"
-    local readme_path="$project_path/README.md"
     local gitignore_path="$project_path/.gitignore"
     
-    # Extract Track Content preference from README
-    local track_content=""
-    if [[ -f "$readme_path" ]]; then
-        track_content=$(grep -E "^\s*-\s*\*\*Track Content\*\*:" "$readme_path" | sed 's/.*: *//' | tr -d ' ')
-    fi
-    
-    # If no preference declared, can't fix automatically
-    if [[ -z "$track_content" ]]; then
-        return 1
-    fi
-    
-    # Fix based on preference
-    if [[ "$track_content" == "no" ]]; then
-        # Should have content/ in .gitignore
-        if [[ ! -f "$gitignore_path" ]]; then
-            # Create .gitignore
-            info "Creating .gitignore with content/ entry"
-            echo "# Project content (not tracked in git)" > "$gitignore_path"
-            echo "content/" >> "$gitignore_path"
-            return 0
-        elif ! grep -q "^content/$" "$gitignore_path"; then
-            # Add content/ to existing .gitignore
-            info "Adding content/ to .gitignore"
-            echo "" >> "$gitignore_path"
-            echo "# Project content (not tracked in git)" >> "$gitignore_path"
-            echo "content/" >> "$gitignore_path"
-            return 0
-        fi
-    elif [[ "$track_content" == "yes" ]]; then
-        # Should NOT have content/ in .gitignore
-        if [[ -f "$gitignore_path" ]] && grep -q "^content/$" "$gitignore_path"; then
-            info "Removing content/ from .gitignore"
-            # Create temp file without content/ line
-            grep -v "^content/$" "$gitignore_path" > "$gitignore_path.tmp"
-            # Also remove the comment line before it if present
-            grep -v "# Project content (not tracked in git)" "$gitignore_path.tmp" > "$gitignore_path"
-            rm "$gitignore_path.tmp"
-            # Remove empty .gitignore
-            if [[ ! -s "$gitignore_path" ]]; then
-                rm "$gitignore_path"
-            fi
-            return 0
-        fi
+    # Check if .gitignore exists
+    if [[ ! -f "$gitignore_path" ]]; then
+        # Create .gitignore with .untracked entry
+        info "Creating .gitignore with .untracked/ entry"
+        echo "# Untracked items" > "$gitignore_path"
+        echo ".untracked/" >> "$gitignore_path"
+        return 0
+    elif ! grep -q "^\.untracked/" "$gitignore_path"; then
+        # Add .untracked/ to existing .gitignore
+        info "Adding .untracked/ to .gitignore"
+        echo "" >> "$gitignore_path"
+        echo "# Untracked items" >> "$gitignore_path"
+        echo ".untracked/" >> "$gitignore_path"
+        return 0
     fi
     
     return 1
@@ -131,10 +119,10 @@ fix_project() {
         success "Fixed $dir_fixes missing directories"
     fi
     
-    # Fix content tracking
-    if fix_content_tracking "$project_path"; then
+    # Fix .untracked gitignore entry
+    if fix_untracked_gitignore "$project_path"; then
         ((fixes_done++))
-        success "Fixed content tracking configuration"
+        success "Fixed .untracked gitignore configuration"
     fi
     
     # Fix template references
@@ -198,8 +186,8 @@ echo "======================"
 echo "Generated: $(date +"%Y-%m-%dT%H:%M:%S%z")"
 echo
 echo "This tool will automatically fix common issues:"
-echo "- Missing required directories"
-echo "- Content tracking mismatches"
+echo "- Missing required directories (.untracked, content, etc.)"
+echo "- Missing .untracked/ in .gitignore"
 echo "- Missing template references"
 echo "- File permission issues"
 echo
@@ -235,7 +223,7 @@ if [[ $FIXES_FAILED -gt 0 ]]; then
     echo "===================="
     echo "Some issues could not be fixed automatically:"
     echo "- Files in wrong locations (need manual move)"
-    echo "- Missing 'Track Content' declarations (need manual edit)"
+    echo "- Missing metadata attributes (need manual edit)"
     echo "- Complex structural issues"
     echo
 fi

@@ -2,15 +2,17 @@
 
 <!-- This file follows template @content/templates/T002 -->
 
-## Version: 3.0.0
-
-### Metadata
-- **Type**: workspace
-- **Created**: 2025-07-03T20:00:00+0530
-- **Status**: active
+## Metadata
+- **Name**: DeepWorkspace
+- **Slug**: deepworkspace
 - **Parent**: root
-- **Track Content**: yes
-- **Philosophy**: Minimalist, modular, git-centric
+- **Type**: product
+- **Subtype**: software
+- **URL**: https://github.com/ryarasi/deepworkspace
+- **Created**: 2025-07-03T20:00:00+0530
+- **Modified**: 2025-07-05T12:45:00+0530
+- **Status**: active
+- **Related**:
 
 ## What is DeepWorkspace?
 
@@ -87,11 +89,12 @@ After setup, you can use:
 deepworkspace/                    # The root project (this workspace)
 ├── README.md                     # You are here
 ├── CLAUDE.md                     # AI context entry point
+├── .claude/                      # Claude Desktop settings
+├── .untracked/                   # External repos and local data
 ├── content/                      # Workspace system files
 │   ├── templates/                # T001-T999 templates
 │   ├── rules/                    # R001-R999 rules  
 │   ├── scripts/                  # Helper scripts
-│   ├── archive/                  # Compressed old projects
 │   └── temp/                     # Temporary files
 └── projects/                     # All your projects
     └── [project-name]/          # Each project follows same structure
@@ -136,6 +139,35 @@ All changes (except in content/) must follow:
 4. Auto-merge to main
 5. Pull and cleanup
 
+## Content Manifest
+
+The content/ directory contains all DeepWorkspace system files:
+
+### Structure
+```
+content/
+├── templates/     # Project and file templates (T001-T999)
+├── rules/         # Workspace rules and requirements (R001-R999)
+├── scripts/       # CLI tools and automation
+│   ├── dws        # Main CLI entry point
+│   └── dws-lib/   # Command implementations
+└── temp/          # Temporary files (gitignored)
+```
+
+### Key Components
+- **Templates**: Define consistent structure for all files
+- **Rules**: Enforce workspace integrity and conventions
+- **Scripts**: Provide CLI tools for project management
+- **DWS CLI**: Main command-line interface for workspace operations
+
+## External Repositories
+
+No external repositories are currently integrated into the workspace system.
+
+| Repository | Description | URL | Added | Last Modified |
+|------------|-------------|-----|-------|---------------|
+| - | - | - | - | - |
+
 ## For AI Agents
 
 When working in this workspace:
@@ -159,7 +191,7 @@ Future features:
 - GitHub issue-based change tracking
 - Automated template validation
 - Cross-project dependency management
-- Enhanced archival system
+- External repository integration tools
 
 ---
 

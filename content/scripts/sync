@@ -1,0 +1,9 @@
+#!/bin/bash
+# Universal sync command wrapper
+# Place this in your PATH or alias it for easy access
+
+# Get the directory where this script is located
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# Run the Python sync command
+python3 "$SCRIPT_DIR/sync.py" "$@"
