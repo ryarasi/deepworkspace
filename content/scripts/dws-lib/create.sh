@@ -202,10 +202,6 @@ cat > "$WORKSPACE_ROOT/$PROJECT_PATH/.gitignore" << 'EOF'
 # Claude Desktop settings (local to each developer)
 **/.claude/settings.local.json
 
-# Temporary files in content
-content/temp/*
-!content/temp/.gitkeep
-
 # Build artifacts
 dist/
 build/

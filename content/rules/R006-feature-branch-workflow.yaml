@@ -6,7 +6,18 @@ category: "workflow"
 content: |
   ## Rule Statement
   
-  All changes to workspace files outside of content/ folders MUST be made through feature branches and pull requests. Direct commits to main branch MUST be prevented through pre-commit hooks. Every change MUST have a complete audit trail.
+  All changes to git-tracked files MUST be made through feature branches and pull requests. Direct commits to main branch MUST be prevented through pre-commit hooks. Every change MUST have a complete audit trail.
+  
+  ## Scope
+  
+  This rule applies to:
+  - All files tracked by git (check with `git ls-files`)
+  - Any new files being added to git
+  
+  This rule does NOT apply to:
+  - Files in .untracked/ directory
+  - Any files ignored by .gitignore
+  - Temporary or local-only files
   
   ## Rationale
   

@@ -40,14 +40,13 @@ Current Location: /deepworkspace/
 ├── System files: content/
 │   ├── Templates: content/templates/T*.yaml
 │   ├── Rules: content/rules/R*.yaml
-│   ├── Scripts: content/scripts/*.sh
-│   └── Temp: content/temp/
+│   └── Scripts: content/scripts/*.sh
 └── Projects: projects/*/CLAUDE.md
 ```
 
 ## Workflow Requirements
 
-**CRITICAL**: All changes to files outside content/ MUST follow this workflow:
+**CRITICAL**: All changes to git-tracked files MUST follow this workflow:
 
 1. Create feature branch: `git checkout -b feature/description`
 2. Make changes in feature branch
@@ -58,6 +57,8 @@ Current Location: /deepworkspace/
 Use helper scripts:
 - `./content/scripts/safe-edit.sh` - Start new feature
 - `./content/scripts/create-pr.sh` - Create PR
+
+**Note**: Files in `.untracked/` and other `.gitignore`'d locations can be edited directly without PRs.
 
 ## Key Rules to Remember
 
