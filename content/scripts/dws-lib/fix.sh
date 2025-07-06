@@ -4,6 +4,17 @@
 # Get workspace root
 WORKSPACE_ROOT="$(get_workspace_root)" || exit 1
 
+# Check and warn if on main branch (stricter for fix command)
+if git rev-parse --git-dir > /dev/null 2>&1; then
+    current_branch=$(git branch --show-current 2>/dev/null)
+    if [[ "$current_branch" == "main" ]] || [[ "$current_branch" == "master" ]]; then
+        echo -e "\033[1;31m❌ ERROR: Cannot run 'dws fix' on main branch!\033[0m" >&2
+        echo -e "\033[1;33mThis command modifies files and must be run on a feature branch.\033[0m" >&2
+        echo -e "\033[1;32mCreate a feature branch first: git checkout -b feature/fix-validation\033[0m" >&2
+        exit 1
+    fi
+fi
+
 # Initialize counters
 TOTAL_FIXES=0
 FIXES_APPLIED=0

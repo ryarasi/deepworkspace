@@ -11,6 +11,9 @@ DWS_LIB="$SCRIPT_DIR/dws-lib"
 # Source common functions
 source "$DWS_LIB/common.sh"
 
+# Check and warn if on main branch
+check_and_warn_main_branch
+
 # Main command dispatcher
 case "${1:-}" in
     create)

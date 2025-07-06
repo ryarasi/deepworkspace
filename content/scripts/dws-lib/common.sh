@@ -38,6 +38,25 @@ validate_project_name() {
     return 0
 }
 
+# Check if on main branch and show warning
+check_and_warn_main_branch() {
+    # Skip if not in a git repository
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        return 0
+    fi
+    
+    local current_branch=$(git branch --show-current 2>/dev/null)
+    
+    if [[ "$current_branch" == "main" ]] || [[ "$current_branch" == "master" ]]; then
+        echo -e "\033[1;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" >&2
+        echo -e "\033[1;33m⚠️  WARNING: You are on the main branch!\033[0m" >&2
+        echo -e "\033[1;33mPer R006, all changes must be made on feature branches.\033[0m" >&2
+        echo -e "\033[1;33mCreate a feature branch with: git checkout -b feature/description\033[0m" >&2
+        echo -e "\033[1;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m" >&2
+        echo >&2
+    fi
+}
+
 # Check if project already exists
 project_exists() {
     local workspace_root="$1"
