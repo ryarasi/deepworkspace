@@ -1,4 +1,4 @@
-# DeepWorkspace Project Specification Document
+# DeepWork Project Specification Document
 
 <!-- This file follows template @templates/T010 -->
 
@@ -15,7 +15,7 @@
 
 ## System Architecture
 
-DeepWorkspace is a minimalist, template-driven workspace management system that brings order to chaos through fractal architecture. Every project follows the same self-similar pattern, enabling infinite nesting while maintaining simplicity at its core.
+DeepWork is a minimalist, template-driven project management system that brings order to chaos through fractal architecture. Every project follows the same self-similar pattern, enabling infinite nesting while maintaining simplicity at its core.
 
 ### Core Principles
 
@@ -36,7 +36,7 @@ DeepWorkspace is a minimalist, template-driven workspace management system that 
 
 ## Core Philosophy
 
-### Why DeepWorkspace?
+### Why DeepWork?
 
 By maintaining the most minimalist structure possible, we optimize for efficiency and elegance. This system captures endless complexity through modular nesting while remaining simple at its core.
 
@@ -95,7 +95,7 @@ Child projects of [Name]:
 
 To clone child projects, run:
 \`\`\`bash
-./scripts/init-workspace.sh
+./scripts/init-project.sh
 \`\`\`
 
 ## Quick Start
@@ -229,4 +229,4 @@ From v2.x to v3.x:
 
 ---
 
-*This PSD provides comprehensive specifications for the DeepWorkspace system. For quick overview, see [README.md](../README.md).*
+*This PSD provides comprehensive specifications for the DeepWork system. For quick overview, see [README.md](../README.md).*

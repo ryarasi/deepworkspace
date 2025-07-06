@@ -1,10 +1,10 @@
-# DeepWorkspace Roadmap
+# DeepWork Roadmap
 
 <!-- This file follows template @templates/T008 -->
 
 ## Overview
 
-This document tracks the evolution of DeepWorkspace and outlines future development plans.
+This document tracks the evolution of DeepWork and outlines future development plans.
 
 ## Table of Contents
 
@@ -36,7 +36,7 @@ This document tracks the evolution of DeepWorkspace and outlines future developm
 
 ## Current Status
 
-DeepWorkspace v3.0.0 is stable and production-ready with:
+DeepWork v3.0.0 is stable and production-ready with:
 - ✅ Complete rule system (R001-R008)
 - ✅ Comprehensive templates (T001-T008)
 - ✅ Full CLI tooling (dws commands)

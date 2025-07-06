@@ -1,10 +1,10 @@
-# DeepWorkspace Overview
+# DeepWork Overview
 
 <!-- This file follows template @templates/T008 -->
 
-## What is DeepWorkspace?
+## What is DeepWork?
 
-DeepWorkspace is a minimalist, template-driven workspace management system that brings order to chaos through fractal architecture, where every project follows the same self-similar pattern, enabling infinite nesting while maintaining simplicity at its core.
+DeepWork is a minimalist, template-driven workspace management system that brings order to chaos through fractal architecture, where every project follows the same self-similar pattern, enabling infinite nesting while maintaining simplicity at its core.
 
 ## Documentation Index
 
@@ -16,13 +16,13 @@ DeepWorkspace is a minimalist, template-driven workspace management system that 
 ## Table of Contents
 
 - [Core Features](#core-features)
-- [Why DeepWorkspace?](#why-deepworkspace)
+- [Why DeepWork?](#why-deepwork)
 - [Key Benefits](#key-benefits)
 - [External Repositories](#external-repositories)
 
 ## Core Features
 
-DeepWorkspace brings order to chaos through:
+DeepWork brings order to chaos through:
 
 - **Fractal Architecture**: Every project follows the same pattern, projects can contain projects
 - **Template-Driven**: Consistency through templates, not complex tooling
@@ -30,7 +30,7 @@ DeepWorkspace brings order to chaos through:
 - **AI-Optimized**: Designed for seamless Claude Code integration
 - **Minimalist**: Lightweight orchestration, maximum flexibility
 
-## Why DeepWorkspace?
+## Why DeepWork?
 
 Our thesis: By maintaining the most minimalist structure possible, we optimize for efficiency and elegance. This system captures endless complexity through modular nesting while remaining simple at its core.
 

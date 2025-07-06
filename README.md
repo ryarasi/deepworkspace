@@ -1,35 +1,13 @@
-# DeepWorkspace
+# DeepWork
+<!-- This file follows template @docs/rules/templates/T002 -->
 
-<!-- This file follows template @templates/T002 -->
-
-## Metadata
-- **Name**: DeepWorkspace
-- **Slug**: deepworkspace
-- **Parent**:
-- **Type**: product
-- **Subtype**: software
-- **URL**: https://github.com/ryarasi/deepworkspace
-- **Created**: 2025-07-03T20:00:00+0530
-- **Modified**: 2025-07-06T10:40:00+0530
-- **Status**: active
-- **Related**:
+This project follows the rules specified in [docs/RULES.md](docs/RULES.md).
 
 ## Overview
 
-DeepWorkspace is a minimalist, git-centric project management system that uses fractal patterns to organize work at any scale. Every project follows the same simple structure, enabling infinite nesting while maintaining clarity and consistency.
+DeepWork is a minimalist, git-centric project management system that uses fractal patterns to organize work at any scale. Every project follows the same simple structure, enabling infinite nesting while maintaining clarity and consistency.
 
-For more details see [docs/PSD.md](docs/PSD.md)
-
-
-## Projects
-
-Child projects of DeepWorkspace:
-- **ragavyarasi**: Strategic vision layer for technology and wisdom integration | `[PLACEHOLDER: URL]`
-
-To clone child projects, run:
-```bash
-./scripts/init-workspace.sh
-```
+For project specifications, see [docs/PSD.md](docs/PSD.md).
 
 ## Quick Start
 
@@ -37,18 +15,22 @@ To clone child projects, run:
 # 1. Clone and setup
 git clone https://github.com/ryarasi/deepworkspace.git
 cd deepworkspace
-./scripts/setup.sh
+docs/rules/scripts/setup.sh
 
-# 2. Initialize child projects
-./scripts/init-workspace.sh
+# 2. Create your first project
+docs/rules/scripts/dws create
 
-# 3. Create your first project
-dws create
-
-# 4. Navigate to projects with Claude
-dws start
+# 3. Validate structure
+docs/rules/scripts/validate
 ```
 
-## Documentation
+## Projects
 
-See [Project Specification Document](docs/PSD.md) for detailed specifications.
+Child projects of DeepWork:
+- **ragavyarasi**: Strategic vision layer for technology and wisdom integration
+
+## Resources
+
+- **Rules**: [docs/RULES.md](docs/RULES.md) - Complete governance system
+- **Specification**: [docs/PSD.md](docs/PSD.md) - Detailed project specification
+- **Scripts**: Located in `docs/rules/scripts/`

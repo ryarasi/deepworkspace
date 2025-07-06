@@ -1,10 +1,10 @@
-# DeepWorkspace Setup Guide
+# DeepWork Setup Guide
 
 <!-- This file follows template @templates/T008 -->
 
 ## Overview
 
-This guide provides detailed instructions for setting up DeepWorkspace on your system, including both automated and manual setup options.
+This guide provides detailed instructions for setting up DeepWork on your system, including both automated and manual setup options.
 
 ## Table of Contents
 

@@ -1,10 +1,10 @@
-# DeepWorkspace Architecture
+# DeepWork Architecture
 
 <!-- This file follows template @templates/T008 -->
 
 ## Overview
 
-This document details the technical architecture and design principles of DeepWorkspace, including its fractal structure, component organization, and script architecture.
+This document details the technical architecture and design principles of DeepWork, including its fractal structure, component organization, and script architecture.
 
 ## Table of Contents
 
@@ -126,7 +126,7 @@ DWS scripts provide extensive validation:
 
 ## System File Organization
 
-DeepWorkspace system files live directly at the root level:
+DeepWork system files live directly at the root level:
 
 ### Structure
 ```

@@ -1,10 +1,10 @@
-# DeepWorkspace Workflow Guide
+# DeepWork Workflow Guide
 
 <!-- This file follows template @templates/T008 -->
 
 ## Overview
 
-This guide covers the essential workflows for working with DeepWorkspace, including git workflow, AI agent instructions, and best practices.
+This guide covers the essential workflows for working with DeepWork, including git workflow, AI agent instructions, and best practices.
 
 ## Table of Contents
 
