@@ -24,24 +24,25 @@ You are in the DeepWorkspace root, which is itself a project following its own r
 ## Critical Context
 
 This workspace has a **fractal structure** - every project (including this workspace) follows the exact same pattern:
-- README.md (human docs)
-- CLAUDE.md (AI context) 
+- README.md (universal docs for humans and AI)
 - content/ (actual content)
-- projects/ (sub-projects, optional)
+- .untracked/ (local workspace, includes cloned child projects in repos/)
 
 The workspace IS a project. No exceptions, no special folders.
+
+**Important**: Child projects are independent git repositories cloned into `.untracked/repos/` to maintain clean separation and avoid nested git repositories.
 
 ## Navigation
 
 ```
 Current Location: /deepworkspace/
 ├── You are here: CLAUDE.md
-├── Human docs: README.md
+├── Universal docs: README.md
 ├── System files: content/
 │   ├── Templates: content/templates/T*.yaml
 │   ├── Rules: content/rules/R*.yaml
 │   └── Scripts: content/scripts/*.sh
-└── Projects: projects/*/CLAUDE.md
+└── Child projects: .untracked/repos/*/
 ```
 
 ## Workflow Requirements

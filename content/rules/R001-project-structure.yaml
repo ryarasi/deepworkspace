@@ -1,90 +1,90 @@
 id: R001
-name: "Universal Project Structure"
-version: "1.2.0"
+name: "Minimal Project Structure"
+version: "2.0.0"
 priority: "critical"
 category: "structure"
 content: |
   ## Rule Statement
   
-  Every project (including the workspace root) MUST have exactly these files and folders:
-  - README.md - Human-readable documentation with required metadata
-  - CLAUDE.md - AI context and instructions
-  - .claude/ - Claude Desktop project settings
-  - .untracked/ - Untracked items (repos/, local/)
-  - content/ - All actual project content
-    - content/docs/ - Detailed project documentation
-    - content/docs/overview.md - Required documentation entry point
-  - projects/ - Sub-projects (optional, can be empty)
+  Every project (including the workspace root) MUST have:
+  - README.md - Universal documentation for humans and AI with metadata
+  - content/ - All actual project content (created when needed)
+  - .untracked/ - Local workspace including cloned child projects in repos/
+  
+  That's it. Three items maximum. Less if content/ is empty.
   
   ## Rationale
   
-  This creates a fractal, self-similar structure where:
-  - Every project looks the same
-  - Navigation is predictable
-  - The workspace demonstrates its own rules
-  - Complexity is managed through nesting
+  - **Minimal**: Can't remove anything without losing functionality
+  - **Fractal**: Same pattern works for any size or complexity
+  - **No redundancy**: Each piece of information lives in exactly one place
+  - **Clean git**: Child projects are independent repos in .untracked/repos/
   
   ## Implementation
   
   1. When creating a new project:
      - Create the project directory
-     - Add README.md using template T002
-     - Add CLAUDE.md using template T003
-     - Create .claude/ directory
-     - Create .untracked/ directory with repos/ and local/
-     - Create content/ directory
-     - Create content/docs/ directory for detailed documentation
-     - Create projects/ directory (even if empty)
+     - Add README.md with metadata, purpose, and child projects list
+     - Create .untracked/ for local workspace
+     - Create content/ only when there's actual content
      - Create .gitignore to exclude .untracked/
   
-  2. The workspace root follows this same structure:
-     - content/ contains system files (templates, rules, etc.)
-     - projects/ contains all other projects
+  2. README.md includes:
+     - Metadata section (name, type, purpose, etc.)
+     - Overview for both humans and AI
+     - Projects section listing immediate children only
+     - Content index documenting what's in content/
+     - Setup instructions
+  
+  3. Child projects:
+     - Listed in parent's README.md Projects section
+     - Cloned into parent's .untracked/repos/
+     - Each maintains its own independent git repository
   
   ## Examples
   
-  ### Correct
+  ### Minimal (no content yet)
   ```
   my-project/
   ├── README.md
-  ├── CLAUDE.md
-  ├── .claude/
-  ├── .untracked/
+  └── .untracked/
+      └── repos/
+  ```
+  
+  ### With content
+  ```
+  my-project/
+  ├── README.md
   ├── content/
-  │   ├── docs/
-  │   │   └── [detailed documentation]
   │   └── [actual project files]
-  └── projects/
-      └── [sub-projects if any]
+  └── .untracked/
+      ├── repos/
+      │   └── [cloned child projects]
+      └── local/
+          └── [workspace files]
   ```
   
   ### Incorrect
   ```
   my-project/
   ├── README.md
+  ├── CLAUDE.md      # Wrong: redundant with README
   ├── src/           # Wrong: should be in content/
-  ├── docs/          # Wrong: should be in content/
-  └── .claude/       # Wrong: should be CLAUDE.md
+  ├── docs/          # Wrong: should be in README or content/
+  └── projects/      # Wrong: causes git nesting issues
   ```
   
   ## Verification
   
   To verify this rule is being followed:
-  - [ ] Project has README.md at root with complete metadata
-  - [ ] Project has CLAUDE.md at root
-  - [ ] Project has .claude/ directory
-  - [ ] Project has .untracked/ directory with repos/ and local/
-  - [ ] Project has content/ directory
-  - [ ] Project has content/docs/ directory for detailed documentation
-  - [ ] Project has content/docs/overview.md as documentation entry point
-  - [ ] Project has projects/ directory
+  - [ ] Project has README.md with metadata, overview, projects list
+  - [ ] Project has .untracked/ directory (gitignored)
+  - [ ] Project has content/ directory (if there's content)
   - [ ] No other files/folders at project root (except .git, .gitignore)
+  - [ ] Child projects are in .untracked/repos/, not tracked
   
 references:
   - "T002"  # README template with metadata
-  - "T003"  # CLAUDE.md template
-  - "T008"  # Documentation file template
-  - "T009"  # Project overview template
   - "R002"  # Content tracking rules
   - "R004"  # Nesting rules
   
