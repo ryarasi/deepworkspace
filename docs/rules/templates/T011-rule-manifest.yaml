@@ -1,0 +1,47 @@
+id: T011
+name: "Rule Manifest"
+version: "1.0.0"
+category: "governance"
+content: |
+  # Rule Manifest
+  
+  <!-- This file follows template @templates/T011 -->
+  
+  ## Core Rules (Immutable)
+  
+  These rules are copied from the parent project and must not be modified:
+  
+  - **R001**: Project Structure - Defines required directories and files
+  - **R002**: Template System Integrity - Ensures templates are valid and consistent
+  - **R003**: Self-Demonstration Principle - Project uses its own patterns
+  - **R004**: Reference Integrity - All references must resolve
+  - **R005**: Project Files at Root - System files at root level
+  - **R006**: Script Validation Requirements - Scripts must validate rules
+  
+  ## Extension Rules (Project-Specific)
+  
+  This project has added the following custom rules:
+  
+  <!-- List R007+ rules here as they are added -->
+  <!-- Example:
+  - **R007**: Code Style Guidelines - Project-specific coding standards
+  - **R008**: Testing Requirements - Minimum test coverage rules
+  -->
+  
+  ## Rule Precedence
+  
+  1. Core rules (R001-R006) take precedence and cannot be overridden
+  2. Extension rules (R007+) add additional requirements
+  3. Extension rules must not conflict with core rules
+  4. If conflict detected, core rule wins
+  
+  ## Validation
+  
+  Run `scripts/validate` to check compliance with all rules.
+  
+references:
+  - "R001"  # Defines rules/ directory
+  - "R006"  # Script validation
+  
+description: |
+  Documents which rules apply to this project. Core rules are immutable and copied from parent. Extension rules are project-specific additions.

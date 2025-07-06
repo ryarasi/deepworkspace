@@ -1,0 +1,82 @@
+id: R005
+name: "Governance Hierarchy"
+version: "4.0.0"
+priority: "critical"
+category: "structure"
+content: |
+  ## Rule Statement
+  
+  This Project MUST organize governance with proper hierarchy:
+  - All rules, templates, and scripts within docs/rules/
+  - Templates nested in docs/rules/templates/
+  - Scripts nested in docs/rules/scripts/
+  - Dependencies contained within what depends on them
+  
+  ## Rationale
+  
+  This hierarchical structure:
+  - Reflects true dependencies (scripts/templates serve rules)
+  - Creates a self-contained governance system
+  - Makes the entire rule system portable
+  - Clarifies that governance is documentation
+  
+  ## Implementation
+  
+  1. Governance structure:
+     ```
+     docs/
+     ├── RULES.md           # Entry point
+     └── rules/             # Complete governance
+         ├── R001-R006...   # Core rules
+         ├── templates/     # Templates serve rules
+         └── scripts/       # Scripts enforce rules
+     ```
+  
+  2. Key insights:
+     - Scripts and templates are dependencies of rules
+     - Everything needed for governance in one place
+     - Copy docs/rules/ to any project for complete system
+     - No scattered system files
+  
+  ## Examples
+  
+  ### Correct Hierarchy
+  ```
+  this-project/
+  └── docs/
+      ├── RULES.md
+      └── rules/
+          ├── R001-project-structure.yaml
+          ├── R002-template-integrity.yaml
+          ├── templates/       # Nested under rules
+          │   ├── T001...
+          │   └── T002...
+          └── scripts/         # Nested under rules
+              └── validate
+  ```
+  
+  ### Incorrect (Flat Structure)
+  ```
+  this-project/
+  ├── rules/         # Wrong: not hierarchical
+  ├── templates/     # Wrong: not under rules
+  └── scripts/       # Wrong: not under rules
+  ```
+  
+  ## Verification
+  
+  To verify governance hierarchy:
+  - [ ] docs/rules/ contains all governance
+  - [ ] docs/rules/templates/ contains templates
+  - [ ] docs/rules/scripts/ contains scripts
+  - [ ] No governance files outside docs/rules/
+  - [ ] Can copy docs/rules/ for complete system
+  
+references:
+  - "R001"  # Defines docs/rules/ structure
+  - "R006"  # Scripts within governance
+  
+next_rule: "R006"  # Continue to Script Validation Requirements
+  
+exceptions:
+  - "None - hierarchy is essential"

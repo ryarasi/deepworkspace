@@ -1,18 +1,13 @@
-# DeepWorkspace
+# DeepWork
+<!-- This file follows template @docs/rules/templates/T002 -->
 
-<!-- This file follows template @content/templates/T002 -->
+This project follows the rules specified in [docs/RULES.md](docs/RULES.md).
 
-## Metadata
-- **Name**: DeepWorkspace
-- **Slug**: deepworkspace
-- **Parent**: root
-- **Type**: product
-- **Subtype**: software
-- **URL**: https://github.com/ryarasi/deepworkspace
-- **Created**: 2025-07-03T20:00:00+0530
-- **Modified**: 2025-07-06T09:00:00+0530
-- **Status**: active
-- **Related**:
+## Overview
+
+DeepWork is a minimalist, git-centric project management system that uses fractal patterns to organize work at any scale. Every project follows the same simple structure, enabling infinite nesting while maintaining clarity and consistency.
+
+For project specifications, see [docs/PSD.md](docs/PSD.md).
 
 ## Quick Start
 
@@ -20,23 +15,22 @@
 # 1. Clone and setup
 git clone https://github.com/ryarasi/deepworkspace.git
 cd deepworkspace
-./content/scripts/setup.sh
+docs/rules/scripts/setup.sh
 
 # 2. Create your first project
-dws create
+docs/rules/scripts/dws create
 
-# 3. Navigate to projects with Claude
-dws start
+# 3. Validate structure
+docs/rules/scripts/validate
 ```
 
-## Documentation
+## Projects
 
-See [Documentation Overview](content/docs/overview.md) for comprehensive project information.
+Child projects of DeepWork:
+- **ragavyarasi**: Strategic vision layer for technology and wisdom integration
 
-## For AI Agents
+## Resources
 
-Start with [CLAUDE.md](CLAUDE.md) for AI-specific context and instructions.
-
----
-
-*This workspace is itself a project that follows its own rules. No exceptions, no special cases.*
+- **Rules**: [docs/RULES.md](docs/RULES.md) - Complete governance system
+- **Specification**: [docs/PSD.md](docs/PSD.md) - Detailed project specification
+- **Scripts**: Located in `docs/rules/scripts/`

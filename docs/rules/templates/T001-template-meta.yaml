@@ -1,0 +1,25 @@
+id: T001
+name: "Template Meta-Template"
+version: "1.0.0"
+modified: "2025-07-04T03:32:21+0530"
+purpose: "Defines the structure for all other templates"
+format: "yaml"
+content: |
+  id: T[###]
+  name: "[Descriptive Template Name]"
+  version: "[semantic version]"
+  modified: "[YYYY-MM-DDTHH:MM:SS+ZZZZ]"
+  purpose: "[Brief description of what this template is for]"
+  format: "[yaml|markdown|json|other]"
+  content: |
+    [The actual template content goes here]
+    [Use proper indentation for the format]
+    [Include placeholders in square brackets]
+    
+  usage: |
+    [Optional: Instructions on how to use this template]
+    [Example: Copy to new file and replace placeholders]
+    
+  references:
+    - "[Optional: Related templates, e.g., T002, T003]"
+    - "[Optional: Related rules, e.g., R001, R002]"

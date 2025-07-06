@@ -1,0 +1,82 @@
+id: R004
+name: "Reference Integrity"
+version: "2.0.0"
+priority: "high"
+category: "integrity"
+content: |
+  ## Rule Statement
+  
+  This Project MUST maintain reference integrity:
+  - All template references to rules must be valid
+  - All rule references to templates must be valid
+  - All documentation references must resolve
+  - No orphaned or broken references allowed
+  
+  ## Rationale
+  
+  Reference integrity ensures:
+  - Documentation remains accurate
+  - Templates and rules form a coherent system
+  - Users can follow any reference successfully
+  - System changes don't break connections
+  
+  ## Implementation
+  
+  1. Valid references:
+     - Rule IDs: R001-R999 (check docs/rules/)
+     - Template IDs: T001-T999 (check docs/rules/templates/)
+     - Document paths: Relative from project root
+     - Section anchors: Must exist in target
+  
+  2. Reference formats:
+     - In YAML: `references: ["R001", "T002"]`
+     - In Markdown: `[link text](../path/file.md)`
+     - In comments: `@templates/T002`
+  
+  3. Validation process:
+     - Parse all templates and rules in this project
+     - Extract all references
+     - Verify each reference resolves locally
+     - Report any broken links
+  
+  ## Examples
+  
+  ### Valid References
+  ```yaml
+  # In a template
+  references:
+    - "R001"  # Exists in docs/rules/
+    - "R003"  # Exists in docs/rules/
+  ```
+  
+  ```markdown
+  <!-- In documentation -->
+  See [Architecture](docs/architecture.md) for details.
+  Follow template [T002](docs/rules/templates/T002-readme.yaml).
+  ```
+  
+  ### Invalid References
+  ```yaml
+  references:
+    - "R999"  # Doesn't exist locally
+    - "T1000" # Out of range
+  ```
+  
+  ## Verification
+  
+  To verify reference integrity:
+  - [ ] All rule IDs in templates exist locally
+  - [ ] All template IDs in rules exist locally
+  - [ ] All markdown links resolve
+  - [ ] No 404s in documentation
+  - [ ] Validation scripts check references
+  
+references:
+  - "R002"  # Template integrity includes references
+  - "R003"  # Self-demonstration of working refs
+  
+next_rule: "R005"  # Continue to Project Files at Root
+  
+exceptions:
+  - External URLs (not validated)
+  - Example/demonstration references
