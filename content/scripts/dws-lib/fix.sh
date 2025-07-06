@@ -34,6 +34,13 @@ fix_missing_directories() {
         fi
     done
     
+    # Check and create content/docs directory
+    if [[ ! -d "$project_path/content/docs" ]]; then
+        info "Creating missing directory: content/docs"
+        mkdir -p "$project_path/content/docs"
+        ((fixed++))
+    fi
+    
     # Create .untracked structure separately to count as one fix
     if [[ ! -d "$project_path/.untracked" ]]; then
         info "Creating .untracked directory structure"
@@ -111,6 +118,51 @@ fix_template_references() {
     return $fixed
 }
 
+# Function to fix missing overview.md
+fix_missing_overview() {
+    local project_path="$1"
+    
+    # Check if overview.md exists
+    if [[ ! -f "$project_path/content/docs/overview.md" ]]; then
+        info "Creating missing overview.md from template T009"
+        
+        # Load T009 template
+        local OVERVIEW_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T009-project-overview.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
+        
+        # Get project name from README.md if exists
+        local project_name="Project"
+        if [[ -f "$project_path/README.md" ]]; then
+            # Try to extract project name from README
+            local extracted_name=$(grep "^# " "$project_path/README.md" | head -1 | sed 's/^# //')
+            if [[ -n "$extracted_name" ]] && [[ "$extracted_name" != "README" ]]; then
+                project_name="$extracted_name"
+            fi
+        fi
+        
+        # Create overview.md with placeholders replaced
+        echo "$OVERVIEW_TEMPLATE" | sed \
+            -e "s/\[Project Name\]/$project_name/g" \
+            -e "s/\[YYYY-MM-DD\]/$(date +%Y-%m-%d)/g" \
+            -e "s/\[One paragraph explaining what this project is, its purpose, and key goals\]/This project needs a proper description. Please update this section./g" \
+            -e "s/\[List the main features or components of this project\]/- Feature 1\n- Feature 2\n- Feature 3/g" \
+            -e "s/\[active|paused|archived\]/active/g" \
+            -e "s/\[planning|development|testing|production\]/development/g" \
+            -e "s/\[high|medium|low\]/medium/g" \
+            -e "s/\[Brief description of current state and immediate next steps\]/Project is being set up. Next steps include updating this documentation./g" \
+            -e "s/\[First step to understand or use this project\]/Review the project structure/g" \
+            -e "s/\[Second step\]/Read the CLAUDE.md for AI context/g" \
+            -e "s/\[Third step\]/Check TASKS.md for current work items/g" \
+            -e "s/\[describe main directories\/files\]/[Project-specific structure]/g" \
+            -e "s/\[Link to external resources\]/None yet/g" \
+            -e "s/\[Link to dependencies or related projects\]/None yet/g" \
+            > "$project_path/content/docs/overview.md"
+        
+        return 0
+    fi
+    
+    return 1
+}
+
 # Function to fix a single project
 fix_project() {
     local project_path="$1"
@@ -142,6 +194,12 @@ fix_project() {
     if [[ $ref_fixes -gt 0 ]]; then
         fixes_done=$((fixes_done + ref_fixes))
         success "Fixed $ref_fixes missing template references"
+    fi
+    
+    # Fix missing overview.md
+    if fix_missing_overview "$project_path"; then
+        ((fixes_done++))
+        success "Created missing overview.md"
     fi
     
     if [[ $fixes_done -eq 0 ]]; then

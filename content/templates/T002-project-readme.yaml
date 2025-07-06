@@ -1,8 +1,8 @@
 id: T002
 name: "Project README Template"
-version: "4.0.0"
+version: "5.0.0"
 workspace_version: "3.0.0"
-modified: "2025-07-05T12:30:00+0530"
+modified: "2025-07-06T09:00:00+0530"
 purpose: "Standard template for all project README.md files"
 format: "markdown"
 content: |
@@ -22,65 +22,19 @@ content: |
   - **Status**: [active|paused|archived]
   - **Related**: [comma-separated-project-slugs or empty]
   
-  ## Purpose
-  
-  [One paragraph explaining what this project is and why it exists]
-  
-  ## Structure
-  
-  This project follows the standard DeepWorkspace structure:
-  - `README.md` - This file
-  - `CLAUDE.md` - AI context and instructions
-  - `.claude/` - Claude Desktop project settings
-  - `.untracked/` - External repositories and local data
-  - `content/` - [Describe what's in content: code, documents, etc.]
-  - `projects/` - [List sub-projects if any, or state "No sub-projects"]
-  
   ## Quick Start
   
-  [2-3 steps to get started with this project]
-  
-  ## Content Manifest
-  
-  [Detailed description of what's in the content/ directory]
-  
-  ### Structure
-  ```
-  content/
-  ├── [List main directories and files]
-  └── [with descriptions]
+  ```bash
+  # [2-3 essential commands to get started]
   ```
   
-  ### Development
-  [Any build commands, development setup, or architecture notes]
+  ## Documentation
   
-  ## External Repositories
+  See [Documentation Overview](content/docs/overview.md) for comprehensive project information.
   
-  [List any external repositories in .untracked/repos/]
+  ## For AI Agents
   
-  | Repository | Description | URL | Added | Last Modified |
-  |------------|-------------|-----|-------|---------------|
-  | [repo-name] | [Purpose/description] | [github.com/...] | [YYYY-MM-DD] | [YYYY-MM-DD] |
-  
-  ## Key Information
-  
-  [Project-specific important details]
-  
-  ## Sub-Projects
-  
-  [If applicable, list and briefly describe each sub-project]
-  
-  ## Dependencies
-  
-  [List any dependencies on other projects or external resources]
-  
-  ## Status & Roadmap
-  
-  Current focus: [What's being worked on]
-  
-  Next steps:
-  - [ ] [Future task 1]
-  - [ ] [Future task 2]
+  Start with [CLAUDE.md](CLAUDE.md) for AI-specific context and instructions.
   
   ---
   
@@ -89,9 +43,11 @@ content: |
 usage: |
   1. Copy this template to new-project/README.md
   2. Replace all placeholders in square brackets
-  3. Remove any sections that don't apply
-  4. Keep the template reference comment at the top
+  3. Create corresponding docs in content/docs/ for detailed information
+  4. Keep README minimal - move extensive content to docs/
+  5. Keep the template reference comment at the top
   
 references:
   - "T003"  # CLAUDE.md template
+  - "T008"  # Documentation file template
   - "R001"  # Project structure rule

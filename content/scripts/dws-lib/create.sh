@@ -162,6 +162,7 @@ info "Creating project structure..."
 
 # Create directories
 mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/content"
+mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/content/docs"
 mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/projects"
 mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/.claude"
 mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/.untracked/repos"
@@ -171,6 +172,7 @@ mkdir -p "$WORKSPACE_ROOT/$PROJECT_PATH/.untracked/local"
 README_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T002-project-readme.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
 CLAUDE_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T003-project-claude.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
 TASKS_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T007-project-tasks.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
+OVERVIEW_TEMPLATE=$(cat "$WORKSPACE_ROOT/content/templates/T009-project-overview.yaml" | sed -n '/^content: |/,/^[a-z]/p' | sed '1d;$d')
 
 # Get timestamps
 CREATED_DATE="$(date +%Y-%m-%dT%H:%M:%S%z)"
@@ -203,6 +205,23 @@ echo "$TASKS_TEMPLATE" | sed \
     -e "s/\[Project Name\]/$PROJECT_NAME/g" \
     -e "s/\[YYYY-MM-DD\]/$CREATED_DATE/g" \
     > "$WORKSPACE_ROOT/$PROJECT_PATH/.untracked/local/TASKS.md"
+
+echo "$OVERVIEW_TEMPLATE" | sed \
+    -e "s/\[Project Name\]/$PROJECT_NAME/g" \
+    -e "s/\[YYYY-MM-DD\]/$(date +%Y-%m-%d)/g" \
+    -e "s/\[One paragraph explaining what this project is, its purpose, and key goals\]/$PURPOSE/g" \
+    -e "s/\[List the main features or components of this project\]/- Primary feature or component\n- Secondary feature or component\n- Additional features to be determined/g" \
+    -e "s/\[active|paused|archived\]/active/g" \
+    -e "s/\[planning|development|testing|production\]/planning/g" \
+    -e "s/\[high|medium|low\]/medium/g" \
+    -e "s/\[Brief description of current state and immediate next steps\]/Project has been created. Next steps: define requirements and begin development./g" \
+    -e "s/\[First step to understand or use this project\]/Review this documentation/g" \
+    -e "s/\[Second step\]/Check CLAUDE.md for AI context/g" \
+    -e "s/\[Third step\]/See TASKS.md for current work items/g" \
+    -e "s/\[describe main directories\/files\]/# Project-specific content will go here/g" \
+    -e "s/\[Link to external resources\]/- Project repository: $PROJECT_URL/g" \
+    -e "s/\[Link to dependencies or related projects\]/- Parent project: ${PARENT_PROJECT:-root}/g" \
+    > "$WORKSPACE_ROOT/$PROJECT_PATH/content/docs/overview.md"
 
 # Create project .gitignore
 cat > "$WORKSPACE_ROOT/$PROJECT_PATH/.gitignore" << 'EOF'
