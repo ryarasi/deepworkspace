@@ -1,7 +1,7 @@
 #!/bin/bash
-# sync-claude-tasks-v2.sh - Fixed version with proper merging to prevent data loss
+# sync-claude-tasks-v3.sh - Fixed version with timestamp tracking and smart merging
 # Usage: 
-#   sync-claude-tasks.sh save    - Save todos from Claude to TASKS.md (merges, doesn't replace)
+#   sync-claude-tasks.sh save    - Save todos from Claude to TASKS.md (merges with timestamps)
 #   sync-claude-tasks.sh load    - Load tasks from TASKS.md to Claude
 #   sync-claude-tasks.sh check   - Check sync status
 
@@ -57,13 +57,20 @@ load_existing_tasks() {
             local status=$(echo "$status_line" | sed -n 's/.*\*\*Status\*\*: //p')
             local priority=$(echo "$priority_line" | sed -n 's/.*\*\*Priority\*\*: //p')
             
+            # Check for last_modified line (optional, for backward compatibility)
+            local last_modified=""
+            if read -r modified_line && [[ "$modified_line" =~ \*\*Last\ Modified\*\*:\ (.+) ]]; then
+                last_modified="${BASH_REMATCH[1]}"
+            fi
+            
             # Store as JSON in array
             existing_tasks["$task_id"]=$(jq -n \
                 --arg id "$task_id" \
                 --arg content "$task_content" \
                 --arg status "${status:-pending}" \
                 --arg priority "${priority:-medium}" \
-                '{id: $id, content: $content, status: $status, priority: $priority}')
+                --arg last_modified "${last_modified:-}" \
+                '{id: $id, content: $content, status: $status, priority: $priority, last_modified: $last_modified}')
         fi
     done <<< "$tasks_section"
     
@@ -92,7 +99,12 @@ save_todos_to_tasks() {
     # Create backup of TASKS.md
     cp "$TASKS_FILE" "${TASKS_FILE}.backup-$(date +%Y%m%d-%H%M%S)"
     
-    # Merge tasks: combine existing and new tasks
+    # Add timestamps to Claude tasks
+    local current_time=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+    claude_todos_json=$(echo "$claude_todos_json" | jq --arg now "$current_time" \
+        'map(. + {last_modified: $now})')
+    
+    # Merge tasks: combine existing and new tasks with timestamp-based conflict resolution
     local merged_tasks_json
     merged_tasks_json=$(jq -s '
         (.[0] // []) as $existing |
@@ -103,8 +115,27 @@ save_todos_to_tasks() {
         ($claude | map({(.id): .}) | add) as $claude_map |
         # Get all unique task IDs
         (($existing | map(.id)) + ($claude | map(.id)) | unique) as $all_ids |
-        # For each ID, prefer Claude version if it exists, otherwise keep existing
-        $all_ids | map(. as $id | ($claude_map[$id] // $existing_map[$id]))
+        # For each ID, merge with smart conflict resolution
+        $all_ids | map(. as $id | 
+            if ($claude_map[$id] and $existing_map[$id]) then
+                # Both exist - check if content or status changed
+                if ($claude_map[$id].content != $existing_map[$id].content or 
+                    $claude_map[$id].status != $existing_map[$id].status or
+                    $claude_map[$id].priority != $existing_map[$id].priority) then
+                    # Changes detected, use Claude version with new timestamp
+                    $claude_map[$id]
+                else
+                    # No changes, keep existing with original timestamp
+                    $existing_map[$id]
+                end
+            elif $claude_map[$id] then
+                # Only in Claude, use it
+                $claude_map[$id]
+            else
+                # Only in existing, keep it
+                $existing_map[$id]
+            end
+        )
     ' <(echo "$existing_tasks_json") <(echo "$claude_todos_json"))
     
     log "Merged $(echo "$merged_tasks_json" | jq 'length') total tasks"
@@ -122,11 +153,16 @@ save_todos_to_tasks() {
         echo "<!-- SYNC_STATUS: last_sync=$(date -u +%Y-%m-%dT%H:%M:%SZ) -->"
         echo ""
         
-        # Sort tasks by ID and add each one
+        # Sort tasks by ID and add each one with timestamp
         echo "$merged_tasks_json" | jq -r 'sort_by(.id) | .[] | 
             "### \(.id): \(.content)\n" +
             "- **Status**: \(.status)\n" +
-            "- **Priority**: \(.priority)\n"'
+            "- **Priority**: \(.priority)\n" +
+            if .last_modified and .last_modified != "" then
+                "- **Last Modified**: \(.last_modified)\n"
+            else 
+                ""
+            end'
         
         # Check if there's content after Claude-Managed Tasks section
         if awk '/^## Claude-Managed Tasks/ {found=1; next} found && /^## [^C]/ {exit 1}' "$TASKS_FILE"; then
@@ -191,12 +227,19 @@ load_tasks_to_claude() {
             local status=$(echo "$status_line" | sed -n 's/.*\*\*Status\*\*: //p')
             local priority=$(echo "$priority_line" | sed -n 's/.*\*\*Priority\*\*: //p')
             
+            # Check for last_modified line (optional)
+            local last_modified=""
+            if IFS= read -r modified_line && [[ "$modified_line" =~ \*\*Last\ Modified\*\*:\ (.+) ]]; then
+                last_modified="${BASH_REMATCH[1]}"
+            fi
+            
             todos_json+=$(jq -n \
                 --arg id "$task_id" \
                 --arg content "$task_content" \
                 --arg status "${status:-pending}" \
                 --arg priority "${priority:-medium}" \
-                '{id: $id, content: $content, status: $status, priority: $priority}')
+                --arg last_modified "${last_modified:-}" \
+                '{id: $id, content: $content, status: $status, priority: $priority, last_modified: $last_modified}')
         fi
     done <<< "$tasks_section"
     

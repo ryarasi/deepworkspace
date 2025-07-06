@@ -4,6 +4,16 @@
 # Get workspace root
 WORKSPACE_ROOT="$(get_workspace_root)" || exit 1
 
+# Check and warn if on main branch (context-specific warning)
+if git rev-parse --git-dir > /dev/null 2>&1; then
+    current_branch=$(git branch --show-current 2>/dev/null)
+    if [[ "$current_branch" == "main" ]] || [[ "$current_branch" == "master" ]]; then
+        echo -e "\033[1;33m⚠️  Note: You're creating a project while on main branch.\033[0m" >&2
+        echo -e "\033[1;33mRemember to create a feature branch before making changes to existing files.\033[0m" >&2
+        echo >&2
+    fi
+fi
+
 echo "Creating new project..."
 echo
 
