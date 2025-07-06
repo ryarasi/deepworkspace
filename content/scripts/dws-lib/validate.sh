@@ -57,6 +57,8 @@ validate_project() {
     [[ ! -d "$project_path/.claude" ]] && missing_items+=(".claude/")
     [[ ! -d "$project_path/.untracked" ]] && missing_items+=(".untracked/")
     [[ ! -d "$project_path/content" ]] && missing_items+=("content/")
+    [[ ! -d "$project_path/content/docs" ]] && missing_items+=("content/docs/")
+    [[ ! -f "$project_path/content/docs/overview.md" ]] && missing_items+=("content/docs/overview.md")
     [[ ! -d "$project_path/projects" ]] && missing_items+=("projects/")
     
     if [[ ${#missing_items[@]} -gt 0 ]]; then

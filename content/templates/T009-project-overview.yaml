@@ -1,0 +1,76 @@
+id: T009
+name: "Project Overview Template"
+version: "1.0.0"
+workspace_version: "3.0.0"
+modified: "2025-07-06T09:30:00+0530"
+purpose: "Required overview.md template for all project documentation"
+format: "markdown"
+content: |
+  # [Project Name] Overview
+  
+  <!-- This file follows template @content/templates/T009 -->
+  
+  ## What is [Project Name]?
+  
+  [One paragraph explaining what this project is, its purpose, and key goals]
+  
+  ## Documentation Index
+  
+  - **[This Overview](overview.md)** - Project introduction and documentation guide
+  - [Add links to other documentation files as they are created]
+  
+  ## Table of Contents
+  
+  - [Key Features](#key-features)
+  - [Current Status](#current-status)
+  - [Getting Started](#getting-started)
+  - [Project Structure](#project-structure)
+  
+  ## Key Features
+  
+  [List the main features or components of this project]
+  
+  ## Current Status
+  
+  **Status**: [active|paused|archived]  
+  **Stage**: [planning|development|testing|production]  
+  **Priority**: [high|medium|low]
+  
+  [Brief description of current state and immediate next steps]
+  
+  ## Getting Started
+  
+  1. [First step to understand or use this project]
+  2. [Second step]
+  3. [Third step]
+  
+  For detailed setup instructions, see [setup documentation] (if applicable).
+  
+  ## Project Structure
+  
+  ```
+  content/
+  ├── docs/           # Project documentation
+  │   └── overview.md # This file
+  └── [describe main directories/files]
+  ```
+  
+  ## Related Resources
+  
+  - [Link to external resources]
+  - [Link to dependencies or related projects]
+  
+  ## Version History
+  
+  - **v1.0.0** ([YYYY-MM-DD]): Initial project creation
+  
+usage: |
+  1. This template is automatically applied to content/docs/overview.md
+  2. Replace all placeholders in square brackets
+  3. This file is REQUIRED for all projects
+  4. Keep it updated as the project evolves
+  5. Add links to new documentation files as they are created
+  
+references:
+  - "R001"  # Project structure (overview.md requirement)
+  - "T008"  # Generic documentation template

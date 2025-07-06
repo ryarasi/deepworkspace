@@ -12,6 +12,8 @@ content: |
   - .claude/ - Claude Desktop project settings
   - .untracked/ - Untracked items (repos/, local/)
   - content/ - All actual project content
+    - content/docs/ - Detailed project documentation
+    - content/docs/overview.md - Required documentation entry point
   - projects/ - Sub-projects (optional, can be empty)
   
   ## Rationale
@@ -31,6 +33,7 @@ content: |
      - Create .claude/ directory
      - Create .untracked/ directory with repos/ and local/
      - Create content/ directory
+     - Create content/docs/ directory for detailed documentation
      - Create projects/ directory (even if empty)
      - Create .gitignore to exclude .untracked/
   
@@ -46,7 +49,10 @@ content: |
   ├── README.md
   ├── CLAUDE.md
   ├── .claude/
+  ├── .untracked/
   ├── content/
+  │   ├── docs/
+  │   │   └── [detailed documentation]
   │   └── [actual project files]
   └── projects/
       └── [sub-projects if any]
@@ -69,12 +75,16 @@ content: |
   - [ ] Project has .claude/ directory
   - [ ] Project has .untracked/ directory with repos/ and local/
   - [ ] Project has content/ directory
+  - [ ] Project has content/docs/ directory for detailed documentation
+  - [ ] Project has content/docs/overview.md as documentation entry point
   - [ ] Project has projects/ directory
   - [ ] No other files/folders at project root (except .git, .gitignore)
   
 references:
   - "T002"  # README template with metadata
   - "T003"  # CLAUDE.md template
+  - "T008"  # Documentation file template
+  - "T009"  # Project overview template
   - "R002"  # Content tracking rules
   - "R004"  # Nesting rules
   

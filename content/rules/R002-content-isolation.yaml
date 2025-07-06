@@ -115,7 +115,7 @@ references:
   - "R001"  # Project structure
   - "R005"  # Workspace as project
   - "T002"  # README template
-  - "T009"  # Content README template
+  - "T008"  # Documentation file template
   
 exceptions:
   - "None - all projects must follow this structure"
