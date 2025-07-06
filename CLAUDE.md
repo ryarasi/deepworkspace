@@ -60,6 +60,22 @@ Use helper scripts:
 
 **Note**: Files in `.untracked/` and other `.gitignore`'d locations can be edited directly without PRs.
 
+## Session Start: Load Tasks
+
+**IMPORTANT**: At the start of each Claude session, load your tasks from TASKS.md:
+
+```bash
+# Run this command to load tasks from previous sessions
+./content/scripts/load-tasks.sh
+```
+
+This will:
+1. Show all tasks from TASKS.md with their status
+2. Provide JSON to copy into TodoWrite
+3. Automatically copy to clipboard (macOS)
+
+**Why**: PreToolUse hooks cannot inject data into Claude tools, so manual loading is required.
+
 ## Key Rules to Remember
 
 - **R001**: Every project has README.md, CLAUDE.md, content/
