@@ -12,6 +12,7 @@ DeepWork is a minimalist, template-driven workspace management system that bring
 - **[Architecture](architecture.md)** - Technical design and system structure  
 - **[Workflow](workflow.md)** - Git workflow and development practices
 - **[Roadmap](roadmap.md)** - Version history and future plans
+- **[Evolution](evolution.md)** - Detailed story of DeepWork's development
 
 ## Table of Contents
 

@@ -9,6 +9,7 @@ This document tracks the evolution of DeepWork and outlines future development p
 ## Table of Contents
 
 - [Version History](#version-history)
+- [Evolution Story](evolution.md)
 - [Current Status](#current-status)
 - [Future Features](#future-features)
 - [Contributing](#contributing)
