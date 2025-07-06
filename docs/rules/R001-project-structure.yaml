@@ -1,0 +1,94 @@
+id: R001
+name: "Project Structure"
+version: "5.0.0"
+priority: "critical"
+category: "structure"
+content: |
+  ## Rule Statement
+  
+  This Project MUST maintain the following structure:
+  - README.md - References docs/RULES.md for governance
+  - docs/ - Project documentation
+  - docs/RULES.md - Entry point to the rule system
+  - docs/rules/ - Complete governance system
+  - docs/PSD.md - Project Specification Document
+  - .untracked/ - Local directory for temporary files
+  
+  ## Rationale
+  
+  This structure:
+  - Creates a clear hierarchy with dependencies nested appropriately
+  - Makes projects self-sufficient with embedded governance
+  - Keeps all rules, templates, and scripts together
+  - Provides a single entry point for understanding governance
+  
+  ## Implementation
+  
+  1. Required files and directories:
+     - README.md - Simple reference to docs/RULES.md
+     - docs/RULES.md - Explains the rule system and links to R001
+     - docs/PSD.md - Project Specification Document following T010
+     - docs/rules/ - Contains the complete governance system:
+       - R001-R006 core rules (this file and others)
+       - templates/ - All project templates
+       - scripts/ - Validation and enforcement scripts
+     - .untracked/ - Local untracked directory (gitignored)
+  
+  2. Governance hierarchy:
+     - README.md → docs/RULES.md → R001 → R002 → ... → R006
+     - Each rule references the next, creating a chain
+     - Scripts and templates support rule enforcement
+  
+  3. Self-containment:
+     - Copy docs/rules/ to any project for complete governance
+     - All dependencies included within rules directory
+     - No external references needed
+  
+  ## Examples
+  
+  ### Compliant Structure
+  ```
+  this-project/
+  ├── README.md        # "This project follows docs/RULES.md"
+  ├── docs/
+  │   ├── RULES.md     # Entry point to rules
+  │   ├── PSD.md       # Project specification
+  │   └── rules/       # Complete governance
+  │       ├── R001-project-structure.yaml
+  │       ├── R002-template-integrity.yaml
+  │       ├── ...
+  │       ├── templates/
+  │       └── scripts/
+  └── .untracked/      # Local directory
+  ```
+  
+  ### Non-Compliant
+  ```
+  this-project/
+  ├── README.md
+  ├── rules/           # Wrong: not in docs/
+  ├── templates/       # Wrong: not in docs/rules/
+  └── scripts/         # Wrong: not in docs/rules/
+  ```
+  
+  ## Verification
+  
+  To verify this project follows its structure:
+  - [ ] Has README.md referencing docs/RULES.md
+  - [ ] Has docs/RULES.md explaining governance
+  - [ ] Has docs/PSD.md following T010
+  - [ ] Has docs/rules/ with R001-R006
+  - [ ] Has docs/rules/templates/
+  - [ ] Has docs/rules/scripts/
+  - [ ] Has .untracked/ directory (gitignored)
+  
+references:
+  - "T002"  # README template
+  - "T010"  # PSD template
+  
+next_rule: "R002"  # Continue to Template System Integrity
+  
+exceptions:
+  - ".git/" directory for version control
+  - ".gitignore" file
+  - "CLAUDE.md" for AI context (optional)

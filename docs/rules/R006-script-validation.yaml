@@ -1,0 +1,85 @@
+id: R006
+name: "Script Validation Requirements"
+version: "2.0.0"
+priority: "high"
+category: "validation"
+content: |
+  ## Rule Statement
+  
+  This Project's validation scripts MUST:
+  - Work correctly on this project itself
+  - Validate all rules in docs/rules/ directory
+  - Provide clear, actionable error messages
+  - Support both validation and auto-fix modes
+  
+  ## Rationale
+  
+  Scripts are executable documentation that:
+  - Prove rules are enforceable
+  - Demonstrate patterns are practical
+  - Provide automated quality assurance
+  - Enable self-validation of the system
+  
+  ## Implementation
+  
+  1. Core scripts:
+     - `docs/rules/scripts/validate` - Check rule compliance
+     - `docs/rules/scripts/fix` - Auto-fix common issues
+     - `docs/rules/scripts/create` - Create new sub-projects
+     - `docs/rules/scripts/help` - Show available commands
+  
+  2. Validation coverage:
+     - R001: Project structure
+     - R002: Template integrity
+     - R003: Self-demonstration
+     - R004: Reference integrity
+     - R005: Governance hierarchy
+     - R006: Script validation (meta!)
+  
+  3. Local rule discovery:
+     - Scripts look for rules in docs/rules/ directory
+     - No hardcoded rule assumptions
+     - Support for project extensions (R007+)
+  
+  ## Examples
+  
+  ### Validation Success
+  ```bash
+  $ cd this-project
+  $ docs/rules/scripts/validate
+  ✓ Project structure correct (R001)
+  ✓ Template integrity maintained (R002)
+  ✓ Self-demonstration active (R003)
+  ✓ All references valid (R004)
+  ✓ Governance hierarchy correct (R005)
+  ```
+  
+  ### Validation Failure
+  ```bash
+  $ docs/rules/scripts/validate
+  ✗ Template integrity violation (R002)
+    Template T999 referenced but not found
+    Fix: Remove reference or create template
+  ```
+  
+  ## Verification
+  
+  To verify script validation:
+  - [ ] docs/rules/scripts/validate works on this project
+  - [ ] All rules have validation logic
+  - [ ] Error messages are helpful
+  - [ ] Fix suggestions are accurate
+  - [ ] Scripts handle edge cases
+  - [ ] Scripts discover rules locally
+  
+references:
+  - "R001"  # Validates structure
+  - "R002"  # Validates templates
+  - "R003"  # Validates self-demo
+  - "R004"  # Validates references
+  - "R005"  # Validates hierarchy
+  
+next_rule: null  # End of core rule chain
+  
+exceptions:
+  - None. Scripts must work.

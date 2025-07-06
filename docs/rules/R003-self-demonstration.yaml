@@ -1,0 +1,84 @@
+id: R003
+name: "Self-Demonstration Principle"
+version: "3.0.0"
+priority: "critical"
+category: "integrity"
+content: |
+  ## Rule Statement
+  
+  This Project MUST demonstrate its own patterns work by:
+  - Using its own templates for all applicable files
+  - Following its own rules without exception
+  - Passing its own validation scripts
+  - Serving as a reference implementation
+  
+  ## Rationale
+  
+  This project's credibility depends on proving its patterns work at scale. By using its own system, this project:
+  - Validates that templates are practical
+  - Shows rules are achievable
+  - Provides real examples of every pattern
+  - Maintains system integrity through self-application
+  
+  ## Implementation
+  
+  1. Template usage:
+     - README.md MUST follow template T002
+     - docs/PSD.md MUST follow template T010
+     - All rules MUST follow rule structure
+     - All templates MUST follow template structure
+  
+  2. Rule compliance:
+     - Project structure follows R001
+     - Templates maintain integrity per R002
+     - Scripts validate these requirements
+  
+  3. Validation:
+     - `docs/rules/scripts/validate` must pass on this project
+     - Scripts must work on this project itself
+     - Changes must maintain compliance
+  
+  ## Examples
+  
+  ### Self-Application
+  ```
+  this-project/
+  ├── README.md      # References docs/RULES.md
+  └── docs/
+      ├── RULES.md   # Entry point
+      └── rules/
+          ├── R001...    # All follow rule structure
+          ├── R003...    # This very rule
+          └── templates/
+              ├── T001...    # All follow template structure
+              └── T002...    # Used by README.md
+  ```
+  
+  ### Validation Success
+  ```bash
+  $ cd /path/to/this-project
+  $ docs/rules/scripts/validate
+  ✓ Structure follows R001
+  ✓ Templates have integrity (R002)
+  ✓ Self-demonstration active (R003)
+  ```
+  
+  ## Verification
+  
+  To verify self-demonstration:
+  - [ ] README.md follows T002
+  - [ ] docs/PSD.md follows T010
+  - [ ] All templates have valid structure
+  - [ ] All rules have valid structure
+  - [ ] Validation passes on this project
+  - [ ] Scripts work on this project itself
+  
+references:
+  - "R001"  # Structure we demonstrate
+  - "R002"  # Template integrity we maintain
+  - "T002"  # Template our README uses
+  
+next_rule: "R004"  # Continue to Reference Integrity
+  
+exceptions:
+  - None. Self-demonstration is absolute.

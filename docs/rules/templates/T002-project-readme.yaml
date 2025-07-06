@@ -1,0 +1,53 @@
+id: T002
+name: "Project README Template"
+version: "5.0.0"
+modified: "2025-07-06T09:00:00+0530"
+purpose: "Standard template for all project README.md files"
+format: "markdown"
+content: |
+  # [Project Name]
+  
+  This project follows the rules specified in [docs/RULES.md](docs/RULES.md).
+  
+  ## Metadata
+  - **Name**: [Project Name]
+  - **Slug**: [project-slug]
+  - **Parent**: [parent-slug or 'root']
+  - **Type**: [person|group|entity|product|research|learning]
+  - **Subtype**: [type-specific-subtype]
+  - **URL**: [https://example.com/project-link]
+  - **Created**: [YYYY-MM-DDTHH:MM:SS+ZZZZ]
+  - **Modified**: [YYYY-MM-DDTHH:MM:SS+ZZZZ]
+  - **Status**: [active|paused|archived]
+  - **Related**: [comma-separated-project-slugs or empty]
+  
+  ## Quick Start
+  
+  ```bash
+  # [2-3 essential commands to get started]
+  ```
+  
+  ## Documentation
+  
+  - **Rules**: [docs/RULES.md](docs/RULES.md) - Complete governance system
+  - **Specification**: [docs/PSD.md](docs/PSD.md) - Detailed project specification
+  
+  ## AI Context
+  
+  This README serves as both human documentation and AI context.
+  
+  ---
+  
+  *This project follows a structured governance pattern.*
+  
+usage: |
+  1. Copy this template to new-project/README.md
+  2. Replace all placeholders in square brackets
+  3. Create corresponding docs in docs/ directory for detailed information
+  4. Keep README minimal - move extensive content to PSD.md
+  5. Keep the template reference comment at the top
+  
+references:
+  - "T010"  # PSD.md template
+  - "T008"  # Documentation file template
+  - "R001"  # Project structure rule

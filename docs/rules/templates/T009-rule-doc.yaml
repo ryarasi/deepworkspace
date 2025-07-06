@@ -1,0 +1,54 @@
+id: T009
+name: "Rule Documentation"
+version: "1.0.0"
+category: "rules"
+content: |
+  id: [RXXX]
+  name: "[Rule Name]"
+  version: "1.0.0"
+  priority: "[critical|high|medium|low]"
+  category: "[integrity|structure|validation|etc]"
+  content: |
+    ## Rule Statement
+    
+    DeepWork MUST [specific requirement that DeepWork enforces on itself].
+    
+    ## Rationale
+    
+    [Why this rule exists and what it ensures for DeepWork's integrity]
+    
+    ## Implementation
+    
+    [Specific steps DeepWork takes to comply with this rule]
+    
+    ## Examples
+    
+    ### Compliant
+    ```
+    [Example of correct implementation]
+    ```
+    
+    ### Non-Compliant
+    ```
+    [Example of violation]
+    ```
+    
+    ## Verification
+    
+    To verify this rule:
+    - [ ] [Verification step 1]
+    - [ ] [Verification step 2]
+    - [ ] [Verification step 3]
+    
+  references:
+    - "[Related rule ID]"
+    - "[Related template ID]"
+    
+  exceptions:
+    - "[Any exceptions, or 'None']"
+  
+references:
+  - "T004"  # Original rule template
+  
+description: |
+  Template for DeepWork rules. Rules are requirements that DeepWork enforces on itself to maintain system integrity. This is different from patterns, which are optional practices that other projects can adopt.
