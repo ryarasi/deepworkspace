@@ -1,11 +1,11 @@
 # DeepWorkspace
 
-<!-- This file follows template @content/templates/T002 -->
+<!-- This file follows template @templates/T002 -->
 
 ## Metadata
 - **Name**: DeepWorkspace
 - **Slug**: deepworkspace
-- **Parent**: root
+- **Parent**:
 - **Type**: product
 - **Subtype**: software
 - **URL**: https://github.com/ryarasi/deepworkspace
@@ -14,6 +14,13 @@
 - **Status**: active
 - **Related**:
 
+## Overview
+
+DeepWorkspace is a minimalist, git-centric project management system that uses fractal patterns to organize work at any scale. Every project follows the same simple structure, enabling infinite nesting while maintaining clarity and consistency.
+
+For more details see [docs/PSD.md](docs/PSD.md)
+
+
 ## Projects
 
 Child projects of DeepWorkspace:
@@ -21,7 +28,7 @@ Child projects of DeepWorkspace:
 
 To clone child projects, run:
 ```bash
-./content/scripts/init-workspace.sh
+./scripts/init-workspace.sh
 ```
 
 ## Quick Start
@@ -30,10 +37,10 @@ To clone child projects, run:
 # 1. Clone and setup
 git clone https://github.com/ryarasi/deepworkspace.git
 cd deepworkspace
-./content/scripts/setup.sh
+./scripts/setup.sh
 
 # 2. Initialize child projects
-./content/scripts/init-workspace.sh
+./scripts/init-workspace.sh
 
 # 3. Create your first project
 dws create
@@ -44,12 +51,4 @@ dws start
 
 ## Documentation
 
-See [Documentation Overview](content/docs/overview.md) for comprehensive project information.
-
-## For AI Agents
-
-Start with [CLAUDE.md](CLAUDE.md) for AI-specific context and instructions.
-
----
-
-*This workspace is itself a project that follows its own rules. No exceptions, no special cases.*
+See [Project Specification Document](docs/PSD.md) for detailed specifications.

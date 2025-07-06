@@ -1,0 +1,94 @@
+id: R006
+name: "Feature Branch Workflow Required"
+version: "1.0.0"
+priority: "critical"
+category: "workflow"
+content: |
+  ## Rule Statement
+  
+  All changes to git-tracked files MUST be made through feature branches and pull requests. Direct commits to main branch MUST be prevented through pre-commit hooks. Every change MUST have a complete audit trail.
+  
+  ## Scope
+  
+  This rule applies to:
+  - All files tracked by git (check with `git ls-files`)
+  - Any new files being added to git
+  
+  This rule does NOT apply to:
+  - Files in .untracked/ directory
+  - Any files ignored by .gitignore
+  - Temporary or local-only files
+  
+  ## Rationale
+  
+  This workflow provides:
+  - Complete traceability of all changes
+  - Context preservation for AI agents
+  - Easy rollback capabilities
+  - Protected main branch integrity
+  - Professional development practices
+  
+  ## Implementation
+  
+  1. Before making changes:
+     - Ensure you're on main: `git checkout main`
+     - Pull latest: `git pull`
+     - Create feature branch: `git checkout -b feature/description`
+  
+  2. Make your changes:
+     - Work in the feature branch
+     - Commit with template T005
+     - Include full context in commits
+  
+  3. Create pull request:
+     - Push branch: `git push -u origin feature/description`
+     - Create PR with template T006
+     - Include original user request
+     - Document all decisions
+  
+  4. Merge and cleanup:
+     - Merge PR (can be auto-merged)
+     - Switch to main: `git checkout main`
+     - Pull changes: `git pull`
+     - Delete feature branch: `git branch -d feature/description`
+  
+  5. Helper scripts provided:
+     - `scripts/safe-edit.sh` - Start feature branch
+     - `scripts/create-pr.sh` - Create PR
+  
+  ## Examples
+  
+  ### Correct
+  ```bash
+  git checkout main
+  git checkout -b feature/add-new-rule
+  # Make changes
+  git add .
+  git commit -m "feat: Add new rule for..."
+  git push -u origin feature/add-new-rule
+  gh pr create --title "feat: Add new rule" --body "..."
+  ```
+  
+  ### Incorrect
+  ```bash
+  # On main branch
+  git add .
+  git commit -m "Quick fix"  # Blocked by pre-commit hook!
+  ```
+  
+  ## Verification
+  
+  To verify this rule is being followed:
+  - [ ] Pre-commit hook installed and active
+  - [ ] No direct commits to main in git log
+  - [ ] All changes have associated PRs
+  - [ ] PRs include full context
+  
+references:
+  - "T005"  # Commit message template
+  - "T006"  # PR description template
+  - "R007"  # Commit standards
+  - "R008"  # PR documentation
+  
+exceptions:
+  - "Initial repository setup only"

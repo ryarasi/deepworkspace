@@ -1,0 +1,304 @@
+#!/bin/bash
+# DWS Fix Command - Automatically fix common validation issues
+
+# Get workspace root
+WORKSPACE_ROOT="$(get_workspace_root)" || exit 1
+
+# Check and warn if on main branch (stricter for fix command)
+if git rev-parse --git-dir > /dev/null 2>&1; then
+    current_branch=$(git branch --show-current 2>/dev/null)
+    if [[ "$current_branch" == "main" ]] || [[ "$current_branch" == "master" ]]; then
+        echo -e "\033[1;31m❌ ERROR: Cannot run 'dws fix' on main branch!\033[0m" >&2
+        echo -e "\033[1;33mThis command modifies files and must be run on a feature branch.\033[0m" >&2
+        echo -e "\033[1;32mCreate a feature branch first: git checkout -b feature/fix-validation\033[0m" >&2
+        exit 1
+    fi
+fi
+
+# Initialize counters
+TOTAL_FIXES=0
+FIXES_APPLIED=0
+FIXES_FAILED=0
+
+# Function to fix missing directories
+fix_missing_directories() {
+    local project_path="$1"
+    local fixed=0
+    
+    # Check and create required directories
+    if [[ ! -d "$project_path/docs" ]]; then
+        info "Creating missing directory: docs"
+        mkdir -p "$project_path/docs"
+        ((fixed++))
+    fi
+    
+    # Create .untracked structure separately to count as one fix
+    if [[ ! -d "$project_path/.untracked" ]]; then
+        info "Creating .untracked directory structure"
+        mkdir -p "$project_path/.untracked/repos"
+        mkdir -p "$project_path/.untracked/local"
+        ((fixed++))
+    else
+        # Check subdirectories
+        if [[ ! -d "$project_path/.untracked/repos" ]]; then
+            mkdir -p "$project_path/.untracked/repos"
+            ((fixed++))
+        fi
+        if [[ ! -d "$project_path/.untracked/local" ]]; then
+            mkdir -p "$project_path/.untracked/local"
+            ((fixed++))
+        fi
+    fi
+    
+    return $fixed
+}
+
+# Function to fix .untracked gitignore entry
+fix_untracked_gitignore() {
+    local project_path="$1"
+    local gitignore_path="$project_path/.gitignore"
+    
+    # Check if .gitignore exists
+    if [[ ! -f "$gitignore_path" ]]; then
+        # Create .gitignore with .untracked and .claude entries
+        info "Creating .gitignore with .untracked/ and .claude/ entries"
+        echo "# Untracked items" > "$gitignore_path"
+        echo ".untracked/" >> "$gitignore_path"
+        echo "" >> "$gitignore_path"
+        echo "# Claude Desktop settings" >> "$gitignore_path"
+        echo ".claude/" >> "$gitignore_path"
+        return 0
+    elif ! grep -q "^\.untracked/" "$gitignore_path"; then
+        # Add .untracked/ to existing .gitignore
+        info "Adding .untracked/ to .gitignore"
+        echo "" >> "$gitignore_path"
+        echo "# Untracked items" >> "$gitignore_path"
+        echo ".untracked/" >> "$gitignore_path"
+        return 0
+    fi
+    
+    return 1
+}
+
+# Function to fix missing template references
+fix_template_references() {
+    local project_path="$1"
+    local fixed=0
+    
+    # Fix README.md
+    if [[ -f "$project_path/README.md" ]]; then
+        if ! grep -q "<!-- This file follows template @templates/T" "$project_path/README.md"; then
+            info "Adding template reference to README.md"
+            # Add after first line (usually the title)
+            sed -i '' '1 a\
+\
+<!-- This file follows template @templates/T002 -->' "$project_path/README.md"
+            ((fixed++))
+        fi
+    fi
+    
+    return $fixed
+}
+
+# Function to fix missing PSD.md
+fix_missing_psd() {
+    local project_path="$1"
+    
+    # Check if PSD.md exists
+    if [[ ! -f "$project_path/docs/PSD.md" ]]; then
+        info "Creating missing PSD.md"
+        
+        # Create basic PSD template if T010 doesn't exist
+        local PSD_TEMPLATE="# Project Specification Document"
+        
+        # Get project name from README.md if exists
+        local project_name="Project"
+        if [[ -f "$project_path/README.md" ]]; then
+            # Try to extract project name from README
+            local extracted_name=$(grep "^# " "$project_path/README.md" | head -1 | sed 's/^# //')
+            if [[ -n "$extracted_name" ]] && [[ "$extracted_name" != "README" ]]; then
+                project_name="$extracted_name"
+            fi
+        fi
+        
+        # Create PSD.md with basic structure
+        cat > "$project_path/docs/PSD.md" << EOF
+# $project_name Project Specification Document
+
+## Overview
+
+This project needs a proper description. Please update this section.
+
+## Technical Specifications
+
+To be documented.
+
+## Features
+
+- Feature 1
+- Feature 2  
+- Feature 3
+
+## Development Status
+
+Project is being set up. Next steps include updating this documentation.
+
+---
+
+*This document provides detailed specifications for the $project_name project.*
+EOF
+        
+        return 0
+    fi
+    
+    return 1
+}
+
+# Function to fix a single project
+fix_project() {
+    local project_path="$1"
+    local project_name="$2"
+    local fixes_needed=0
+    local fixes_done=0
+    
+    echo
+    echo "Checking: $project_name"
+    echo "Path: $project_path"
+    
+    # Fix missing directories
+    fix_missing_directories "$project_path"
+    local dir_fixes=$?
+    if [[ $dir_fixes -gt 0 ]]; then
+        fixes_done=$((fixes_done + dir_fixes))
+        success "Fixed $dir_fixes missing directories"
+    fi
+    
+    # Fix .untracked gitignore entry
+    if fix_untracked_gitignore "$project_path"; then
+        ((fixes_done++))
+        success "Fixed .untracked gitignore configuration"
+    fi
+    
+    # Fix template references
+    fix_template_references "$project_path"
+    local ref_fixes=$?
+    if [[ $ref_fixes -gt 0 ]]; then
+        fixes_done=$((fixes_done + ref_fixes))
+        success "Fixed $ref_fixes missing template references"
+    fi
+    
+    # Fix missing overview.md
+    if fix_missing_psd "$project_path"; then
+        ((fixes_done++))
+        success "Created missing PSD.md"
+    fi
+    
+    if [[ $fixes_done -eq 0 ]]; then
+        info "No automatic fixes needed"
+    else
+        FIXES_APPLIED=$((FIXES_APPLIED + fixes_done))
+    fi
+}
+
+# Function to scan and fix all projects recursively
+scan_and_fix_projects() {
+    local parent_path="$1"
+    local project_name="$2"
+    
+    # Fix this project
+    TOTAL_FIXES=$((TOTAL_FIXES + 1))
+    fix_project "$parent_path" "$project_name"
+    
+    # Scan sub-projects
+    if [[ -d "$parent_path/projects" ]]; then
+        for project_dir in "$parent_path/projects"/*; do
+            if [[ -d "$project_dir" ]] && [[ -f "$project_dir/README.md" ]]; then
+                local sub_name=$(basename "$project_dir")
+                scan_and_fix_projects "$project_dir" "$sub_name"
+            fi
+        done
+    fi
+}
+
+# Function to fix structural issues
+fix_structural_issues() {
+    echo
+    echo "STRUCTURAL FIXES"
+    echo "================"
+    
+    # Check and fix pre-commit hook
+    if [[ ! -f "$WORKSPACE_ROOT/.git/hooks/pre-commit" ]]; then
+        error "Pre-commit hook missing - cannot fix automatically"
+        echo "  Please run: git init (if needed) to create .git/hooks directory"
+        ((FIXES_FAILED++))
+    elif [[ ! -x "$WORKSPACE_ROOT/.git/hooks/pre-commit" ]]; then
+        info "Making pre-commit hook executable"
+        chmod +x "$WORKSPACE_ROOT/.git/hooks/pre-commit"
+        success "Fixed pre-commit hook permissions"
+        ((FIXES_APPLIED++))
+    fi
+    
+}
+
+# Main fix process
+echo "DeepWorkspace Fix Tool"
+echo "======================"
+echo "Generated: $(date +"%Y-%m-%dT%H:%M:%S%z")"
+echo
+echo "This tool will automatically fix common issues:"
+echo "- Missing required directories (.untracked, docs, etc.)"
+echo "- Missing .untracked/ in .gitignore"
+echo "- Missing template references"
+echo "- File permission issues"
+echo
+
+read -p "Proceed with automatic fixes? (y/n) " CONFIRM
+if [[ "$CONFIRM" != "y" ]]; then
+    echo "Fix cancelled by user"
+    exit 0
+fi
+
+# Fix structural issues first
+fix_structural_issues
+
+# Fix all projects
+echo
+echo "PROJECT FIXES"
+echo "============="
+info "Scanning and fixing all projects..."
+scan_and_fix_projects "$WORKSPACE_ROOT" "workspace (root)"
+
+# Generate summary report
+echo
+echo "SUMMARY"
+echo "======="
+echo "Projects processed: $TOTAL_FIXES"
+echo "Fixes applied: $FIXES_APPLIED"
+echo "Fixes failed: $FIXES_FAILED"
+echo
+
+# Note about manual fixes
+if [[ $FIXES_FAILED -gt 0 ]]; then
+    echo "MANUAL FIXES REQUIRED"
+    echo "===================="
+    echo "Some issues could not be fixed automatically:"
+    echo "- Files in wrong locations (need manual move)"
+    echo "- Missing metadata attributes (need manual edit)"
+    echo "- Complex structural issues"
+    echo
+fi
+
+# Recommend validation
+echo "NEXT STEPS"
+echo "=========="
+echo "1. Run 'dws validate' to check if all issues are resolved"
+echo "2. Review any remaining issues that need manual fixes"
+echo "3. Commit the fixes using the standard git workflow"
+echo
+
+# Exit with appropriate code
+if [[ $FIXES_FAILED -gt 0 ]]; then
+    exit 1
+else
+    exit 0
+fi
