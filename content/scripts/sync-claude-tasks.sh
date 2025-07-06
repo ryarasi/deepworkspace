@@ -1,7 +1,7 @@
 #!/bin/bash
-# sync-claude-tasks.sh - Bidirectional sync between Claude TodoWrite/TodoRead and TASKS.md
+# sync-claude-tasks-v2.sh - Fixed version with proper merging to prevent data loss
 # Usage: 
-#   sync-claude-tasks.sh save    - Save todos from Claude to TASKS.md (called by hook)
+#   sync-claude-tasks.sh save    - Save todos from Claude to TASKS.md (merges, doesn't replace)
 #   sync-claude-tasks.sh load    - Load tasks from TASKS.md to Claude
 #   sync-claude-tasks.sh check   - Check sync status
 
@@ -28,21 +28,86 @@ extract_todos_from_stdin() {
     echo "$json_input" | jq -r '.tool_input.todos // empty'
 }
 
-# Save todos from Claude to TASKS.md
+# Load existing tasks from TASKS.md into associative array
+load_existing_tasks() {
+    declare -A existing_tasks
+    
+    if [ ! -f "$TASKS_FILE" ]; then
+        return 0
+    fi
+    
+    # Extract Claude-managed tasks from TASKS.md
+    local tasks_section
+    tasks_section=$(awk '/^## Claude-Managed Tasks/,/^## [^C]/' "$TASKS_FILE" | grep -E "^### task-" -A 2 || true)
+    
+    if [ -z "$tasks_section" ]; then
+        return 0
+    fi
+    
+    # Parse tasks into associative array
+    while IFS= read -r line; do
+        if [[ "$line" =~ ^###\ (task-[0-9]+):\ (.+) ]]; then
+            local task_id="${BASH_REMATCH[1]}"
+            local task_content="${BASH_REMATCH[2]}"
+            
+            # Read next two lines for status and priority
+            read -r status_line
+            read -r priority_line
+            
+            local status=$(echo "$status_line" | sed -n 's/.*\*\*Status\*\*: //p')
+            local priority=$(echo "$priority_line" | sed -n 's/.*\*\*Priority\*\*: //p')
+            
+            # Store as JSON in array
+            existing_tasks["$task_id"]=$(jq -n \
+                --arg id "$task_id" \
+                --arg content "$task_content" \
+                --arg status "${status:-pending}" \
+                --arg priority "${priority:-medium}" \
+                '{id: $id, content: $content, status: $status, priority: $priority}')
+        fi
+    done <<< "$tasks_section"
+    
+    # Return tasks as JSON array
+    echo "$existing_tasks"
+}
+
+# Save todos from Claude to TASKS.md (with merging)
 save_todos_to_tasks() {
-    log "Starting save_todos_to_tasks"
+    log "Starting save_todos_to_tasks (v2 with merge)"
     
     # Read todos from stdin
-    local todos_json
-    todos_json=$(extract_todos_from_stdin)
+    local claude_todos_json
+    claude_todos_json=$(extract_todos_from_stdin)
     
-    if [ -z "$todos_json" ]; then
+    if [ -z "$claude_todos_json" ]; then
         log "No todos found in input"
         return 0
     fi
     
+    # Load existing tasks from TASKS.md
+    log "Loading existing tasks from TASKS.md"
+    local existing_tasks_json
+    existing_tasks_json=$(load_tasks_to_claude)
+    
     # Create backup of TASKS.md
     cp "$TASKS_FILE" "${TASKS_FILE}.backup-$(date +%Y%m%d-%H%M%S)"
+    
+    # Merge tasks: combine existing and new tasks
+    local merged_tasks_json
+    merged_tasks_json=$(jq -s '
+        (.[0] // []) as $existing |
+        (.[1] // []) as $claude |
+        # Create a map of existing tasks by ID
+        ($existing | map({(.id): .}) | add) as $existing_map |
+        # Create a map of claude tasks by ID
+        ($claude | map({(.id): .}) | add) as $claude_map |
+        # Get all unique task IDs
+        (($existing | map(.id)) + ($claude | map(.id)) | unique) as $all_ids |
+        # For each ID, prefer Claude version if it exists, otherwise keep existing
+        $all_ids | map(. as $id | ($claude_map[$id] // $existing_map[$id]))
+    ' <(echo "$existing_tasks_json") <(echo "$claude_todos_json"))
+    
+    log "Merged $(echo "$merged_tasks_json" | jq 'length') total tasks"
     
     # Create temporary file for new content
     local temp_file="/tmp/tasks_update_$$.md"
@@ -57,8 +122,8 @@ save_todos_to_tasks() {
         echo "<!-- SYNC_STATUS: last_sync=$(date -u +%Y-%m-%dT%H:%M:%SZ) -->"
         echo ""
         
-        # Parse and add each todo
-        echo "$todos_json" | jq -r '.[] | 
+        # Sort tasks by ID and add each one
+        echo "$merged_tasks_json" | jq -r 'sort_by(.id) | .[] | 
             "### \(.id): \(.content)\n" +
             "- **Status**: \(.status)\n" +
             "- **Priority**: \(.priority)\n"'
@@ -77,7 +142,11 @@ save_todos_to_tasks() {
     # Replace TASKS.md with updated content
     mv "$temp_file" "$TASKS_FILE"
     
-    log "Successfully saved $(echo "$todos_json" | jq 'length') todos to TASKS.md"
+    local claude_count=$(echo "$claude_todos_json" | jq 'length')
+    local existing_count=$(echo "$existing_tasks_json" | jq 'length')
+    local merged_count=$(echo "$merged_tasks_json" | jq 'length')
+    
+    log "Successfully merged tasks: $claude_count from Claude + $existing_count existing = $merged_count total"
 }
 
 # Load tasks from TASKS.md to Claude
@@ -87,6 +156,7 @@ load_tasks_to_claude() {
     # Check if TASKS.md exists
     if [ ! -f "$TASKS_FILE" ]; then
         log "TASKS.md not found"
+        echo "[]"
         return 0
     fi
     
@@ -177,6 +247,7 @@ case "${1:-}" in
         ;;
     check-load)
         # Called by PreToolUse hook - check if we need to load
+        # Note: This doesn't actually load into Claude due to hook limitations
         if [ ! -f "/tmp/claude-tasks-loaded-$$" ]; then
             touch "/tmp/claude-tasks-loaded-$$"
             load_tasks_to_claude
@@ -184,7 +255,7 @@ case "${1:-}" in
         ;;
     *)
         echo "Usage: $0 {save|load|check|check-load}"
-        echo "  save       - Save todos from Claude to TASKS.md (hook)"
+        echo "  save       - Save todos from Claude to TASKS.md (merges)"
         echo "  load       - Load tasks from TASKS.md to Claude"
         echo "  check      - Check sync status"
         echo "  check-load - Check and load if needed (hook)"
