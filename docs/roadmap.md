@@ -15,7 +15,22 @@ This document tracks the evolution of DeepWork and outlines future development p
 
 ## Version History
 
-### v3.0.0 - Current (2025-07-05)
+### v5.0.0 - Current (2025-07-07)
+- **Major Structure Migration**
+  - Consolidated all governance under docs/rules/
+  - Reduced to 6 core immutable rules (R001-R006)
+  - Added pattern documents for workflow guidance
+  - Enhanced template collection (11 templates)
+  - Complete portability of governance system
+- **Security Enhancement**
+  - Removed sensitive files from git history
+  - Clean branch implementation
+- **Improvements**
+  - Self-contained governance directory
+  - Better separation of rules vs patterns
+  - Enhanced validation scripts
+
+### v3.0.0 - (2025-07-05)
 - Minimalist, modular design
 - Fractal architecture implementation
 - DWS CLI tool suite
@@ -36,14 +51,15 @@ This document tracks the evolution of DeepWork and outlines future development p
 
 ## Current Status
 
-DeepWork v3.0.0 is stable and production-ready with:
-- ✅ Complete rule system (R001-R008)
-- ✅ Comprehensive templates (T001-T008)
-- ✅ Full CLI tooling (dws commands)
-- ✅ Git workflow integration
-- ✅ AI agent optimization
-- ✅ Documentation structure
-- ✅ Task synchronization system
+DeepWork v5.0.0 is stable and production-ready with:
+- ✅ Core rule system (R001-R006) - focused on immutable governance
+- ✅ Enhanced templates (T001-T011) - 11 comprehensive templates
+- ✅ Full CLI tooling (dws commands) - relocated to docs/rules/scripts/
+- ✅ Git workflow integration with pattern documents
+- ✅ AI agent optimization with CLAUDE.md support
+- ✅ Self-contained governance in docs/rules/
+- ✅ Task synchronization system with fixed hooks
+- ✅ Complete portability - copy docs/rules/ to any project
 
 Active development continues in:
 - Task management improvements
