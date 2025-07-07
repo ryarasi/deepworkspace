@@ -1,0 +1,9 @@
+#!/bin/bash
+# Project Validation Tool
+# Validates project compliance with governance rules
+
+# This is a wrapper that calls the master validation script
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+GOVERNANCE_DIR="$(dirname "$SCRIPT_DIR")"
+
+exec "$GOVERNANCE_DIR/validation/master-validate" "$@"

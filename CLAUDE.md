@@ -1,14 +1,14 @@
-# DeepWork AI Context
+# Project AI Context
 
-This file provides AI-specific context for working with the DeepWork project.
+This file provides AI-specific context for working with this project.
 
 ## Project Structure Requirements
 
-This project follows a strict fractal structure defined in docs/rules/R001-project-structure.yaml:
-- **Root files**: Only README.md, docs/, .untracked/, and optional CLAUDE.md
-- **Governance**: All rules, templates, and scripts under docs/rules/
-- **No content folder**: Direct file placement at root level
-- **Child projects**: Stored in .untracked/repos/
+This project follows a strict fractal structure:
+- **Root files**: Only README.md, docs/, and three gitignored directories
+- **Governance**: Self-contained units under docs/governance/
+- **Documentation**: Organized in docs/ with guide/, specs/, and user/
+- **Workspaces**: .local/ (temp), projects/ (children), repos/ (external)
 
 ## Critical Rules
 
@@ -16,30 +16,34 @@ This project follows a strict fractal structure defined in docs/rules/R001-proje
 2. **R002**: Template integrity - all documents follow templates
 3. **R003**: Self-demonstration - DeepWork uses its own system
 4. **R004**: Reference integrity - all references must be valid
-5. **R005**: Root file governance - strict control of root directory
-6. **R006**: Script validation - all scripts must be validated
+5. **R005**: Governance hierarchy - clear rule precedence
+6. **R006**: Script validation - all rules must be validatable
 
 ## Working with DeepWork
 
 ### Git Workflow
 - Always work on feature branches (never on main)
-- Follow commit standards in docs/rules/templates/T005-git-commit.yaml
-- Create PRs with comprehensive documentation (T006)
+- Follow commit standards in governance templates
+- Create PRs with comprehensive documentation
 
 ### Validation
 Always run validation after changes:
 ```bash
-docs/rules/scripts/validate
+docs/governance/tools/validate
 ```
 
 ### Key Commands
-- `docs/rules/scripts/dws create` - Create new projects
-- `docs/rules/scripts/validate` - Validate structure
-- `docs/rules/scripts/sync` - Sync tasks and state
+- `docs/governance/tools/create` - Create new projects
+- `docs/governance/tools/validate` - Validate structure
+- Each rule has its own `validate.sh` script
 
-## Current Migration Status
+## Current Version: v6.0.0
 
-The project is currently migrating from the old structure (rules/, templates/, scripts/ at root) to the new v5.0.0 structure where everything is consolidated under docs/rules/. This migration needs to be completed and committed properly.
+The project now uses fractal governance units where each rule is self-contained with its own validation. The structure emphasizes:
+- True fractal pattern (same at every level)
+- Self-validating rules
+- Clear separation of governance vs user documentation
+- Three workspace directories for different purposes
 
 ## AI Instructions
 
@@ -47,12 +51,12 @@ The project is currently migrating from the old structure (rules/, templates/, s
 2. **Use templates** - All documents must follow their designated templates
 3. **Validate changes** - Run validation scripts after modifications
 4. **Follow git workflow** - Feature branches, proper commits, documented PRs
-5. **Maintain self-containment** - docs/rules/ must be completely portable
+5. **Maintain self-containment** - docs/governance/ is completely portable
 
 ## Context for Current Session
 
 When working on this project:
-- Check git status to understand current migration state
-- Complete the structural migration before other changes
-- Ensure all references are updated to new paths
-- Validate the final structure matches R001 requirements
+- Use the fractal pattern at every level
+- Each rule directory contains rule.yaml, validate.sh, and README.md
+- User documentation goes in docs/user/ (unstructured)
+- Governance documentation stays in docs/governance/

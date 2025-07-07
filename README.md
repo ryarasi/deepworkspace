@@ -1,13 +1,13 @@
 # DeepWork
-<!-- This file follows template @docs/rules/templates/T002 -->
+<!-- This file follows template @governance/templates/library/T002 -->
 
-This project follows the rules specified in [docs/RULES.md](docs/RULES.md).
+This project follows the governance system specified in [docs/GOVERNANCE.md](docs/GOVERNANCE.md).
 
 ## Overview
 
 DeepWork is a minimalist, git-centric project management system that uses fractal patterns to organize work at any scale. Every project follows the same simple structure, enabling infinite nesting while maintaining clarity and consistency.
 
-For project specifications, see [docs/PSD.md](docs/PSD.md).
+For project specifications, see [docs/specs/PSD.md](docs/specs/PSD.md).
 
 ## Quick Start
 
@@ -15,13 +15,13 @@ For project specifications, see [docs/PSD.md](docs/PSD.md).
 # 1. Clone and setup
 git clone https://github.com/ryarasi/deepworkspace.git
 cd deepworkspace
-docs/rules/scripts/setup.sh
+# Setup is no longer needed - just clone!
 
 # 2. Create your first project
-docs/rules/scripts/dws create
+docs/governance/tools/create my-project
 
 # 3. Validate structure
-docs/rules/scripts/validate
+docs/governance/tools/validate
 ```
 
 ## Projects
@@ -31,6 +31,7 @@ Child projects of DeepWork:
 
 ## Resources
 
-- **Rules**: [docs/RULES.md](docs/RULES.md) - Complete governance system
-- **Specification**: [docs/PSD.md](docs/PSD.md) - Detailed project specification
-- **Scripts**: Located in `docs/rules/scripts/`
+- **Governance**: [docs/GOVERNANCE.md](docs/GOVERNANCE.md) - Complete governance system
+- **Specification**: [docs/specs/PSD.md](docs/specs/PSD.md) - Detailed project specification
+- **Documentation**: [docs/guide/overview.md](docs/guide/overview.md) - Project overview
+- **Tools**: Located in `docs/governance/tools/`

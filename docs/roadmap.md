@@ -16,7 +16,21 @@ This document tracks the evolution of DeepWork and outlines future development p
 
 ## Version History
 
-### v5.0.0 - Current (2025-07-07)
+### v6.0.0 - Current (2025-07-07)
+- **Fractal Governance Units**
+  - Each rule is a self-contained mini-project
+  - Self-validating rules with integrated scripts
+  - True fractal structure verified
+- **Enhanced Workspace Model**
+  - Three gitignored directories: .local/, projects/, repos/
+  - Clear separation of purposes
+  - No branded terminology
+- **User Freedom**
+  - docs/user/ for unstructured content
+  - Organized docs in guide/ and specs/
+  - Maximum flexibility
+
+### v5.0.0 - (2025-07-07)
 - **Major Structure Migration**
   - Consolidated all governance under docs/rules/
   - Reduced to 6 core immutable rules (R001-R006)
@@ -52,15 +66,15 @@ This document tracks the evolution of DeepWork and outlines future development p
 
 ## Current Status
 
-DeepWork v5.0.0 is stable and production-ready with:
-- ✅ Core rule system (R001-R006) - focused on immutable governance
-- ✅ Enhanced templates (T001-T011) - 11 comprehensive templates
-- ✅ Full CLI tooling (dws commands) - relocated to docs/rules/scripts/
-- ✅ Git workflow integration with pattern documents
-- ✅ AI agent optimization with CLAUDE.md support
-- ✅ Self-contained governance in docs/rules/
-- ✅ Task synchronization system with fixed hooks
-- ✅ Complete portability - copy docs/rules/ to any project
+DeepWork v6.0.0 achieves fractal perfection with:
+- ✅ Fractal governance units - each rule self-validates
+- ✅ True minimal structure - max 2-3 levels deep
+- ✅ Three workspace model - .local/, projects/, repos/
+- ✅ User documentation freedom - docs/user/
+- ✅ Generic portable governance - no branding
+- ✅ Validated fractal property - tested with child projects
+- ✅ Self-contained rules - rule.yaml + validate.sh + README.md
+- ✅ Simplified tools - create and validate
 
 Active development continues in:
 - Task management improvements

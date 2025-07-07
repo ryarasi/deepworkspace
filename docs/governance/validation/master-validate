@@ -1,0 +1,105 @@
+#!/bin/bash
+# Master Validation Script
+# Runs all rule validations for complete project compliance check
+
+set -e
+
+# Get the directory to validate (default to current directory)
+PROJECT_DIR="${1:-.}"
+PROJECT_DIR=$(cd "$PROJECT_DIR" && pwd)  # Get absolute path
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# Find governance directory
+if [ -d "$PROJECT_DIR/docs/governance" ]; then
+    GOVERNANCE_DIR="$PROJECT_DIR/docs/governance"
+elif [ -d "$(dirname "$0")/.." ]; then
+    GOVERNANCE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+else
+    echo -e "${RED}Error: Cannot find governance directory${NC}"
+    exit 1
+fi
+
+echo -e "${BLUE}════════════════════════════════════════${NC}"
+echo -e "${BLUE}    Project Governance Validation       ${NC}"
+echo -e "${BLUE}════════════════════════════════════════${NC}"
+echo
+echo "Project: $PROJECT_DIR"
+echo "Governance: $GOVERNANCE_DIR"
+echo
+
+# Track overall results
+TOTAL_RULES=0
+PASSED_RULES=0
+FAILED_RULES=0
+
+# Function to run a rule validation
+run_validation() {
+    local rule_name="$1"
+    local rule_dir="$2"
+    local validate_script="$rule_dir/validate.sh"
+    
+    echo -e "${BLUE}→ ${rule_name}${NC}"
+    
+    if [ ! -f "$validate_script" ]; then
+        echo -e "  ${YELLOW}⚠ No validation script found${NC}"
+        return
+    fi
+    
+    if [ ! -x "$validate_script" ]; then
+        echo -e "  ${YELLOW}⚠ Validation script not executable${NC}"
+        return
+    fi
+    
+    ((TOTAL_RULES++))
+    
+    # Run the validation and capture result
+    if "$validate_script" "$PROJECT_DIR" > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓ PASSED${NC}"
+        ((PASSED_RULES++))
+    else
+        echo -e "  ${RED}✗ FAILED${NC}"
+        ((FAILED_RULES++))
+        # Run again to show output
+        echo "  Details:"
+        "$validate_script" "$PROJECT_DIR" 2>&1 | sed 's/^/    /'
+    fi
+    echo
+}
+
+# Run all rule validations
+echo -e "${BLUE}Running Rule Validations${NC}"
+echo "────────────────────────"
+echo
+
+run_validation "R001 - Project Structure" "$GOVERNANCE_DIR/structure"
+run_validation "R002 - Template Integrity" "$GOVERNANCE_DIR/templates"
+run_validation "R003 - Self Demonstration" "$GOVERNANCE_DIR/demonstration"
+run_validation "R004 - Reference Integrity" "$GOVERNANCE_DIR/references"
+run_validation "R005 - Governance Hierarchy" "$GOVERNANCE_DIR/hierarchy"
+run_validation "R006 - Script Validation" "$GOVERNANCE_DIR/validation"
+
+# Summary
+echo -e "${BLUE}════════════════════════════════════════${NC}"
+echo -e "${BLUE}           Summary Report               ${NC}"
+echo -e "${BLUE}════════════════════════════════════════${NC}"
+echo
+echo "Total Rules Checked: $TOTAL_RULES"
+echo -e "Passed: ${GREEN}$PASSED_RULES${NC}"
+echo -e "Failed: ${RED}$FAILED_RULES${NC}"
+echo
+
+if [ $FAILED_RULES -eq 0 ]; then
+    echo -e "${GREEN}✓ All validations passed!${NC}"
+    echo "Project is fully compliant with governance rules."
+    exit 0
+else
+    echo -e "${RED}✗ Validation failed!${NC}"
+    echo "$FAILED_RULES rule(s) need attention."
+    exit 1
+fi
