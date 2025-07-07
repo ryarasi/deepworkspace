@@ -1,0 +1,74 @@
+id: T002
+name: "Project README Template"
+version: "7.0.0"
+modified: "2025-01-07T14:28:00-0500"
+purpose: "Standard template for all project README.md files (v7.0.0 - no parent references)"
+format: "markdown"
+content: |
+  # [Project Name]
+  <!-- This file follows template @governance/templates/library/T002 -->
+  
+  This project follows the governance system specified in [docs/GOVERNANCE.md](docs/GOVERNANCE.md).
+  
+  ## Overview
+  
+  [One paragraph description of what this project is and why it exists]
+  
+  **Author**: [github-username]
+  
+  ## Projects
+  
+  Child projects:
+  - **[child-slug]**: [Brief description]
+  
+  Or if no children:
+  No child projects yet.
+  
+  ## Repositories
+  
+  External repositories:
+  - **[repo-slug]**: [Brief description]
+  
+  Or if no repositories:
+  No repositories yet.
+  
+  ## Quick Start
+  
+  ```bash
+  # [2-3 essential commands to get started]
+  dws set-project [project-slug]
+  dws create-child
+  ```
+  
+  ## Resources
+  
+  - **Governance**: [docs/GOVERNANCE.md](docs/GOVERNANCE.md) - Complete governance system
+  - **Specification**: [docs/specs/PSD.md](docs/specs/PSD.md) - Detailed project specification
+  - **Documentation**: [docs/guide/overview.md](docs/guide/overview.md) - Project overview
+  
+  ---
+  
+  *Created with DeepWork v7.0.0*
+  
+usage: |
+  1. Copy this template to new-project/README.md
+  2. Replace all placeholders in square brackets
+  3. Create corresponding docs in docs/ directory
+  4. Keep README focused on structure - details go in docs/
+  5. Do NOT add parent references - parents list their children
+  6. Update Projects and Repositories sections as items are added
+  
+references:
+  - "T010"  # PSD.md template
+  - "T008"  # Documentation file template
+  - "R001"  # Project structure rule
+
+changelog: |
+  v7.0.0 (2025-01-07):
+  - Removed Parent field from metadata
+  - Removed all metadata section (simplified)
+  - Added Author field in Overview
+  - Added Projects section for child projects
+  - Added Repositories section for external repos
+  - Updated template comment format
+  - Aligned with new .dws workspace structure
