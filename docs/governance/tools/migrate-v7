@@ -1,0 +1,167 @@
+#!/bin/bash
+# DeepWork v6 to v7 Migration Script
+# Migrates projects to new .dws workspace structure
+
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Print functions
+success() { echo -e "${GREEN}✓${NC} $1"; }
+error() { echo -e "${RED}✗${NC} $1" >&2; }
+warning() { echo -e "${YELLOW}⚠${NC} $1"; }
+info() { echo -e "${BLUE}→${NC} $1"; }
+
+echo "DeepWork v6 to v7 Migration Tool"
+echo "================================="
+echo
+
+# Check if .dws already exists
+HOME_DIR="$HOME"
+DWS_PATH="$HOME_DIR/.dws"
+OLD_WORKSPACE="$HOME_DIR/workspace"
+
+if [[ -d "$DWS_PATH" ]]; then
+    warning ".dws workspace already exists at $DWS_PATH"
+    echo "Would you like to:"
+    echo "1) Merge with existing .dws workspace"
+    echo "2) Backup and replace existing .dws"
+    echo "3) Cancel migration"
+    read -p "Choice (1-3): " choice
+    
+    case $choice in
+        1)
+            info "Merging with existing workspace..."
+            ;;
+        2)
+            BACKUP_PATH="$DWS_PATH.backup-$(date +%Y%m%d-%H%M%S)"
+            info "Backing up to $BACKUP_PATH"
+            mv "$DWS_PATH" "$BACKUP_PATH"
+            success "Backup created"
+            ;;
+        3)
+            info "Migration cancelled"
+            exit 0
+            ;;
+        *)
+            error "Invalid choice"
+            exit 1
+            ;;
+    esac
+fi
+
+# Create .dws structure
+info "Creating .dws workspace structure..."
+mkdir -p "$DWS_PATH"/{projects,cache}
+
+# Find existing workspace projects
+if [[ -d "$OLD_WORKSPACE" ]]; then
+    info "Found existing workspace at $OLD_WORKSPACE"
+    
+    # Find user directories
+    for user_dir in "$OLD_WORKSPACE"/*; do
+        if [[ -d "$user_dir" && -f "$user_dir/README.md" ]]; then
+            USERNAME=$(basename "$user_dir")
+            info "Migrating user workspace: $USERNAME"
+            
+            # Copy to new location
+            TARGET_DIR="$DWS_PATH/projects/$USERNAME"
+            if [[ -d "$TARGET_DIR" ]]; then
+                warning "User $USERNAME already exists in .dws, skipping..."
+                continue
+            fi
+            
+            cp -r "$user_dir" "$TARGET_DIR"
+            success "Migrated $USERNAME"
+            
+            # Update README.md to remove parent references
+            update_readme "$TARGET_DIR"
+        fi
+    done
+else
+    warning "No existing workspace found at $OLD_WORKSPACE"
+fi
+
+# Function to update README files
+update_readme() {
+    local PROJECT_PATH="$1"
+    local README_PATH="$PROJECT_PATH/README.md"
+    
+    if [[ ! -f "$README_PATH" ]]; then
+        return
+    fi
+    
+    # Create backup
+    cp "$README_PATH" "$README_PATH.v6-backup"
+    
+    # Remove parent field from metadata
+    sed -i.tmp '/^- \*\*Parent\*\*:/d' "$README_PATH"
+    
+    # Add Projects and Repositories sections if not present
+    if ! grep -q "^## Projects" "$README_PATH"; then
+        echo -e "\n## Projects\n\nNo child projects yet.\n" >> "$README_PATH"
+    fi
+    
+    if ! grep -q "^## Repositories" "$README_PATH"; then
+        echo -e "\n## Repositories\n\nNo repositories yet.\n" >> "$README_PATH"
+    fi
+    
+    # Clean up temp file
+    rm -f "$README_PATH.tmp"
+    
+    # Recursively update child projects
+    if [[ -d "$PROJECT_PATH/projects" ]]; then
+        for child in "$PROJECT_PATH/projects"/*; do
+            if [[ -d "$child" ]]; then
+                update_readme "$child"
+            fi
+        done
+    fi
+}
+
+# Create config.toml
+info "Creating configuration file..."
+cat > "$DWS_PATH/config.toml" << EOF
+workspace_path = "$DWS_PATH"
+github_username = ""
+
+[api_keys]
+# Add your API keys here:
+# anthropic = "sk-ant-..."
+# gemini = "..."
+# 
+# [api_keys.azure]
+# endpoint = "https://..."
+# api_key = "..."
+EOF
+
+success "Created config.toml"
+
+# Summary
+echo
+echo "Migration Summary"
+echo "================="
+echo
+success "Workspace created at: $DWS_PATH"
+
+# Count migrated projects
+if [[ -d "$DWS_PATH/projects" ]]; then
+    PROJECT_COUNT=$(find "$DWS_PATH/projects" -name "README.md" -type f | wc -l)
+    success "Migrated $PROJECT_COUNT projects"
+fi
+
+echo
+echo "Next Steps:"
+echo "1. Edit $DWS_PATH/config.toml to add your GitHub username and API keys"
+echo "2. Install the DeepWork CLI: cargo install --path /path/to/deepwork-cli"
+echo "3. Run 'dws list-projects' to verify migration"
+echo "4. Old workspace preserved at: $OLD_WORKSPACE"
+echo
+echo "For more information, see:"
+echo "- Migration guide: docs/user/migration-v7.md"
+echo "- CLI documentation: deepwork-cli/docs/USAGE.md"
