@@ -29,11 +29,6 @@ docs/governance/tools/validate
 Child projects of DeepWork:
 - **ragavyarasi**: Strategic vision layer for technology and wisdom integration
 
-## Repositories
-
-External repositories:
-- **deepwork-cli**: Command-line interface for DeepWork project management
-
 ## Resources
 
 - **Governance**: [docs/GOVERNANCE.md](docs/GOVERNANCE.md) - Complete governance system
