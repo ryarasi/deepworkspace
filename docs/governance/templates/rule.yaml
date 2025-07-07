@@ -1,0 +1,82 @@
+id: R002
+name: "Template System Integrity"
+version: "2.0.0"
+priority: "critical"
+category: "integrity"
+content: |
+  ## Rule Statement
+  
+  This Project MUST maintain template integrity:
+  - All templates must have valid YAML structure with required fields
+  - Template IDs must be unique and follow T001-T999 numbering
+  - Templates must reference only existing rules
+  - This project's files must follow their declared templates
+  
+  ## Rationale
+  
+  Templates are this project's primary mechanism for ensuring consistency. If the template system itself lacks integrity, the entire system fails. This project must demonstrate that templates work by using them correctly.
+  
+  ## Implementation
+  
+  1. Template requirements:
+     - id: Unique identifier (T001-T999)
+     - name: Descriptive name
+     - version: Semantic version
+     - content: The template content
+     - references: Valid rule IDs
+  
+  2. Validation checks:
+     - No duplicate template IDs
+     - All referenced rules exist in docs/rules/
+     - YAML structure is valid
+     - Required fields are present
+  
+  3. Self-application:
+     - README.md declares `@templates/T002`
+     - docs/PSD.md declares `@templates/T010`
+     - All templates follow template structure
+  
+  ## Examples
+  
+  ### Valid Template
+  ```yaml
+  id: T002
+  name: "Project README"
+  version: "1.0.0"
+  content: |
+    # Project documentation...
+  references:
+    - "R001"  # Valid rule reference
+  ```
+  
+  ### Invalid Templates
+  ```yaml
+  # Missing required fields
+  name: "Bad Template"
+  content: "..."
+  
+  # Invalid ID format
+  id: TEMPLATE-002
+  
+  # References non-existent rule
+  references:
+    - "R999"  # Doesn't exist
+  ```
+  
+  ## Verification
+  
+  To verify template integrity:
+  - [ ] All templates have unique IDs (T001-T999)
+  - [ ] All templates have required fields
+  - [ ] All rule references in templates exist locally
+  - [ ] This project's files follow declared templates
+  - [ ] Validation scripts check template integrity
+  
+references:
+  - "R001"  # Project structure includes templates/
+  - "R003"  # Self-demonstration principle
+  
+next_rule: "R003"  # Continue to Self-Demonstration Principle
+  
+exceptions:
+  - None. Template integrity is absolute.

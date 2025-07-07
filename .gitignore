@@ -1,4 +1,9 @@
-# Untracked items
+# Local workspace directories (fractal pattern)
+.local/
+projects/
+repos/
+
+# Legacy directory (to be removed)
 .untracked/
 
 # Claude Desktop settings (entire directory)

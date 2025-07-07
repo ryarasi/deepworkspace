@@ -203,6 +203,48 @@ deepworkspace/
 
 **Philosophy**: "Portable perfection"
 
+### v6.0.0 - Fractal Governance Units (July 7, 2025)
+
+**Revolution**: True fractal architecture with self-validating rules
+
+**Structure**:
+```
+project/
+├── README.md               # Entry point
+├── docs/                   # All documentation
+│   ├── GOVERNANCE.md       # Governance entry
+│   ├── governance/         # Self-contained units
+│   │   ├── structure/      # Each rule is
+│   │   │   ├── rule.yaml   # a complete
+│   │   │   ├── validate.sh # mini-project
+│   │   │   └── README.md   # with docs
+│   │   ├── templates/
+│   │   │   └── library/    # All templates
+│   │   └── tools/          # Simple scripts
+│   ├── guide/              # User guides
+│   ├── specs/              # Specifications
+│   └── user/               # Unstructured
+├── .local/                 # Local workspace
+├── projects/               # Child projects
+└── repos/                  # External repos
+```
+
+**Breakthrough Changes**:
+- **Fractal governance**: Each rule is a self-contained unit
+- **Self-validation**: Every rule includes its own validator
+- **Three workspaces**: .local/, projects/, repos/ (all gitignored)
+- **User freedom**: docs/user/ for unstructured content
+- **No branding**: Generic, portable governance
+- **True minimalism**: Maximum 2-3 levels deep
+
+**Key Innovations**:
+- Rules as fractal units
+- Separation of concerns (governance vs user docs)
+- Clear workspace purposes
+- Validated fractal property
+
+**Philosophy**: "Fractal perfection"
+
 ## Evolution Themes
 
 ### 1. Progressive Simplification
@@ -211,6 +253,7 @@ deepworkspace/
 - v3: Unified structure
 - v4: Minimal nesting
 - v5: Essential only
+- v6: Fractal units
 
 ### 2. Tool Evolution
 - v1: No tools
@@ -218,6 +261,7 @@ deepworkspace/
 - v3: DWS CLI introduction
 - v4: Git integration
 - v5: Validation-focused
+- v6: Self-validating
 
 ### 3. Philosophy Shifts
 - v1: "Organize by type"
@@ -225,6 +269,7 @@ deepworkspace/
 - v3: "Fractal consistency"
 - v4: "Minimal viable structure"
 - v5: "Portable governance"
+- v6: "Fractal perfection"
 
 ### 4. AI Integration
 - v1: No AI consideration
@@ -232,6 +277,7 @@ deepworkspace/
 - v3: AI-first design
 - v4: Context optimization
 - v5: Optional but supported
+- v6: Refined and focused
 
 ## Structural Comparisons
 
@@ -272,6 +318,12 @@ v2: Nested complexity → v5: Flat simplicity
 - Reduce to core rules
 - Add pattern documents
 
+### v5 → v6
+- Fractal governance units
+- Self-validating rules
+- Three workspace directories
+- True minimal structure
+
 ## Philosophy Evolution
 
 ### The Journey of Ideas
@@ -281,6 +333,7 @@ v2: Nested complexity → v5: Flat simplicity
 3. **Consistency** (v3): "Let's make everything identical"
 4. **Minimalism** (v4): "Let's remove the unnecessary"
 5. **Portability** (v5): "Let's make it universally applicable"
+6. **Fractality** (v6): "Let's achieve true self-similarity"
 
 ### Key Insights
 
@@ -292,7 +345,7 @@ v2: Nested complexity → v5: Flat simplicity
 
 ## Conclusion
 
-DeepWork's evolution represents a journey from complexity to elegance. What began as a simple folder structure evolved through a tool-heavy phase before finding its true form as a minimal, fractal system. The v5.0.0 release achieves the original goal—organizing deep work—through the most elegant means possible: portable, self-contained governance that works everywhere.
+DeepWork's evolution represents a journey from complexity to elegance. What began as a simple folder structure evolved through a tool-heavy phase before finding its true form as a minimal, fractal system. The v6.0.0 release perfects this vision with self-validating governance units that mirror the project's own fractal structure, achieving maximum flexibility with minimal complexity.
 
 The future of DeepWork lies not in adding features, but in discovering what else can be removed while maintaining its essential purpose.
 

@@ -1,0 +1,87 @@
+id: T003
+name: "Pattern Documentation"
+version: "1.0.0"
+category: "documentation"
+content: |
+  # Pattern: [Pattern Name]
+  
+  <!-- This file follows template @templates/T003 -->
+  
+  ## Overview
+  
+  [Brief description of what this pattern solves and why it exists]
+  
+  ## When to Use
+  
+  This pattern is recommended when:
+  - [Condition 1]
+  - [Condition 2]
+  - [Condition 3]
+  
+  ## When NOT to Use
+  
+  This pattern may not be suitable when:
+  - [Exception 1]
+  - [Exception 2]
+  
+  ## Implementation
+  
+  ### Basic Example
+  
+  ```[language]
+  [Simple example code/configuration]
+  ```
+  
+  ### Advanced Example
+  
+  ```[language]
+  [More complex example with options]
+  ```
+  
+  ## Benefits
+  
+  - **[Benefit 1]**: [Explanation]
+  - **[Benefit 2]**: [Explanation]
+  - **[Benefit 3]**: [Explanation]
+  
+  ## Trade-offs
+  
+  - **[Trade-off 1]**: [What you gain vs what you lose]
+  - **[Trade-off 2]**: [What you gain vs what you lose]
+  
+  ## Adoption
+  
+  To adopt this pattern in your project:
+  
+  1. [Step 1]
+  2. [Step 2]
+  3. [Step 3]
+  
+  ### Quick Start
+  
+  ```bash
+  # Commands to quickly implement this pattern
+  ```
+  
+  ### Customization
+  
+  You can customize this pattern by:
+  - [Customization option 1]
+  - [Customization option 2]
+  
+  ## Related Patterns
+  
+  - [Related Pattern 1]: [How they work together]
+  - [Related Pattern 2]: [How they complement each other]
+  
+  ## References
+  
+  - [External resource or documentation]
+  - [Academic paper or blog post]
+  - [Tool or library documentation]
+  
+references:
+  - "T008"  # General documentation template
+  
+description: |
+  Template for documenting patterns that projects can adopt. Unlike rules (which DeepWork enforces on itself), patterns are optional best practices that projects can choose to implement.

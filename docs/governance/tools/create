@@ -1,0 +1,124 @@
+#!/bin/bash
+# Create New Project Tool
+# Creates a new project following the fractal structure
+
+set -e
+
+# Check arguments
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 <project-name> [parent-directory]"
+    echo "  project-name: Name of the new project"
+    echo "  parent-directory: Where to create it (default: ./projects)"
+    exit 1
+fi
+
+PROJECT_NAME="$1"
+PARENT_DIR="${2:-./projects}"
+
+# Colors
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# Create project directory
+PROJECT_DIR="$PARENT_DIR/$PROJECT_NAME"
+echo -e "${BLUE}Creating project: $PROJECT_NAME${NC}"
+
+# Create fractal structure
+mkdir -p "$PROJECT_DIR"/{docs,projects,repos,.local}
+
+# Create README from template
+cat > "$PROJECT_DIR/README.md" << EOF
+# $PROJECT_NAME
+
+This project follows the governance rules of its parent.
+
+## Overview
+
+[Project description]
+
+## Structure
+
+This project follows the fractal pattern:
+- \`README.md\` - This file
+- \`docs/\` - Documentation
+- \`.local/\` - Local workspace (gitignored)
+- \`projects/\` - Child projects (gitignored)
+- \`repos/\` - External repositories (gitignored)
+
+## Getting Started
+
+1. Read the documentation in \`docs/\`
+2. Create child projects in \`projects/\`
+3. Clone external repos in \`repos/\`
+4. Use \`.local/\` for temporary work
+
+---
+*Created: $(date +%Y-%m-%d)*
+EOF
+
+# Create docs structure
+mkdir -p "$PROJECT_DIR/docs/"{user,guide,specs}
+
+# Create basic documentation
+cat > "$PROJECT_DIR/docs/README.md" << EOF
+# $PROJECT_NAME Documentation
+
+## Overview
+This directory contains all project documentation.
+
+## Structure
+- \`guide/\` - User guides and tutorials
+- \`specs/\` - Technical specifications
+- \`user/\` - Unstructured user documentation
+
+## Governance
+This project inherits governance from its parent project.
+EOF
+
+# Copy governance (link to parent)
+cat > "$PROJECT_DIR/docs/GOVERNANCE.md" << EOF
+# Governance
+
+This project follows the governance system of its parent.
+
+To validate compliance:
+\`\`\`bash
+../../../docs/governance/tools/validate
+\`\`\`
+
+For governance details, see the parent project's \`docs/governance/\` directory.
+EOF
+
+# Create .gitignore
+cat > "$PROJECT_DIR/.gitignore" << EOF
+# Local workspace directories (fractal pattern)
+.local/
+projects/
+repos/
+
+# System files
+.DS_Store
+*.swp
+*.swo
+*~
+EOF
+
+# Initialize git repository
+cd "$PROJECT_DIR"
+git init
+git add .
+git commit -m "Initial commit: $PROJECT_NAME
+
+Created with fractal project structure:
+- README.md and docs/
+- Three gitignored workspace directories
+- Inherits governance from parent"
+
+echo -e "${GREEN}✓ Project created successfully!${NC}"
+echo
+echo "Next steps:"
+echo "1. cd $PROJECT_DIR"
+echo "2. Edit README.md with project details"
+echo "3. Add documentation in docs/"
+echo "4. Create child projects with: ../../../docs/governance/tools/create <name>"
